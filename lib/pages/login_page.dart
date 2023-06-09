@@ -291,25 +291,32 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Dont have an account?',
-                              style: TextStyle(
-                                  color: Color(0xFFfebe07), fontSize: 17.h),
-                            ),
-                            SizedBox(
-                              width: 10.h,
-                            ),
-                            Text(
-                              'Contact With Admin',
-                              style: TextStyle(
-                                  color: Color(0xFF032178),
-                                  fontSize: 15.h,
-                                  fontWeight: FontWeight.bold),
-                            )
-                          ],
+                        Container(
+                          width: MediaQuery.of(context).size.width - 60.w,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Dont have an account?',
+                                style: TextStyle(
+                                    color: Color(0xFFfebe07), fontSize: 14.h),
+                              ),
+                              SizedBox(
+                                width: 7.h,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Contact With Admin',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: Color(0xFF032178),
+                                      fontSize: 14.h,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),
