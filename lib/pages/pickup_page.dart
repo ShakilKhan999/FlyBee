@@ -37,9 +37,9 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
     double screenWidth = MediaQuery.of(context).size.width;
     _tabController = TabController(length: 2, vsync: this);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PickUpList'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('PickUpList'),
+      // ),
       body: Column(
         children: [
           TabBar(

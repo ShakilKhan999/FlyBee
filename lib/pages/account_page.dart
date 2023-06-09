@@ -13,7 +13,7 @@ class _AccountPageState extends State<AccountPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Account'),),
+      // appBar: AppBar(title: Text('Account'),),
     );
   }
 }

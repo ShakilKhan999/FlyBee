@@ -176,97 +176,105 @@ class _LoginPageState extends State<LoginPage> {
                           width: mediaQuery.size.width,
                           height: 40.h,
                           child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: logoblue,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(10), // <-- Radius
-                                ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: logoblue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(10), // <-- Radius
                               ),
-                              onPressed: () async {
-                                // bool login= await loginProvider.login(emailController.text, passwordController.text);
-                                //   login?  Navigator.pushReplacementNamed(context, HomePage.routeName):CustomSnackBar().showSnackBar(
-                                //             context: context,
-                                //             content: 'Wrong Email or Password',
-                                //             backgroundColor: Colors.green);
+                            ),
+                            onPressed: () async {
+                              // bool login= await loginProvider.login(emailController.text, passwordController.text);
+                              //   login?  Navigator.pushReplacementNamed(context, HomePage.routeName):CustomSnackBar().showSnackBar(
+                              //             context: context,
+                              //             content: 'Wrong Email or Password',
+                              //             backgroundColor: Colors.green);
 
+                              // if (emailController.text == '') {
+                              //   CustomSnackBar().showSnackBar(
+                              //       context: context,
+                              //       content: 'Enter Email',
+                              //       backgroundColor: Colors.red);
+                              //   return;
+                              // }
+                              // if (passwordController.text == '') {
+                              //   CustomSnackBar().showSnackBar(
+                              //       context: context,
+                              //       content: 'Enter Password',
+                              //       backgroundColor: Colors.red);
+                              //   return;
+                              // }
+                              // if (passwordController.text.length < 6) {
+                              //   CustomSnackBar().showSnackBar(
+                              //       context: context,
+                              //       content:
+                              //           'Password length must be at least 6',
+                              //       backgroundColor: Colors.red);
+                              //   return;
+                              // }
+                              // if (ActiveConnection == false) {
+                              //   try {
+                              //     final result = await InternetAddress.lookup(
+                              //         'example.com');
+                              //     if (result.isNotEmpty &&
+                              //         result[0].rawAddress.isNotEmpty) {
+                              //       bool login = await loginProvider.login(
+                              //           emailController.text,
+                              //           passwordController.text);
+                              //       if (login == true) {
+                              //         Navigator.pushReplacementNamed(
+                              //             context, HomePage.routeName);
+                              //         CustomSnackBar().showSnackBar(
+                              //             context: context,
+                              //             content: 'Log in Successful',
+                              //             backgroundColor: Colors.green);
+                              //       } else {
+                              //         CustomSnackBar().showSnackBar(
+                              //             context: context,
+                              //             content: 'Wrong Email or Password',
+                              //             backgroundColor: Colors.green);
+                              //       }
 
-                                if (emailController.text == '') {
+                              //       //  method
+                              //     }
+                              //   } on SocketException catch (_) {
+                              //     CustomIconSnackBar().showSnackBar(
+                              //       context: context,
+                              //       content: Icon(Icons.wifi),
+                              //     );
+                              //   }
+                              // } else {
+                              //   //  method
+                              //   bool login = await loginProvider.login(
+                              //       emailController.text,
+                              //       passwordController.text);
+                              //   if (login == true) {
+                              //     Navigator.pushReplacementNamed(
+                              //         context, HomePage.routeName);
+                              //     CustomSnackBar().showSnackBar(
+                              //         context: context,
+                              //         content: 'Log in Successful',
+                              //         backgroundColor: Colors.green);
+                              //   } else {
+                              //     CustomSnackBar().showSnackBar(
+                              //         context: context,
+                              //         content: 'Wrong Email or Password',
+                              //         backgroundColor: Colors.green);
+                              //   }
+                              // }
+                               Navigator.pushReplacementNamed(
+                                      context, HomePage.routeName);
                                   CustomSnackBar().showSnackBar(
                                       context: context,
-                                      content: 'Enter Email',
-                                      backgroundColor: Colors.red);
-                                  return;
-                                }
-                                if (passwordController.text == '') {
-                                  CustomSnackBar().showSnackBar(
-                                      context: context,
-                                      content: 'Enter Password',
-                                      backgroundColor: Colors.red);
-                                  return;
-                                }
-                                if (passwordController.text.length < 6) {
-                                  CustomSnackBar().showSnackBar(
-                                      context: context,
-                                      content:
-                                          'Password length must be at least 6',
-                                      backgroundColor: Colors.red);
-                                  return;
-                                }
-                                if (ActiveConnection == false) {
-                                  try {
-                                    final result = await InternetAddress.lookup(
-                                        'example.com');
-                                    if (result.isNotEmpty &&
-                                        result[0].rawAddress.isNotEmpty) {
-
-                                      bool login= await loginProvider.login(emailController.text, passwordController.text);
-                                     if(login == true){
-                                       Navigator.pushReplacementNamed(context, HomePage.routeName);
-                                       CustomSnackBar().showSnackBar(
-                                                   context: context,
-                                                   content: 'Log in Successful',
-                                                   backgroundColor: Colors.green);
-                                     } else{
-                                       CustomSnackBar().showSnackBar(
-                                           context: context,
-                                           content: 'Wrong Email or Password',
-                                           backgroundColor: Colors.green);
-                                     }
-
-                                      //  method
-                                    }
-                                  } on SocketException catch (_) {
-                                    CustomIconSnackBar().showSnackBar(
-                                      context: context,
-                                      content: Icon(Icons.wifi),
-                                    );
-                                  }
-                                } else {
-
-                                  //  method
-                                  bool login= await loginProvider.login(emailController.text, passwordController.text);
-                                  if(login == true){
-                                    Navigator.pushReplacementNamed(context, HomePage.routeName);
-                                    CustomSnackBar().showSnackBar(
-                                        context: context,
-                                        content: 'Log in Successful',
-                                        backgroundColor: Colors.green);
-                                  } else{
-                                    CustomSnackBar().showSnackBar(
-                                        context: context,
-                                        content: 'Wrong Email or Password',
-                                        backgroundColor: Colors.green);
-                                  }
-                                }
-
-
-                              },
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 18.h),
-                              )),
+                                      content: 'Log in Successful',
+                                      backgroundColor: Colors.green);
+                            },
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 18.h),
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height: 20.h,
@@ -330,5 +338,4 @@ class _LoginPageState extends State<LoginPage> {
   //         backgroundColor: Colors.green);
   //   }
   // }
-
 }
