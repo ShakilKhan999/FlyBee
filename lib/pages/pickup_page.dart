@@ -12,23 +12,10 @@ class PickUpPage extends StatefulWidget {
 
 class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
   late TabController _tabController;
-
-  int _expandedIndex = -1;
-
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
-  }
-
-  void _toggleExpanded(int index) {
-    setState(() {
-      if (_expandedIndex == index) {
-        _expandedIndex = -1;
-      } else {
-        _expandedIndex = index;
-      }
-    });
   }
 
   @override
@@ -44,10 +31,6 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
             unselectedLabelColor: Colors.grey,
             indicatorSize: TabBarIndicatorSize.tab,
             indicatorWeight: 3,
-            // indicator: BoxDecoration(
-            //   borderRadius: BorderRadius.circular(5),
-            //   color: Colors.blue.withOpacity(0.15),
-            // ),
             tabs: const [
               Tab(text: 'Pickup List'),
               Tab(text: 'Active Pickup List'),
@@ -84,6 +67,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
         ],
       ),
     );
+  
   }
 
   Widget _buildActivePickUpItem(int index) {
@@ -413,4 +397,5 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
       ),
     );
   }
+
 }
