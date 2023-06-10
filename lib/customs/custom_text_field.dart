@@ -13,7 +13,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputType? textInputType;
 
   const CustomTextField(
-      {required this.controller,
+      {super.key, required this.controller,
       this.hintText,
       this.labelText,
       this.prefixIcon,
@@ -32,11 +32,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 50.h,
       child: TextFormField(
 
-        keyboardType: widget.textInputType == null ? TextInputType.text : widget.textInputType,
+        keyboardType: widget.textInputType ?? TextInputType.text,
         controller: widget.controller,
         readOnly: widget.readOnly == null ? false : true,
         obscureText: widget.isPassword == null ? false : true,
@@ -47,13 +47,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 borderSide: BorderSide(color: Colors.black, width: 1.2)),
             border: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black, width: 1.2)),
-            hintText: widget.hintText == null ? "" : widget.hintText,
-            labelText: widget.labelText == null ? "" : widget.labelText,
+            hintText: widget.hintText ?? "",
+            labelText: widget.labelText ?? "",
             prefixIcon:
                 widget.prefixIcon == null ? null : Icon(widget.prefixIcon,color: Colors.white,),
             suffixIcon:
                 widget.suffixIcon == null ? null : Icon(widget.suffixIcon),
-            labelStyle: TextStyle(color: Colors.black)),
+            labelStyle: const TextStyle(color: Colors.black)),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flybee/utils/colors.dart';
 
 class DeliveryPage extends StatefulWidget {
   static const String routeName = '/delivery';
@@ -27,10 +28,11 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
         children: [
           TabBar(
             controller: _tabController,
-            labelColor: Colors.blue,
+            labelColor: logoblue,
             unselectedLabelColor: Colors.grey,
             indicatorSize: TabBarIndicatorSize.tab,
             indicatorWeight: 3,
+            indicatorColor: logoblue,
             tabs: const [
               Tab(text: 'Delivery List'),
               Tab(text: 'Delivered'),
@@ -47,7 +49,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                   itemCount: 10,
                   itemBuilder: (context, index) {
                     return Container(
-                      child: _buildPickUpItem(index),
+                      child: _buildDeliveryItem(index),
                     );
                   },
                 ),
@@ -57,7 +59,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                   itemCount: 10,
                   itemBuilder: (context, index) {
                     return Container(
-                      child: _buildActivePickUpItem(index),
+                      child: _buildActiveDeliveryItem(index),
                     );
                   },
                 ),
@@ -69,13 +71,14 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
     );
   }
 
-  Widget _buildActivePickUpItem(int index) {
+  Widget _buildActiveDeliveryItem(int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
         elevation: 3,
         child: ExpansionTile(
-          // collapsedBackgroundColor: Colors.grey[400],
+          iconColor: logoblue,
+          collapsedIconColor: logogold,
           title: Text(
             'Product ${index + 1}',
             style: const TextStyle(
@@ -105,7 +108,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Store Address'),
+                          const Text('Branch Address'),
                           Row(
                             children: [
                               Icon(
@@ -156,7 +159,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Order Pickup Time'),
+                            const Text('Collection Time'),
                             Row(
                               children: [
                                 Icon(
@@ -194,13 +197,61 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                               ],
                             )
                           ],
-                        ))
+                        )),
+                        
                       ],
                     ),
                   ),
                   SizedBox(
                     height: 15.h,
                   ),
+                    Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 30.h,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF01B075),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          child: Text(
+                            'Delivered',
+                            style: TextStyle(fontSize: 14.sp),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 50.w,
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8), // <-- Radius
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          child: Text(
+                            'Return',
+                            style: TextStyle(fontSize: 14.sp),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                
                 ],
               ),
             ),
@@ -210,13 +261,14 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
     );
   }
 
-  Widget _buildPickUpItem(int index) {
+  Widget _buildDeliveryItem(int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
         elevation: 3,
         child: ExpansionTile(
-          // collapsedBackgroundColor: Colors.grey[400],
+          iconColor: logoblue,
+          collapsedIconColor: logogold,
           title: Text(
             'Product ${index + 1}',
             style: const TextStyle(
@@ -246,7 +298,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Store Address'),
+                          const Text('Branch Address'),
                           Row(
                             children: [
                               Icon(
@@ -297,7 +349,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Order Pickup Time'),
+                            const Text('Collection Time'),
                             Row(
                               children: [
                                 Icon(
@@ -359,7 +411,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                             setState(() {});
                           },
                           child: Text(
-                            'Delivery',
+                            'Accecpt',
                             style: TextStyle(fontSize: 14.sp),
                           ),
                         ),

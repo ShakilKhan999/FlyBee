@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:http/http.dart';
 
 class ApiLogin {
@@ -12,7 +14,7 @@ class ApiLogin {
         return false;
       }
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
     return false;
   }

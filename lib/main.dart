@@ -40,13 +40,13 @@ class MyApp extends StatelessWidget {
             builder:  EasyLoading.init(),
             initialRoute: LoginPage.routeName,
             routes: {
-              LoginPage.routeName: (context) => LoginPage(),
-              HomePage.routeName:(context)=> HomePage(),
-              PickUpPage.routeName:(context)=>PickUpPage(),
-              DeliveryPage.routeName:(context)=>DeliveryPage(),
-              AccountPage.routeName:(context)=>AccountPage(),
-              MarchantListPage.routeName:(context)=>MarchantListPage(),
-              ItemDetailsPage.routeName:(context)=>ItemDetailsPage(),
+              LoginPage.routeName: (context) => const LoginPage(),
+              HomePage.routeName:(context)=> const HomePage(),
+              PickUpPage.routeName:(context)=>const PickUpPage(),
+              DeliveryPage.routeName:(context)=>const DeliveryPage(),
+              AccountPage.routeName:(context)=>const AccountPage(),
+              MarchantListPage.routeName:(context)=>const MarchantListPage(),
+              ItemDetailsPage.routeName:(context)=>const ItemDetailsPage(),
 
             },
           );

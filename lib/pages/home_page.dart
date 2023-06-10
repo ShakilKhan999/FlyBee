@@ -28,15 +28,15 @@ class _HomePageState extends State<HomePage> {
     Connectivity connectivity = Connectivity();
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           title: Image.asset('images/logo.png', height: 50, width: 250),
           centerTitle: true,
           elevation: 0,
         ),
-        drawer: MainDrawer(),
+        drawer: const MainDrawer(),
         bottomNavigationBar: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color(0xFF032178),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
@@ -48,11 +48,11 @@ class _HomePageState extends State<HomePage> {
             child: GNav(
               iconSize: 22,
               gap: 13,
-              backgroundColor: Color(0xFF032178),
+              backgroundColor: const Color(0xFF032178),
               color: Colors.white,
               activeColor: Colors.white,
-              tabBackgroundColor: Color(0xFFfebe07),
-              padding: EdgeInsets.all(16),
+              tabBackgroundColor: const Color(0xFFfebe07),
+              padding: const EdgeInsets.all(16),
               onTabChange: (index) {
                 setState(() {
                   pageIndex = index;
@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
               },
               selectedIndex: pageIndex,
               // currentIndex: pageIndex,
-              tabs: [
+              tabs: const [
                 GButton(
                   icon: Icons.hail,
                   text: 'Pick up',
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                                         Navigator.pushReplacementNamed(
                                             context, HomePage.routeName);
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Go Online',
                                         style: TextStyle(fontSize: 20),
                                       ),

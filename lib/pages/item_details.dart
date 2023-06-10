@@ -20,8 +20,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: 
-          Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -38,10 +37,10 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Store Address'),
+                      const Text('Marchant Address'),
                       const Row(
                         children: [
-                          Icon(Icons.location_pin), 
+                          Icon(Icons.location_pin),
                           Expanded(
                               child: Text(
                             'Dhaka',
@@ -52,7 +51,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      const Text('User Address'),
+                      const Text('Branch Address'),
                       const Row(
                         children: [
                           Icon(Icons.location_pin),
@@ -83,33 +82,34 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Order Pickup Time'),
+                        Text('Pickup Time'),
                         Row(
                           children: [
                             Icon(Icons.access_time),
                             Text('8am',
-                                style:
-                                    TextStyle(fontSize: 20, color: Colors.black))
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.black))
                           ],
                         )
                       ],
                     )),
-                    Expanded(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Delivery Time'),
-                        Row(
-                          children: [
-                            Icon(Icons.access_time),
-                            Text('10am',
-                                style:
-                                    TextStyle(fontSize: 20, color: Colors.black))
-                          ],
-                        )
-                      ],
-                    ))
+                    // Expanded(
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.start,
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text('Delivery Time'),
+                    //       Row(
+                    //         children: [
+                    //           Icon(Icons.access_time),
+                    //           Text('10am',
+                    //               style: TextStyle(
+                    //                   fontSize: 20, color: Colors.black))
+                    //         ],
+                    //       )
+                    //     ],
+                    //   ),
+                    // )
                   ],
                 ),
               ),
@@ -134,7 +134,9 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       style: TextStyle(fontSize: 17),
                     ),
                   ),
-                  SizedBox(width: 50.w,),
+                  SizedBox(
+                    width: 50.w,
+                  ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
@@ -154,7 +156,6 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
               )
             ],
           ),
-        
         ),
       ),
     );

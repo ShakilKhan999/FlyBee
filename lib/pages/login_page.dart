@@ -1,16 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/pages/home_page.dart';
 import 'package:flybee/providers/login_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../customs/custom_snack_bar.dart';
 import '../customs/custom_snack_bar_icon.dart';
 import '../utils/colors.dart';
-import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   static const String routeName = '/logpage';
@@ -25,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final IconData iconData = Icons.visibility;
-  bool ActiveConnection = false;
+  bool activeConnection = false;
   bool visiblepass = false;
   bool status = false;
   String errMsg = '';
@@ -34,7 +30,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     loginProvider = Provider.of<LoginProvider>(context, listen: false);
-    // TODO: implement initState
     super.initState();
   }
 
@@ -53,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: SingleChildScrollView(
           physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: Padding(
             padding: EdgeInsets.only(left: 30.w, right: 30.w, top: 20.h),
             child: Column(
@@ -68,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: 250.w,
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: 450.h,
                   width: 400.w,
                   // decoration: BoxDecoration(
@@ -206,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                                     backgroundColor: Colors.red);
                                 return;
                               }
-                              if (ActiveConnection == false) {
+                              if (activeConnection == false) {
                                 try {
                                   final result = await InternetAddress.lookup(
                                       'example.com');
@@ -234,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
                                 } on SocketException catch (_) {
                                   CustomIconSnackBar().showSnackBar(
                                     context: context,
-                                    content: Icon(Icons.wifi),
+                                    content: const Icon(Icons.wifi),
                                   );
                                 }
                               } else {
@@ -285,7 +280,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width - 60.w,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -293,7 +288,7 @@ class _LoginPageState extends State<LoginPage> {
                               Text(
                                 'Dont have an account?',
                                 style: TextStyle(
-                                    color: Color(0xFFfebe07), fontSize: 14.h),
+                                    color: const Color(0xFFfebe07), fontSize: 14.h),
                               ),
                               SizedBox(
                                 width: 7.h,
@@ -303,7 +298,7 @@ class _LoginPageState extends State<LoginPage> {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    color: Color(0xFF032178),
+                                    color: const Color(0xFF032178),
                                     fontSize: 14.h,
                                     fontWeight: FontWeight.bold),
                               )

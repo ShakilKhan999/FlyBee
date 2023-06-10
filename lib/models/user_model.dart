@@ -1,24 +1,36 @@
-class user_model {
-  bool? success;
-  List<GetUser>? getUser;
-  String? accessToken;
-  int? userId1;
-  List<Branch>? branch;
-  String? firstBranch;
-  int? isAllBranch;
-  int? isDeliveryBoy;
-  int? isMarchant;
-  int? isPickup;
-  int? isScanPod;
-  int? isUpdateStatus;
-  int? isQuickStatus;
-  int? isAllReport;
-  int? isSetupConf;
-  String? userType;
-  List<SenderZoneDistricts>? senderZoneDistricts;
+// To parse this JSON data, do
+//
+//     final userModel = userModelFromJson(jsonString);
 
-  user_model(
-      {this.success,
+import 'dart:convert';
+
+UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
+
+String userModelToJson(UserModel data) => json.encode(data.toJson());
+
+class UserModel {
+    bool? success;
+    List<GetUser>? getUser;
+    String? accessToken;
+    int? userId1;
+    List<Branch>? branch;
+    String? firstBranch;
+    int? isAllBranch;
+    int? isDeliveryBoy;
+    int? isMarchant;
+    int? isPickup;
+    int? isScanPod;
+    int? isUpdateStatus;
+    int? isQuickStatus;
+    int? isAllReport;
+    int? isSetupConf;
+    String? userType;
+    List<SenderZoneDistrict>? senderZoneDistricts;
+    dynamic deliveryCostPackagesIdF;
+    String? deliveryCostPackages;
+
+    UserModel({
+        this.success,
         this.getUser,
         this.accessToken,
         this.userId1,
@@ -34,114 +46,119 @@ class user_model {
         this.isAllReport,
         this.isSetupConf,
         this.userType,
-        this.senderZoneDistricts});
+        this.senderZoneDistricts,
+        this.deliveryCostPackagesIdF,
+        this.deliveryCostPackages,
+    });
 
-  user_model.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    if (json['getUser'] != null) {
-      getUser = <GetUser>[];
-      json['getUser'].forEach((v) {
-        getUser!.add(new GetUser.fromJson(v));
-      });
-    }
-    accessToken = json['accessToken'];
-    userId1 = json['userId1'];
-    if (json['branch'] != null) {
-      branch = <Branch>[];
-      json['branch'].forEach((v) {
-        branch!.add(new Branch.fromJson(v));
-      });
-    }
-    firstBranch = json['first_branch'];
-    isAllBranch = json['is_all_branch'];
-    isDeliveryBoy = json['is_delivery_boy'];
-    isMarchant = json['is_marchant'];
-    isPickup = json['is_pickup'];
-    isScanPod = json['is_scan_pod'];
-    isUpdateStatus = json['is_update_status'];
-    isQuickStatus = json['is_quick_status'];
-    isAllReport = json['is_all_report'];
-    isSetupConf = json['is_setup_conf'];
-    userType = json['user_type'];
-    if (json['sender_zone_districts'] != null) {
-      senderZoneDistricts = <SenderZoneDistricts>[];
-      json['sender_zone_districts'].forEach((v) {
-        senderZoneDistricts!.add(new SenderZoneDistricts.fromJson(v));
-      });
-    }
-  }
+    factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        success: json["success"],
+        getUser: json["getUser"] == null ? [] : List<GetUser>.from(json["getUser"]!.map((x) => GetUser.fromJson(x))),
+        accessToken: json["accessToken"],
+        userId1: json["userId1"],
+        branch: json["branch"] == null ? [] : List<Branch>.from(json["branch"]!.map((x) => Branch.fromJson(x))),
+        firstBranch: json["first_branch"],
+        isAllBranch: json["is_all_branch"],
+        isDeliveryBoy: json["is_delivery_boy"],
+        isMarchant: json["is_marchant"],
+        isPickup: json["is_pickup"],
+        isScanPod: json["is_scan_pod"],
+        isUpdateStatus: json["is_update_status"],
+        isQuickStatus: json["is_quick_status"],
+        isAllReport: json["is_all_report"],
+        isSetupConf: json["is_setup_conf"],
+        userType: json["user_type"],
+        senderZoneDistricts: json["sender_zone_districts"] == null ? [] : List<SenderZoneDistrict>.from(json["sender_zone_districts"]!.map((x) => SenderZoneDistrict.fromJson(x))),
+        deliveryCostPackagesIdF: json["delivery_cost_packages_id_f"],
+        deliveryCostPackages: json["delivery_cost_packages"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.getUser != null) {
-      data['getUser'] = this.getUser!.map((v) => v.toJson()).toList();
-    }
-    data['accessToken'] = this.accessToken;
-    data['userId1'] = this.userId1;
-    if (this.branch != null) {
-      data['branch'] = this.branch!.map((v) => v.toJson()).toList();
-    }
-    data['first_branch'] = this.firstBranch;
-    data['is_all_branch'] = this.isAllBranch;
-    data['is_delivery_boy'] = this.isDeliveryBoy;
-    data['is_marchant'] = this.isMarchant;
-    data['is_pickup'] = this.isPickup;
-    data['is_scan_pod'] = this.isScanPod;
-    data['is_update_status'] = this.isUpdateStatus;
-    data['is_quick_status'] = this.isQuickStatus;
-    data['is_all_report'] = this.isAllReport;
-    data['is_setup_conf'] = this.isSetupConf;
-    data['user_type'] = this.userType;
-    if (this.senderZoneDistricts != null) {
-      data['sender_zone_districts'] =
-          this.senderZoneDistricts!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "success": success,
+        "getUser": getUser == null ? [] : List<dynamic>.from(getUser!.map((x) => x.toJson())),
+        "accessToken": accessToken,
+        "userId1": userId1,
+        "branch": branch == null ? [] : List<dynamic>.from(branch!.map((x) => x.toJson())),
+        "first_branch": firstBranch,
+        "is_all_branch": isAllBranch,
+        "is_delivery_boy": isDeliveryBoy,
+        "is_marchant": isMarchant,
+        "is_pickup": isPickup,
+        "is_scan_pod": isScanPod,
+        "is_update_status": isUpdateStatus,
+        "is_quick_status": isQuickStatus,
+        "is_all_report": isAllReport,
+        "is_setup_conf": isSetupConf,
+        "user_type": userType,
+        "sender_zone_districts": senderZoneDistricts == null ? [] : List<dynamic>.from(senderZoneDistricts!.map((x) => x.toJson())),
+        "delivery_cost_packages_id_f": deliveryCostPackagesIdF,
+        "delivery_cost_packages": deliveryCostPackages,
+    };
+}
+
+class Branch {
+    int? branchId;
+    String? branch;
+
+    Branch({
+        this.branchId,
+        this.branch,
+    });
+
+    factory Branch.fromJson(Map<String, dynamic> json) => Branch(
+        branchId: json["branch_id"],
+        branch: json["branch"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "branch_id": branchId,
+        "branch": branch,
+    };
 }
 
 class GetUser {
-  int? userID;
-  String? userName;
-  Null? accessClient;
-  Null? branchCode;
-  String? userPass;
-  String? firstName;
-  String? lastName;
-  String? address;
-  String? userEmail;
-  String? userPhone;
-  Null? mobile;
-  int? userType;
-  String? employeeId;
-  Null? createDate;
-  String? tblUsersUserStatus;
-  Null? userStatus;
-  int? isKey;
-  String? tokenCode;
-  String? image;
-  String? modified;
-  String? creator;
-  String? modifier;
-  String? created;
-  Null? tenderBooks;
-  int? zoneDivisionsId;
-  int? zoneDistrictsId;
-  int? zoneUpazilasId;
-  Null? paymentType;
-  Null? operatorNumber;
-  Null? bankName;
-  Null? accountName;
-  Null? accountNumber;
-  Null? routingNumber;
-  Null? nidFront;
-  Null? nidBack;
-  Null? files;
-  String? branchId;
+    int? userId;
+    String? userName;
+    dynamic accessClient;
+    dynamic branchCode;
+    String? userPass;
+    String? firstName;
+    String? lastName;
+    String? address;
+    String? userEmail;
+    String? userPhone;
+    dynamic mobile;
+    int? userType;
+    String? employeeId;
+    dynamic createDate;
+    String? tblUsersUserStatus;
+    dynamic userStatus;
+    int? isKey;
+    String? tokenCode;
+    String? image;
+    String? modified;
+    String? creator;
+    String? modifier;
+    String? created;
+    dynamic tenderBooks;
+    int? zoneDivisionsId;
+    int? zoneDistrictsId;
+    int? zoneUpazilasId;
+    dynamic paymentType;
+    dynamic operatorNumber;
+    dynamic bankName;
+    dynamic accountName;
+    dynamic accountNumber;
+    dynamic routingNumber;
+    dynamic nidFront;
+    dynamic nidBack;
+    dynamic files;
+    String? branchId;
+    dynamic deliveryCostPackagesIdF;
+    dynamic riderCommissionPackagesIdF;
 
-  GetUser(
-      {this.userID,
+    GetUser({
+        this.userId,
         this.userName,
         this.accessClient,
         this.branchCode,
@@ -177,122 +194,108 @@ class GetUser {
         this.nidFront,
         this.nidBack,
         this.files,
-        this.branchId});
+        this.branchId,
+        this.deliveryCostPackagesIdF,
+        this.riderCommissionPackagesIdF,
+    });
 
-  GetUser.fromJson(Map<String, dynamic> json) {
-    userID = json['userID'];
-    userName = json['userName'];
-    accessClient = json['access_client'];
-    branchCode = json['branch_code'];
-    userPass = json['userPass'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    address = json['address'];
-    userEmail = json['userEmail'];
-    userPhone = json['userPhone'];
-    mobile = json['mobile'];
-    userType = json['userType'];
-    employeeId = json['employee_id'];
-    createDate = json['create_date'];
-    tblUsersUserStatus = json['tbl_users_userStatus'];
-    userStatus = json['userStatus'];
-    isKey = json['is_key'];
-    tokenCode = json['tokenCode'];
-    image = json['image'];
-    modified = json['modified'];
-    creator = json['creator'];
-    modifier = json['modifier'];
-    created = json['created'];
-    tenderBooks = json['tender_books'];
-    zoneDivisionsId = json['zone_divisions_id'];
-    zoneDistrictsId = json['zone_districts_id'];
-    zoneUpazilasId = json['zone_upazilas_id'];
-    paymentType = json['payment_type'];
-    operatorNumber = json['operator_number'];
-    bankName = json['bank_name'];
-    accountName = json['account_name'];
-    accountNumber = json['account_number'];
-    routingNumber = json['routing_number'];
-    nidFront = json['nid_front'];
-    nidBack = json['nid_back'];
-    files = json['files'];
-    branchId = json['branch_id'];
-  }
+    factory GetUser.fromJson(Map<String, dynamic> json) => GetUser(
+        userId: json["userID"],
+        userName: json["userName"],
+        accessClient: json["access_client"],
+        branchCode: json["branch_code"],
+        userPass: json["userPass"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        address: json["address"],
+        userEmail: json["userEmail"],
+        userPhone: json["userPhone"],
+        mobile: json["mobile"],
+        userType: json["userType"],
+        employeeId: json["employee_id"],
+        createDate: json["create_date"],
+        tblUsersUserStatus: json["tbl_users_userStatus"],
+        userStatus: json["userStatus"],
+        isKey: json["is_key"],
+        tokenCode: json["tokenCode"],
+        image: json["image"],
+        modified: json["modified"],
+        creator: json["creator"],
+        modifier: json["modifier"],
+        created: json["created"],
+        tenderBooks: json["tender_books"],
+        zoneDivisionsId: json["zone_divisions_id"],
+        zoneDistrictsId: json["zone_districts_id"],
+        zoneUpazilasId: json["zone_upazilas_id"],
+        paymentType: json["payment_type"],
+        operatorNumber: json["operator_number"],
+        bankName: json["bank_name"],
+        accountName: json["account_name"],
+        accountNumber: json["account_number"],
+        routingNumber: json["routing_number"],
+        nidFront: json["nid_front"],
+        nidBack: json["nid_back"],
+        files: json["files"],
+        branchId: json["branch_id"],
+        deliveryCostPackagesIdF: json["delivery_cost_packages_id_f"],
+        riderCommissionPackagesIdF: json["rider_commission_packages_id_f"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userID'] = this.userID;
-    data['userName'] = this.userName;
-    data['access_client'] = this.accessClient;
-    data['branch_code'] = this.branchCode;
-    data['userPass'] = this.userPass;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['address'] = this.address;
-    data['userEmail'] = this.userEmail;
-    data['userPhone'] = this.userPhone;
-    data['mobile'] = this.mobile;
-    data['userType'] = this.userType;
-    data['employee_id'] = this.employeeId;
-    data['create_date'] = this.createDate;
-    data['tbl_users_userStatus'] = this.tblUsersUserStatus;
-    data['userStatus'] = this.userStatus;
-    data['is_key'] = this.isKey;
-    data['tokenCode'] = this.tokenCode;
-    data['image'] = this.image;
-    data['modified'] = this.modified;
-    data['creator'] = this.creator;
-    data['modifier'] = this.modifier;
-    data['created'] = this.created;
-    data['tender_books'] = this.tenderBooks;
-    data['zone_divisions_id'] = this.zoneDivisionsId;
-    data['zone_districts_id'] = this.zoneDistrictsId;
-    data['zone_upazilas_id'] = this.zoneUpazilasId;
-    data['payment_type'] = this.paymentType;
-    data['operator_number'] = this.operatorNumber;
-    data['bank_name'] = this.bankName;
-    data['account_name'] = this.accountName;
-    data['account_number'] = this.accountNumber;
-    data['routing_number'] = this.routingNumber;
-    data['nid_front'] = this.nidFront;
-    data['nid_back'] = this.nidBack;
-    data['files'] = this.files;
-    data['branch_id'] = this.branchId;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "userID": userId,
+        "userName": userName,
+        "access_client": accessClient,
+        "branch_code": branchCode,
+        "userPass": userPass,
+        "firstName": firstName,
+        "lastName": lastName,
+        "address": address,
+        "userEmail": userEmail,
+        "userPhone": userPhone,
+        "mobile": mobile,
+        "userType": userType,
+        "employee_id": employeeId,
+        "create_date": createDate,
+        "tbl_users_userStatus": tblUsersUserStatus,
+        "userStatus": userStatus,
+        "is_key": isKey,
+        "tokenCode": tokenCode,
+        "image": image,
+        "modified": modified,
+        "creator": creator,
+        "modifier": modifier,
+        "created": created,
+        "tender_books": tenderBooks,
+        "zone_divisions_id": zoneDivisionsId,
+        "zone_districts_id": zoneDistrictsId,
+        "zone_upazilas_id": zoneUpazilasId,
+        "payment_type": paymentType,
+        "operator_number": operatorNumber,
+        "bank_name": bankName,
+        "account_name": accountName,
+        "account_number": accountNumber,
+        "routing_number": routingNumber,
+        "nid_front": nidFront,
+        "nid_back": nidBack,
+        "files": files,
+        "branch_id": branchId,
+        "delivery_cost_packages_id_f": deliveryCostPackagesIdF,
+        "rider_commission_packages_id_f": riderCommissionPackagesIdF,
+    };
 }
 
-class Branch {
-  int? branchId;
-  String? branch;
+class SenderZoneDistrict {
+    String? zoneDistricts;
 
-  Branch({this.branchId, this.branch});
+    SenderZoneDistrict({
+        this.zoneDistricts,
+    });
 
-  Branch.fromJson(Map<String, dynamic> json) {
-    branchId = json['branch_id'];
-    branch = json['branch'];
-  }
+    factory SenderZoneDistrict.fromJson(Map<String, dynamic> json) => SenderZoneDistrict(
+        zoneDistricts: json["zone_districts"],
+    );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['branch_id'] = this.branchId;
-    data['branch'] = this.branch;
-    return data;
-  }
-}
-
-class SenderZoneDistricts {
-  String? zoneDistricts;
-
-  SenderZoneDistricts({this.zoneDistricts});
-
-  SenderZoneDistricts.fromJson(Map<String, dynamic> json) {
-    zoneDistricts = json['zone_districts'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['zone_districts'] = this.zoneDistricts;
-    return data;
-  }
+    Map<String, dynamic> toJson() => {
+        "zone_districts": zoneDistricts,
+    };
 }

@@ -14,17 +14,9 @@ class _AccountPageState extends State<AccountPage>
   late TabController _tabController;
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
+    
     _tabController = TabController(length: 2, vsync: this);
-    bool _showFirstTabBottomSheet = false;
-    bool _showSecondTabBottomSheet = false;
 
-    @override
-    void dispose() {
-      _tabController.dispose();
-      super.dispose();
-    }
 
     return SafeArea(
       child: Scaffold(
@@ -32,35 +24,35 @@ class _AccountPageState extends State<AccountPage>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 16.h),
-            CircleAvatar(
+            const CircleAvatar(
               radius: 80,
               backgroundImage: AssetImage('images/placholder.png'),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Kuddus',
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               'Software Developer',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
               ),
             ),
-            SizedBox(height: 16),
-            ListTile(
+            const SizedBox(height: 16),
+            const ListTile(
               leading: Icon(Icons.email),
               title: Text(
                 'johndoe@example.com',
                 style: TextStyle(color: Colors.black),
               ),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.phone),
               title: Text('+8801647383443',
                   style: TextStyle(color: Colors.black)),
@@ -71,8 +63,8 @@ class _AccountPageState extends State<AccountPage>
               labelColor: Colors.black,
               unselectedLabelColor: Colors.grey,
               indicatorSize: TabBarIndicatorSize.tab,
-              indicatorColor: Color(0xFFfebe07),
-              tabs: [
+              indicatorColor: const Color(0xFFfebe07),
+              tabs: const [
                 Tab(text: 'Collection'),
                 Tab(text: 'Total'),
               ],
@@ -88,7 +80,7 @@ class _AccountPageState extends State<AccountPage>
                       ),
                       Expanded(
                         child: ListView.builder(
-                          physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                           itemCount: 5,
                           itemBuilder: (context, index) {
                             return Padding(
@@ -100,7 +92,7 @@ class _AccountPageState extends State<AccountPage>
                                   color: Colors.grey,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: ListTile(
+                                child: const ListTile(
                                   leading: Icon(Icons.email),
                                   title: Text('johndoe@example.com'),
                                 ),
@@ -111,7 +103,7 @@ class _AccountPageState extends State<AccountPage>
                       ),
                     ],
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       'Total Page',
                       style: TextStyle(fontSize: 24),

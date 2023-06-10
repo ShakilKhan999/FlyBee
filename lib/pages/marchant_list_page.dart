@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/pages/item_details.dart';
@@ -118,13 +116,14 @@ class _MarchantListPageState extends State<MarchantListPage> {
         appBar: AppBar(title: const Text('Mrachant List', style: TextStyle(color: Colors.black),), centerTitle: true, backgroundColor: Colors.white, iconTheme: const IconThemeData(color: Colors.black),),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height - 100,
             child: Column(
               children: [
                 SizedBox(height: 20.h,),
                 Expanded(
-                  child: Container(
+                  child: 
+                  Container(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: ListView.separated(
                       shrinkWrap: true,
@@ -166,7 +165,6 @@ class _MarchantListPageState extends State<MarchantListPage> {
                                 ),
                               ),
                               children: itemList.map((item) {
-                                log(item.toString());
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 15.0),
                                   child: ListTile(
@@ -191,6 +189,7 @@ class _MarchantListPageState extends State<MarchantListPage> {
                       },
                     ),
                   ),
+                
                 ),
               ],
             ),
