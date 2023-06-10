@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/pages/account_page.dart';
 import 'package:flybee/pages/delivery_page.dart';
+import 'package:flybee/pages/item_details.dart';
 import 'package:flybee/pages/login_page.dart';
+import 'package:flybee/pages/marchant_list_page.dart';
 import 'package:flybee/pages/pickup_page.dart';
 import 'package:flybee/providers/login_provider.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +17,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => LoginProvider())
       ],
     child:  const MyApp()));
+  //check
 }
 
 class MyApp extends StatelessWidget {
@@ -33,6 +37,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
+            builder:  EasyLoading.init(),
             initialRoute: LoginPage.routeName,
             routes: {
               LoginPage.routeName: (context) => LoginPage(),
@@ -40,6 +45,8 @@ class MyApp extends StatelessWidget {
               PickUpPage.routeName:(context)=>PickUpPage(),
               DeliveryPage.routeName:(context)=>DeliveryPage(),
               AccountPage.routeName:(context)=>AccountPage(),
+              MarchantListPage.routeName:(context)=>MarchantListPage(),
+              ItemDetailsPage.routeName:(context)=>ItemDetailsPage(),
 
             },
           );

@@ -176,97 +176,99 @@ class _LoginPageState extends State<LoginPage> {
                           width: mediaQuery.size.width,
                           height: 40.h,
                           child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: logoblue,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(10), // <-- Radius
-                                ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: logoblue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(10), // <-- Radius
                               ),
-                              onPressed: () async {
-                                // bool login= await loginProvider.login(emailController.text, passwordController.text);
-                                //   login?  Navigator.pushReplacementNamed(context, HomePage.routeName):CustomSnackBar().showSnackBar(
-                                //             context: context,
-                                //             content: 'Wrong Email or Password',
-                                //             backgroundColor: Colors.green);
-
-
-                                if (emailController.text == '') {
-                                  CustomSnackBar().showSnackBar(
-                                      context: context,
-                                      content: 'Enter Email',
-                                      backgroundColor: Colors.red);
-                                  return;
-                                }
-                                if (passwordController.text == '') {
-                                  CustomSnackBar().showSnackBar(
-                                      context: context,
-                                      content: 'Enter Password',
-                                      backgroundColor: Colors.red);
-                                  return;
-                                }
-                                if (passwordController.text.length < 6) {
-                                  CustomSnackBar().showSnackBar(
-                                      context: context,
-                                      content:
-                                          'Password length must be at least 6',
-                                      backgroundColor: Colors.red);
-                                  return;
-                                }
-                                if (ActiveConnection == false) {
-                                  try {
-                                    final result = await InternetAddress.lookup(
-                                        'example.com');
-                                    if (result.isNotEmpty &&
-                                        result[0].rawAddress.isNotEmpty) {
-
-                                      bool login= await loginProvider.login(emailController.text, passwordController.text);
-                                     if(login == true){
-                                       Navigator.pushReplacementNamed(context, HomePage.routeName);
-                                       CustomSnackBar().showSnackBar(
-                                                   context: context,
-                                                   content: 'Log in Successful',
-                                                   backgroundColor: Colors.green);
-                                     } else{
-                                       CustomSnackBar().showSnackBar(
-                                           context: context,
-                                           content: 'Wrong Email or Password',
-                                           backgroundColor: Colors.green);
-                                     }
-
-                                      //  method
+                            ),
+                            onPressed: () async {
+                              if (emailController.text == '') {
+                                CustomSnackBar().showSnackBar(
+                                    context: context,
+                                    content: 'Enter Email',
+                                    backgroundColor: Colors.red);
+                                return;
+                              }
+                              if (passwordController.text == '') {
+                                CustomSnackBar().showSnackBar(
+                                    context: context,
+                                    content: 'Enter Password',
+                                    backgroundColor: Colors.red);
+                                return;
+                              }
+                              if (passwordController.text.length < 6) {
+                                CustomSnackBar().showSnackBar(
+                                    context: context,
+                                    content:
+                                        'Password length must be at least 6',
+                                    backgroundColor: Colors.red);
+                                return;
+                              }
+                              if (ActiveConnection == false) {
+                                try {
+                                  final result = await InternetAddress.lookup(
+                                      'example.com');
+                                  if (result.isNotEmpty &&
+                                      result[0].rawAddress.isNotEmpty) {
+                                    bool login = await loginProvider.login(
+                                        emailController.text,
+                                        passwordController.text);
+                                    if (login == true) {
+                                      Navigator.pushReplacementNamed(
+                                          context, HomePage.routeName);
+                                      CustomSnackBar().showSnackBar(
+                                          context: context,
+                                          content: 'Log in Successful',
+                                          backgroundColor: Colors.green);
+                                    } else {
+                                      CustomSnackBar().showSnackBar(
+                                          context: context,
+                                          content: 'Wrong Email or Password',
+                                          backgroundColor: Colors.green);
                                     }
-                                  } on SocketException catch (_) {
-                                    CustomIconSnackBar().showSnackBar(
-                                      context: context,
-                                      content: Icon(Icons.wifi),
-                                    );
-                                  }
-                                } else {
 
-                                  //  method
-                                  bool login= await loginProvider.login(emailController.text, passwordController.text);
-                                  if(login == true){
-                                    Navigator.pushReplacementNamed(context, HomePage.routeName);
-                                    CustomSnackBar().showSnackBar(
-                                        context: context,
-                                        content: 'Log in Successful',
-                                        backgroundColor: Colors.green);
-                                  } else{
-                                    CustomSnackBar().showSnackBar(
-                                        context: context,
-                                        content: 'Wrong Email or Password',
-                                        backgroundColor: Colors.green);
+                                    //  method
                                   }
+                                } on SocketException catch (_) {
+                                  CustomIconSnackBar().showSnackBar(
+                                    context: context,
+                                    content: Icon(Icons.wifi),
+                                  );
                                 }
-
-
-                              },
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 18.h),
-                              )),
+                              } else {
+                                //  method
+                                bool login = await loginProvider.login(
+                                    emailController.text,
+                                    passwordController.text);
+                                if (login == true) {
+                                  Navigator.pushReplacementNamed(
+                                      context, HomePage.routeName);
+                                  CustomSnackBar().showSnackBar(
+                                      context: context,
+                                      content: 'Log in Successful',
+                                      backgroundColor: Colors.green);
+                                } else {
+                                  CustomSnackBar().showSnackBar(
+                                      context: context,
+                                      content: 'Wrong Email or Password',
+                                      backgroundColor: Colors.green);
+                                }
+                              }
+                              //  Navigator.pushReplacementNamed(
+                              //         context, HomePage.routeName);
+                              //     CustomSnackBar().showSnackBar(
+                              //         context: context,
+                              //         content: 'Log in Successful',
+                              //         backgroundColor: Colors.green);
+                            },
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 18.h),
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height: 20.h,
@@ -283,25 +285,30 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Dont have an account?',
-                              style: TextStyle(
-                                  color: Color(0xFFfebe07), fontSize: 17.h),
-                            ),
-                            SizedBox(
-                              width: 10.h,
-                            ),
-                            Text(
-                              'Contact With Admin',
-                              style: TextStyle(
-                                  color: Color(0xFF032178),
-                                  fontSize: 15.h,
-                                  fontWeight: FontWeight.bold),
-                            )
-                          ],
+                        Container(
+                          width: MediaQuery.of(context).size.width - 60.w,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Dont have an account?',
+                                style: TextStyle(
+                                    color: Color(0xFFfebe07), fontSize: 14.h),
+                              ),
+                              SizedBox(
+                                width: 7.h,
+                              ),
+                              Text(
+                                'Contact With Admin',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Color(0xFF032178),
+                                    fontSize: 14.h,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -330,5 +337,4 @@ class _LoginPageState extends State<LoginPage> {
   //         backgroundColor: Colors.green);
   //   }
   // }
-
 }
