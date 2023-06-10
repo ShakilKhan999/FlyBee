@@ -20,7 +20,8 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Column(
+          child: 
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -32,12 +33,12 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                   ),
                 )),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Store Address'),
+                      const Text('Store Address'),
                       const Row(
                         children: [
                           Icon(Icons.location_pin), 
@@ -51,7 +52,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Text('User Address'),
+                      const Text('User Address'),
                       const Row(
                         children: [
                           Icon(Icons.location_pin),
@@ -67,7 +68,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+                padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
                 decoration: const BoxDecoration(
                     border: Border(
                   bottom: BorderSide(
@@ -120,7 +121,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF01B075),
+                      backgroundColor: const Color(0xFF01B075),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8), // <-- Radius
                       ),
@@ -128,7 +129,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                     onPressed: () {
                       setState(() {});
                     },
-                    child: Text(
+                    child: const Text(
                       'Accept',
                       style: TextStyle(fontSize: 17),
                     ),
@@ -144,7 +145,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                     onPressed: () {
                       setState(() {});
                     },
-                    child: Text(
+                    child: const Text(
                       'Cancel',
                       style: TextStyle(fontSize: 17),
                     ),
@@ -153,6 +154,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
               )
             ],
           ),
+        
         ),
       ),
     );

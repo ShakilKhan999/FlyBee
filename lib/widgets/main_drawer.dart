@@ -13,14 +13,15 @@ class MainDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
+         
         children: [
           ListTile(
             onTap: () async {
               Navigator.pop(context);
               Navigator.pushNamed(context, MarchantListPage.routeName);
             },
-            leading: const Icon(Icons.logout),
-            title: const Text('Select Items'),
+            leading: const Icon(Icons.production_quantity_limits),
+            title: const Text('SELECT ITEMS'),
           ),
           ListTile(
             onTap: () async {},
