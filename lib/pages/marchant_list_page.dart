@@ -114,74 +114,85 @@ class _MarchantListPageState extends State<MarchantListPage> {
     var itemList = [];
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(title: const Text('Mrachant List', style: TextStyle(color: Colors.black),), centerTitle: true, backgroundColor: Colors.white, iconTheme: const IconThemeData(color: Colors.black),),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: Container(
-            height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: data.length,
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 5,
-              ),
-              itemBuilder: (context, index) {
-                itemList = data[index]['items'];
-                return Theme(
-                  data: ThemeData(
-                    expansionTileTheme: const ExpansionTileThemeData(
-                      tilePadding: EdgeInsets.all(0),
-                      collapsedIconColor: logogold,
-                      iconColor: logoblue,
-                      textColor: Colors.black,
-                      collapsedTextColor: Colors.black26,
-                    ),
-                  ),
-                  child: Card(
-                    elevation: 10,
-                    color: Colors.grey[600],
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    child: ExpansionTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)
+            height: MediaQuery.of(context).size.height - 100,
+            child: Column(
+              children: [
+                SizedBox(height: 20.h,),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: data.length,
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 5,
                       ),
-                      tilePadding: EdgeInsets.symmetric(horizontal: 10.w),
-                      // collapsedBackgroundColor: Colors.black38,
-                      // backgroundColor: Colors.black38,
-                      title: Text(
-                        data[index]['name'],
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1,
-                          fontSize: 14,
-                          color: Colors.white
-                        ),
-                      ),
-                      children: itemList.map((item) {
-                        log(item.toString());
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: ListTile(
-                            
-                            style: ListTileStyle.list,
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 16),
-                            // leading: Icon(Icons.ac_unit_sharp),
-                            title: Text(item['item_name'], style: TextStyle(color: Colors.white),),
-                            dense: true,
-                            onTap: () {
-                              Navigator.pushNamed(context, ItemDetailsPage.routeName);
-                            },
+                      itemBuilder: (context, index) {
+                        itemList = data[index]['items'];
+                        return Theme(
+                          data: ThemeData(
+                            expansionTileTheme: const ExpansionTileThemeData(
+                              tilePadding: EdgeInsets.all(0),
+                              collapsedIconColor: logogold,
+                              iconColor: logoblue,
+                              textColor: Colors.black,
+                              collapsedTextColor: Colors.black26,
+                            ),
+                          ),
+                          child: Card(
+                            elevation: 10,
+                            color: Colors.grey[600],
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            child: ExpansionTile(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              tilePadding: EdgeInsets.symmetric(horizontal: 10.w),
+                              // collapsedBackgroundColor: Colors.black38,
+                              // backgroundColor: Colors.black38,
+                              title: Text(
+                                data[index]['name'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
+                                  fontSize: 14,
+                                  color: Colors.white
+                                ),
+                              ),
+                              children: itemList.map((item) {
+                                log(item.toString());
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child: ListTile(
+                                    
+                                    style: ListTileStyle.list,
+                                    contentPadding:
+                                        const EdgeInsets.symmetric(horizontal: 16),
+                                    // leading: Icon(Icons.ac_unit_sharp),
+                                    title: Text(item['item_name'], style: const TextStyle(color: Colors.white),),
+                                    dense: true,
+                                    onTap: () {
+                                      Navigator.pushNamed(context, ItemDetailsPage.routeName);
+                                    },
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         );
-                      }).toList(),
+                  
+                        // Text('${deptData[index]['name']}');
+                      },
                     ),
                   ),
-                );
-        
-                // Text('${deptData[index]['name']}');
-              },
+                ),
+              ],
             ),
           ),
         ),

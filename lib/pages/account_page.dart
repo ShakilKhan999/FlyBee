@@ -34,7 +34,7 @@ class _AccountPageState extends State<AccountPage>
             SizedBox(height: 16.h),
             CircleAvatar(
               radius: 80,
-              // backgroundImage: AssetImage('assets/avatar.png'),
+              backgroundImage: AssetImage('images/placholder.png'),
             ),
             SizedBox(height: 16),
             Text(
@@ -97,7 +97,7 @@ class _AccountPageState extends State<AccountPage>
                                 height: 60.h,
                                 width: 350.h,
                                 decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  color: Colors.grey,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: ListTile(

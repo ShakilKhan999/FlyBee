@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/pages/account_page.dart';
 import 'package:flybee/pages/delivery_page.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
+            builder:  EasyLoading.init(),
             initialRoute: LoginPage.routeName,
             routes: {
               LoginPage.routeName: (context) => LoginPage(),
