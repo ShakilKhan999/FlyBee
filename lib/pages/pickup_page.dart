@@ -277,7 +277,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 Icons.location_pin,
                                 size: 22.sp,
                               ),
-                              Expanded(
+                              Expanded( 
                                   child: Text(
                                 ('Chittagong'),
                                 style: TextStyle(fontSize: 18.sp),
@@ -374,69 +374,4 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildPickUpItem(int index) {
-    var itemList = [];
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Card(
-        elevation: 3,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: data.length,
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 5,
-            ),
-            itemBuilder: (context, index) {
-              itemList = data[index]['items'];
-              return Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                child: ExpansionTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  tilePadding: EdgeInsets.symmetric(horizontal: 10.w),
-                  // collapsedBackgroundColor: Colors.black38,
-                  // backgroundColor: Colors.black38,
-                  title: Text(
-                    data[index]['name'],
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                        fontSize: 14,
-                        color: Colors.white),
-                  ),
-                  children: itemList.map((item) {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
-                      child: ListTile(
-                        style: ListTileStyle.list,
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16),
-                        // leading: Icon(Icons.ac_unit_sharp),
-                        title: Text(
-                          item['item_name'],
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        dense: true,
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, ItemDetailsPage.routeName);
-                        },
-                      ),
-                    );
-                  }).toList(),
-                ),
-              );
-
-              // Text('${deptData[index]['name']}');
-            },
-          ),
-        ),
-      ),
-    );
-  }
 }

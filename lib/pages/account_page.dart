@@ -17,17 +17,10 @@ class _AccountPageState extends State<AccountPage>
   late TabController _tabController;
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    
     double screenWidth = MediaQuery.of(context).size.width;
     _tabController = TabController(length: 2, vsync: this);
-    bool _showFirstTabBottomSheet = false;
-    bool _showSecondTabBottomSheet = false;
 
-    @override
-    void dispose() {
-      _tabController.dispose();
-      super.dispose();
-    }
 
     return SafeArea(
       child: SafeArea(
@@ -119,7 +112,7 @@ class _AccountPageState extends State<AccountPage>
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.location_pin,color: Colors.black,),
+                                  const Icon(Icons.location_pin,color: Colors.black,),
                                   Row(
                                     children: [
                                       Icon(Icons.circle,size: 10.sp,),
@@ -166,7 +159,7 @@ class _AccountPageState extends State<AccountPage>
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -186,7 +179,7 @@ class _AccountPageState extends State<AccountPage>
                               radius: 40.0,
                               lineWidth: 6.0,
                               percent: 0.8,
-                              center:  Text("8/10",style: TextStyle(color: Colors.white),),
+                              center:  const Text("8/10",style: TextStyle(color: Colors.white),),
                               backgroundColor: Colors.white,
                               progressColor: logoblue,
                             ),
@@ -209,7 +202,7 @@ class _AccountPageState extends State<AccountPage>
                               radius: 40.0,
                               lineWidth: 6.0,
                               percent: 0.9,
-                              center:  Text("19/20",style: TextStyle(color: Colors.white),),
+                              center:  const Text("19/20",style: TextStyle(color: Colors.white),),
                               backgroundColor: Colors.white,
                               progressColor: logoblue,
                             ),
@@ -232,7 +225,7 @@ class _AccountPageState extends State<AccountPage>
                               radius: 40.0,
                               lineWidth: 6.0,
                               percent: 1.0,
-                              center:  Text("11",style: TextStyle(color: Colors.white,fontSize: 26),),
+                              center:  const Text("11",style: TextStyle(color: Colors.white,fontSize: 26),),
                               backgroundColor: Colors.white,
                               progressColor: Colors.green,
                             ),
@@ -255,7 +248,7 @@ class _AccountPageState extends State<AccountPage>
                               radius: 40.0,
                               lineWidth: 6.0,
                               percent: 1.0,
-                              center:  Text("15",style: TextStyle(color: Colors.white,fontSize: 26),),
+                              center:  const Text("15",style: TextStyle(color: Colors.white,fontSize: 26),),
                               backgroundColor: Colors.white,
                               progressColor: Colors.green,
                             ),
@@ -276,7 +269,7 @@ class _AccountPageState extends State<AccountPage>
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                   ),
-                  child: ListTile(
+                  child: const ListTile(
                     leading: Icon(Icons.email),
                     trailing: Icon(Icons.verified_user_outlined,color: Colors.green,),
                     title: Text(
@@ -293,7 +286,7 @@ class _AccountPageState extends State<AccountPage>
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                   ),
-                  child: ListTile(
+                  child: const ListTile(
                     leading: Icon(Icons.phone_android),
                     trailing: Icon(Icons.verified_user_outlined,color: Colors.red,),
                     title: Text(
@@ -310,7 +303,7 @@ class _AccountPageState extends State<AccountPage>
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                   ),
-                  child: ListTile(
+                  child: const ListTile(
                     leading: Icon(Icons.home_outlined),
                     title: Text(
                       'Banani, Dhaka',
@@ -326,7 +319,7 @@ class _AccountPageState extends State<AccountPage>
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                   ),
-                  child: ListTile(
+                  child: const ListTile(
                     leading: Icon(Icons.business_center_outlined),
                     title: Text(
                       'Dutch Bangla Bank',
@@ -342,7 +335,7 @@ class _AccountPageState extends State<AccountPage>
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                   ),
-                  child: ListTile(
+                  child: const ListTile(
                     leading: Icon(Icons.person_outline),
                     title: Text(
                       'Rider',
@@ -358,7 +351,7 @@ class _AccountPageState extends State<AccountPage>
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                   ),
-                  child: ListTile(
+                  child: const ListTile(
                     leading: Icon(Icons.featured_video_outlined),
                     trailing:Icon(Icons.navigate_next) ,
                     title: Text(
@@ -367,7 +360,7 @@ class _AccountPageState extends State<AccountPage>
                     ),
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 SizedBox(height: 20.h),
                 Container(
                   height: 30,
@@ -383,8 +376,8 @@ class _AccountPageState extends State<AccountPage>
                   labelColor: Colors.black,
                   unselectedLabelColor: Colors.grey,
                   indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorColor: Color(0xFFfebe07),
-                  tabs: [
+                  indicatorColor: const Color(0xFFfebe07),
+                  tabs: const [
                     Tab(text: 'Commission'),
                     Tab(text: 'Delivery'),
                   ],
@@ -432,7 +425,7 @@ class _AccountPageState extends State<AccountPage>
                                               borderRadius: BorderRadius.circular(12),
                                               color: Colors.white
                                           ),
-                                          child: ListTile(
+                                          child: const ListTile(
                                             trailing: Text("4000 ৳"),
                                             title: Text(
                                               'Total Commission',
@@ -448,7 +441,7 @@ class _AccountPageState extends State<AccountPage>
                                               borderRadius: BorderRadius.circular(12),
                                               color: Colors.white
                                           ),
-                                          child: ListTile(
+                                          child: const ListTile(
                                             trailing: Text("4%"),
                                             title: Text(
                                               'Paid Commission',
@@ -464,7 +457,7 @@ class _AccountPageState extends State<AccountPage>
                                               borderRadius: BorderRadius.circular(12),
                                               color: Colors.white
                                           ),
-                                          child: ListTile(
+                                          child: const ListTile(
                                             trailing: Text("3000 ৳"),
                                             title: Text(
                                               'Due Commission',
@@ -485,7 +478,7 @@ class _AccountPageState extends State<AccountPage>
                         children: [
                           Center(
                             child: Padding(
-                              padding:  EdgeInsets.symmetric(vertical: 8.0),
+                              padding:  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Container(
                                 height: 340.h,width: screenWidth-30.w,
                                 decoration: BoxDecoration(
@@ -519,7 +512,7 @@ class _AccountPageState extends State<AccountPage>
                                               borderRadius: BorderRadius.circular(12),
                                               color: Colors.white
                                           ),
-                                          child: ListTile(
+                                          child: const ListTile(
                                             trailing: Text("2500 ৳"),
                                             title: Text(
                                               'Cost Ammount',
@@ -535,7 +528,7 @@ class _AccountPageState extends State<AccountPage>
                                               borderRadius: BorderRadius.circular(12),
                                               color: Colors.white
                                           ),
-                                          child: ListTile(
+                                          child: const ListTile(
                                             trailing: Text("2%"),
                                             title: Text(
                                               'Cost Percent',
@@ -551,7 +544,7 @@ class _AccountPageState extends State<AccountPage>
                                               borderRadius: BorderRadius.circular(12),
                                               color: Colors.white
                                           ),
-                                          child: ListTile(
+                                          child: const ListTile(
                                             trailing: Text("3000 ৳"),
                                             title: Text(
                                               'Rider Ammount',
@@ -567,7 +560,7 @@ class _AccountPageState extends State<AccountPage>
                                               borderRadius: BorderRadius.circular(12),
                                               color: Colors.white
                                           ),
-                                          child: ListTile(
+                                          child: const ListTile(
                                             trailing: Text("2000 ৳"),
                                             title: Text(
                                               'Rider Withdraw',
@@ -601,12 +594,12 @@ class _AccountPageState extends State<AccountPage>
                                       );
                                     },
                                         style: ElevatedButton.styleFrom(
-                                            primary: logoblue,
+                                            backgroundColor: logoblue,
                                             textStyle: TextStyle(
                                                 fontSize: 16.sp,
                                                 fontWeight: FontWeight.w500)),
                                         child: SizedBox(height:20.h, width: 70.w,
-                                            child: Center(child: Text("Collection")))),
+                                            child: const Center(child: Text("Collection")))),
                                     ElevatedButton(onPressed: (){
                                       showFlexibleBottomSheet(
                                         minHeight: 0,
@@ -619,12 +612,12 @@ class _AccountPageState extends State<AccountPage>
                                       );
                                     },
                                         style: ElevatedButton.styleFrom(
-                                            primary: logoblue,
+                                            backgroundColor: logoblue,
                                             textStyle: TextStyle(
                                                 fontSize: 16.sp,
                                                 fontWeight: FontWeight.w500)),
                                         child:  SizedBox(height:20.h, width: 70.w,
-                                            child: Center(child: Text("Total"))))
+                                            child: const Center(child: Text("Total"))))
                                   ],
                                 ),
                               ))
@@ -654,8 +647,8 @@ class _AccountPageState extends State<AccountPage>
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            Center(child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 160.0),
+            const Center(child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 160.0),
               child: Divider(thickness: 3,color: Colors.black,),
             )),
             SizedBox(height: 10.w,),
@@ -666,7 +659,7 @@ class _AccountPageState extends State<AccountPage>
                   borderRadius: BorderRadius.circular(12),
                   color: Colors.white
               ),
-              child: ListTile(
+              child: const ListTile(
                 trailing: Text("200 ৳"),
                 title: Text(
                   'Collection Ammount',
@@ -682,7 +675,7 @@ class _AccountPageState extends State<AccountPage>
                   borderRadius: BorderRadius.circular(12),
                   color: Colors.white
               ),
-              child: ListTile(
+              child: const ListTile(
                 trailing: Text("2000 ৳"),
                 title: Text(
                   'Paid Collection Ammount',
@@ -698,7 +691,7 @@ class _AccountPageState extends State<AccountPage>
                   borderRadius: BorderRadius.circular(12),
                   color: Colors.white
               ),
-              child: ListTile(
+              child: const ListTile(
                 trailing: Text("2000 ৳"),
                 title: Text(
                   'Due Collection Ammount',
@@ -726,8 +719,8 @@ class _AccountPageState extends State<AccountPage>
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              Center(child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 160.0),
+              const Center(child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 160.0),
                 child: Divider(thickness: 3,color: Colors.black,),
               )),
               SizedBox(height: 10.w,),
@@ -738,7 +731,7 @@ class _AccountPageState extends State<AccountPage>
                     borderRadius: BorderRadius.circular(12),
                     color: Colors.white
                 ),
-                child: ListTile(
+                child: const ListTile(
                   trailing: Text("200 ৳"),
                   title: Text(
                     'Total Commission',
@@ -754,7 +747,7 @@ class _AccountPageState extends State<AccountPage>
                     borderRadius: BorderRadius.circular(12),
                     color: Colors.white
                 ),
-                child: ListTile(
+                child: const ListTile(
                   trailing: Text("2000 ৳"),
                   title: Text(
                     'Total Withdraw',
@@ -770,7 +763,7 @@ class _AccountPageState extends State<AccountPage>
                     borderRadius: BorderRadius.circular(12),
                     color: Colors.white
                 ),
-                child: ListTile(
+                child: const ListTile(
                   trailing: Text("2000 ৳"),
                   title: Text(
                     'Total Due',
