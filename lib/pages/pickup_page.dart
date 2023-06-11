@@ -23,7 +23,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
 
   List data = [
     {
-      'name': 'shamim',
+      'name': 'Marchant 1',
       "items": [
         {
           'item_name': 'item 1',
@@ -48,7 +48,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
       ],
     },
     {
-      'name': 'shakil',
+      'name': 'Marchant 2',
       "items": [
         {
           'item_name': 'item 1',
@@ -69,7 +69,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
       ],
     },
     {
-      'name': 'syed',
+      'name': 'Marchant 3',
       "items": [
         {
           'item_name': 'item 1',
@@ -86,7 +86,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
       ],
     },
     {
-      'name': 'habib',
+      'name': 'Marchant 4',
       "items": [
         {
           'item_name': 'item 1',
@@ -170,7 +170,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 fontSize: 14,
                                 color: Colors.black),
                           ),
-                          subtitle: const Text('Marchant Address'),
+                          // subtitle: const Text('Marchant Address'),
                           children: itemList.map((item) {
                             return Padding(
                               padding: const EdgeInsets.only(left: 15.0),
@@ -317,6 +317,44 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 Text('8am',
                                     style: TextStyle(
                                         fontSize: 18.sp, color: Colors.black))
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF01B075),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8), // <-- Radius
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {});
+                                  },
+                                  child: const Text(
+                                    'Submit',
+                                    style: TextStyle(fontSize: 17),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50.w,
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8), // <-- Radius
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {});
+                                  },
+                                  child: const Text(
+                                    'Cancel',
+                                    style: TextStyle(fontSize: 17),
+                                  ),
+                                ),
                               ],
                             )
                           ],

@@ -28,27 +28,27 @@ class _AccountPageState extends State<AccountPage>
               radius: 80,
               backgroundImage: AssetImage('images/placholder.png'),
             ),
-            const SizedBox(height: 16),
-            const Text(
-              'Kuddus',
+             SizedBox(height: 16.h),
+             Text(
+              'Xyz',
               style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 24.h,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              'Software Developer',
+             SizedBox(height: 8.h),
+             Text(
+              'Rider',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.h,
                 color: Colors.grey,
               ),
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: 10.h),
             const ListTile(
               leading: Icon(Icons.email),
               title: Text(
-                'johndoe@example.com',
+                'xyz@gmail.com',
                 style: TextStyle(color: Colors.black),
               ),
             ),
@@ -103,10 +103,10 @@ class _AccountPageState extends State<AccountPage>
                       ),
                     ],
                   ),
-                  const Center(
+                   Center(
                     child: Text(
                       'Total Page',
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: 24.h),
                     ),
                   ),
                 ],
