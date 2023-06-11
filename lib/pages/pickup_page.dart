@@ -133,7 +133,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
             indicatorColor: logoblue,
             tabs: const [
               Tab(text: 'Pickup List'),
-              Tab(text: 'Active Pickup List'),
+              Tab(text: 'Status'),
             ],
           ),
           Expanded(
@@ -319,68 +319,46 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                         fontSize: 18.sp, color: Colors.black))
                               ],
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF01B075),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8), // <-- Radius
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {});
-                                  },
-                                  child: const Text(
-                                    'Submit',
-                                    style: TextStyle(fontSize: 17),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 50.w,
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8), // <-- Radius
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {});
-                                  },
-                                  child: const Text(
-                                    'Cancel',
-                                    style: TextStyle(fontSize: 17),
-                                  ),
-                                ),
-                              ],
-                            )
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     ElevatedButton(
+                            //       style: ElevatedButton.styleFrom(
+                            //         backgroundColor: const Color(0xFF01B075),
+                            //         shape: RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.circular(8), // <-- Radius
+                            //         ),
+                            //       ),
+                            //       onPressed: () {
+                            //         setState(() {});
+                            //       },
+                            //       child: const Text(
+                            //         'Submit',
+                            //         style: TextStyle(fontSize: 17),
+                            //       ),
+                            //     ),
+                            //     SizedBox(
+                            //       width: 50.w,
+                            //     ),
+                            //     ElevatedButton(
+                            //       style: ElevatedButton.styleFrom(
+                            //         backgroundColor: Colors.red,
+                            //         shape: RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.circular(8), // <-- Radius
+                            //         ),
+                            //       ),
+                            //       onPressed: () {
+                            //         setState(() {});
+                            //       },
+                            //       child: const Text(
+                            //         'Cancel',
+                            //         style: TextStyle(fontSize: 17),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // )
                           ],
                         )),
-                        // Expanded(
-                        //     child: Column(
-                        //   mainAxisAlignment: MainAxisAlignment.start,
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: [
-                        //     const Text('Delivery Time'),
-                        //     SizedBox(
-                        //       width: 8.w,
-                        //     ),
-                        //     Row(
-                        //       children: [
-                        //         Icon(
-                        //           Icons.access_time,
-                        //           size: 22.sp,
-                        //         ),
-                        //         Text('10am',
-                        //             style: TextStyle(
-                        //                 fontSize: 18.sp, color: Colors.black))
-                        //       ],
-                        //     )
-                        //   ],
-                        // ))
                       ],
                     ),
                   ),

@@ -35,7 +35,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
             indicatorColor: logoblue,
             tabs: const [
               Tab(text: 'Delivery List'),
-              Tab(text: 'Delivered'),
+              Tab(text: 'Status'),
             ],
           ),
           Expanded(
@@ -178,15 +178,15 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                         )),
                         Expanded(
                             child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Delivery Time'),
-                            SizedBox(
+                             mainAxisAlignment: MainAxisAlignment.start,
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               const Text('Delivery Time'),
+                               SizedBox(
                               width: 8.w,
                             ),
-                            Row(
-                              children: [
+                              Row(
+                               children: [
                                 Icon(
                                   Icons.access_time,
                                   size: 22.sp,
@@ -205,52 +205,6 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                   SizedBox(
                     height: 15.h,
                   ),
-                    Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 30.h,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF01B075),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8), // <-- Radius
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {});
-                          },
-                          child: Text(
-                            'Delivered',
-                            style: TextStyle(fontSize: 14.sp),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 50.w,
-                      ),
-                      SizedBox(
-                        height: 30.h,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8), // <-- Radius
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {});
-                          },
-                          child: Text(
-                            'Return',
-                            style: TextStyle(fontSize: 14.sp),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
                 
                 ],
               ),
@@ -346,20 +300,20 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                       children: [
                         Expanded(
                             child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Collection Time'),
-                            Row(
-                              children: [
-                                Icon(
+                             mainAxisAlignment: MainAxisAlignment.start,
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                                const Text('Collection Time'),
+                                Row(
+                                   children: [
+                                   Icon(
                                   Icons.access_time,
                                   size: 22.sp,
                                 ),
-                                SizedBox(
+                                   SizedBox(
                                   width: 8.w,
                                 ),
-                                Text('8am',
+                                   Text('8am',
                                     style: TextStyle(
                                         fontSize: 18.sp, color: Colors.black))
                               ],
@@ -368,20 +322,20 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                         )),
                         Expanded(
                             child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Delivery Time'),
-                            SizedBox(
+                               mainAxisAlignment: MainAxisAlignment.start,
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               children: [
+                                const Text('Delivery Time'),
+                                SizedBox(
                               width: 8.w,
                             ),
-                            Row(
-                              children: [
-                                Icon(
+                                Row(
+                                  children: [
+                                   Icon(
                                   Icons.access_time,
                                   size: 22.sp,
                                 ),
-                                Text('10am',
+                                   Text('10am',
                                     style: TextStyle(
                                         fontSize: 18.sp, color: Colors.black))
                               ],
@@ -395,10 +349,12 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                     height: 15.h,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                         height: 30.h,
+                        // width: 115.w,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF01B075),
@@ -411,19 +367,18 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                             setState(() {});
                           },
                           child: Text(
-                            'Accecpt',
+                            'Partial Delivery',
                             style: TextStyle(fontSize: 14.sp),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 50.w,
-                      ),
+                     
                       SizedBox(
                         height: 30.h,
+
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
+                            backgroundColor: logogold,
                             shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.circular(8), // <-- Radius
@@ -433,7 +388,27 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                             setState(() {});
                           },
                           child: Text(
-                            'Cancel',
+                            'Full Delivery',
+                            style: TextStyle(fontSize: 14.sp),
+                          ),
+                        ),
+                      ),
+                      
+                      SizedBox(
+                        height: 30.h,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.circular(8), // <-- Radius
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          child: Text(
+                            'Return',
                             style: TextStyle(fontSize: 14.sp),
                           ),
                         ),

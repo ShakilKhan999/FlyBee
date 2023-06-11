@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
-          title: Image.asset('images/logo.png', height: 50, width: 250),
+          title: Image.asset('images/logo.png', height: 30, width: 120),
           centerTitle: true,
           elevation: 0,
         ),
@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                   icon: Icons.delivery_dining_rounded,
                   text: 'Delivery',
                 ),
-                GButton(icon: Icons.person, text: 'account')
+                GButton(icon: Icons.person, text: 'Account')
               ],
             ),
           ),

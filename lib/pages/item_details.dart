@@ -116,7 +116,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
               SizedBox(
                 height: 15.h,
               ),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
@@ -134,24 +134,21 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       style: TextStyle(fontSize: 17),
                     ),
                   ),
-                  SizedBox(
-                    width: 50.w,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8), // <-- Radius
-                      ),
-                    ),
-                    onPressed: () {
-                      setState(() {});
-                    },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(fontSize: 17),
-                    ),
-                  ),
+                  // ElevatedButton(
+                  //   style: ElevatedButton.styleFrom(
+                  //     backgroundColor: Colors.red,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(8), // <-- Radius
+                  //     ),
+                  //   ),
+                  //   onPressed: () {
+                  //     setState(() {});
+                  //   },
+                  //   child: const Text(
+                  //     'Cancel',
+                  //     style: TextStyle(fontSize: 17),
+                  //   ),
+                  // ),
                 ],
               )
             ],
