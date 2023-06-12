@@ -24,14 +24,14 @@ class _LauncherPageState extends State<LauncherPage> {
   void checklog()async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('accessToken');
-    if(token!="logout")
+    if(token==null)
     {
       Navigator.pushReplacementNamed(
-          context, HomePage.routeName);
+          context, LoginPage.routeName);
     }
     else{
       Navigator.pushReplacementNamed(
-          context, LoginPage.routeName);
+          context, HomePage.routeName);
     }
   }
   @override

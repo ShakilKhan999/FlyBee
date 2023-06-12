@@ -21,7 +21,7 @@ class _MainDrawerState extends State<MainDrawer> {
           ListTile(
             onTap: () async {
               final SharedPreferences prefs = await SharedPreferences.getInstance();
-              await prefs.setString('accessToken','logout');
+              await prefs.clear();
               Navigator.pop(context);
               Navigator.pushReplacementNamed(context, LoginPage.routeName);
             },
