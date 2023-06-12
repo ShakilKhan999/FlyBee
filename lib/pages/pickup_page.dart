@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/utils/colors.dart';
-
+import 'package:provider/provider.dart';
+import '../models/merchant_pickup_model.dart';
+import '../providers/marchant_provider.dart';
 import 'item_details.dart';
 
 class PickUpPage extends StatefulWidget {
@@ -14,7 +16,16 @@ class PickUpPage extends StatefulWidget {
 }
 
 class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
+  late MarchantProvider marchantProvider;
   late TabController _tabController;
+
+  @override
+  void initState() {
+    marchantProvider = Provider.of<MarchantProvider>(context, listen: false);
+    marchantProvider.getMarchantList();
+    super.initState();
+  }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -119,7 +130,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     _tabController = TabController(length: 2, vsync: this);
-    var itemList = [];
+    List<AssignBranchPickupList>? itemList = [];
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Column(
@@ -140,63 +151,85 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
             child: TabBarView(
               controller: _tabController,
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    itemCount: data.length,
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 5,
-                    ),
-                    itemBuilder: (context, index) {
-                      itemList = data[index]['items'];
-                      return Card(
-                        elevation: 3,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: ExpansionTile(
-                          iconColor: logoblue,
-                          collapsedIconColor: logogold,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          tilePadding: EdgeInsets.symmetric(horizontal: 10.w),
-                          title: Text(
-                            data[index]['name'],
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                                fontSize: 14,
-                                color: Colors.black),
+                Consumer<MarchantProvider>(
+                  builder: (context, provider, child) {
+                    if (provider.marchantList.isNotEmpty) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          itemCount:
+                              provider.marchantList.length,
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 5,
                           ),
-                          // subtitle: const Text('Marchant Address'),
-                          children: itemList.map((item) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: ListTile(
-                                style: ListTileStyle.list,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                // leading: Icon(Icons.ac_unit_sharp),
+                          itemBuilder: (context, index) {
+                            itemList = provider.merchantDataList[index].assignBranchPickupList!;
+                            return Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: ExpansionTile(
+                                iconColor: logoblue,
+                                collapsedIconColor: logogold,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                tilePadding:
+                                    EdgeInsets.symmetric(horizontal: 10.w),
                                 title: Text(
-                                  item['item_name'],
-                                  style: const TextStyle(color: Colors.black),
+                                  provider.marchantList[index]
+                                      .userName! ?? 'N/A',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1,
+                                      fontSize: 14,
+                                      color: Colors.black),
                                 ),
-                                dense: true,
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, ItemDetailsPage.routeName);
-                                },
+                                subtitle: Text(provider.marchantList[index].address!),
+                                children: itemList!.map((item) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(left: 15.0),
+                                    child: ListTile(
+                                      style: ListTileStyle.list,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(horizontal: 16),
+                                      // leading: Icon(Icons.ac_unit_sharp),
+                                      title: SizedBox(
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("${index + 1}.  ", style: const TextStyle(fontWeight: FontWeight.bold),),
+                                            Expanded(
+                                              child: Text(
+                                                item.productInfo4!,
+                                                style: const TextStyle(color: Colors.black),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      dense: true,
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, ItemDetailsPage.routeName);
+                                      },
+                                    ),
+                                  );
+                                }).toList(),
                               ),
                             );
-                          }).toList(),
+
+                            // Text('${deptData[index]['name']}');
+                          },
                         ),
                       );
-
-                      // Text('${deptData[index]['name']}');
-                    },
-                  ),
+                    }
+                    else {
+                      return Container();
+                    }
+                  },
                 ),
                 ListView.builder(
                   physics: const BouncingScrollPhysics(
@@ -277,7 +310,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 Icons.location_pin,
                                 size: 22.sp,
                               ),
-                              Expanded( 
+                              Expanded(
                                   child: Text(
                                 ('Chittagong'),
                                 style: TextStyle(fontSize: 18.sp),
@@ -373,5 +406,4 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
       ),
     );
   }
-
 }

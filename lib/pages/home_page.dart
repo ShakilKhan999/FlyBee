@@ -17,9 +17,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   int pageIndex = 0;
-
   List<Widget> widgetList = const [PickUpPage(), DeliveryPage(), AccountPage()];
+
 
   @override
   Widget build(BuildContext context) {
