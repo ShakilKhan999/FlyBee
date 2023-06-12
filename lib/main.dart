@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/pages/account_page.dart';
 import 'package:flybee/pages/delivery_page.dart';
 import 'package:flybee/pages/item_details.dart';
+import 'package:flybee/pages/launcherPage.dart';
 import 'package:flybee/pages/login_page.dart';
 import 'package:flybee/pages/marchant_list_page.dart';
 import 'package:flybee/pages/pickup_page.dart';
@@ -38,8 +39,9 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
             ),
             builder:  EasyLoading.init(),
-            initialRoute: LoginPage.routeName,
+            initialRoute: LauncherPage.routeName,
             routes: {
+              LauncherPage.routeName: (context) => const LauncherPage(),
               LoginPage.routeName: (context) => const LoginPage(),
               HomePage.routeName:(context)=> const HomePage(),
               PickUpPage.routeName:(context)=>const PickUpPage(),

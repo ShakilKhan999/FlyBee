@@ -4,12 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/pages/home_page.dart';
 import 'package:flybee/providers/login_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../customs/custom_snack_bar.dart';
 import '../customs/custom_snack_bar_icon.dart';
 import '../utils/colors.dart';
 
 class LoginPage extends StatefulWidget {
-  static const String routeName = '/logpage';
+  static const String routeName = '/loginPage';
 
   const LoginPage({Key? key}) : super(key: key);
 
@@ -29,9 +30,12 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+
     loginProvider = Provider.of<LoginProvider>(context, listen: false);
     super.initState();
   }
+
+
 
   @override
   void dispose() {
