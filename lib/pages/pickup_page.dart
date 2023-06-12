@@ -187,7 +187,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                       fontSize: 14,
                                       color: Colors.black),
                                 ),
-                                subtitle: const Text('Marchant Address'),
+                                subtitle: Text(provider.marchantList[index].address!),
                                 children: itemList!.map((item) {
                                   return Padding(
                                     padding: const EdgeInsets.only(left: 15.0),
