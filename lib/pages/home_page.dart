@@ -8,7 +8,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import '../utils/colors.dart';
 
 class HomePage extends StatefulWidget {
-  static const String routeName = '/';
+  static const String routeName = '/homePage';
 
   const HomePage({Key? key}) : super(key: key);
 
@@ -17,9 +17,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   int pageIndex = 0;
-
   List<Widget> widgetList = const [PickUpPage(), DeliveryPage(), AccountPage()];
+
 
   @override
   Widget build(BuildContext context) {

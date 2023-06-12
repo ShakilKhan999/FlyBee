@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flybee/pages/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainDrawer extends StatefulWidget {
   const MainDrawer({Key? key}) : super(key: key);
@@ -19,6 +20,8 @@ class _MainDrawerState extends State<MainDrawer> {
      
           ListTile(
             onTap: () async {
+              final SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.clear();
               Navigator.pop(context);
               Navigator.pushReplacementNamed(context, LoginPage.routeName);
             },

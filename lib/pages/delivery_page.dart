@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flybee/providers/delivery_provider.dart';
 import 'package:flybee/utils/colors.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryPage extends StatefulWidget {
   static const String routeName = '/delivery';
@@ -10,8 +12,17 @@ class DeliveryPage extends StatefulWidget {
   State<DeliveryPage> createState() => _DeliveryPageState();
 }
 
-class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMixin {
+class _DeliveryPageState extends State<DeliveryPage>
+    with TickerProviderStateMixin {
+  late DeliveryProvider deliveryProvider;
   late TabController _tabController;
+
+  @override
+  void initState() {
+    deliveryProvider = Provider.of<DeliveryProvider>(context, listen: false);
+    deliveryProvider.getDeliveryList();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -38,33 +49,36 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
               Tab(text: 'Status'),
             ],
           ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                // Content of the first tab (Pickup List)
-                ListView.builder(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: _buildDeliveryItem(index),
-                    );
-                  },
+          Consumer<DeliveryProvider>(
+            builder: (context, provider, child) {
+              return Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    ListView.builder(
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      itemCount: provider.deliveryList.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: _buildDeliveryItem(index, provider),
+                        );
+                      },
+                    ),
+                    ListView.builder(
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: _buildActiveDeliveryItem(index),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-                ListView.builder(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: _buildActiveDeliveryItem(index),
-                    );
-                  },
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),
@@ -178,15 +192,15 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                         )),
                         Expanded(
                             child: Column(
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             children: [
-                               const Text('Delivery Time'),
-                               SizedBox(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Delivery Time'),
+                            SizedBox(
                               width: 8.w,
                             ),
-                              Row(
-                               children: [
+                            Row(
+                              children: [
                                 Icon(
                                   Icons.access_time,
                                   size: 22.sp,
@@ -198,14 +212,12 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                             )
                           ],
                         )),
-                        
                       ],
                     ),
                   ),
                   SizedBox(
                     height: 15.h,
                   ),
-                
                 ],
               ),
             ),
@@ -215,7 +227,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
     );
   }
 
-  Widget _buildDeliveryItem(int index) {
+  Widget _buildDeliveryItem(int index, DeliveryProvider provider) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
@@ -224,13 +236,13 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
           iconColor: logoblue,
           collapsedIconColor: logogold,
           title: Text(
-            'Product ${index + 1}',
+            provider.deliveryList[index].productInfo4!,
             style: const TextStyle(
               color: Colors.black,
               fontSize: 20,
             ),
           ),
-          subtitle: const Text('Mirpur, Dhaka'),
+          subtitle: Text(provider.deliveryList[index].recipientAddress24!),
           children: [
             Padding(
               padding:
@@ -261,7 +273,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                               ),
                               Expanded(
                                   child: Text(
-                                'Dhaka',
+                                  provider.deliveryList[index].senderAddress9!,
                                 style: TextStyle(fontSize: 18.sp),
                               ))
                             ],
@@ -278,7 +290,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                               ),
                               Expanded(
                                   child: Text(
-                                ('Chittagong'),
+                                (provider.deliveryList[index].recipientAddress24!),
                                 style: TextStyle(fontSize: 18.sp),
                               ))
                             ],
@@ -300,20 +312,20 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                       children: [
                         Expanded(
                             child: Column(
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             children: [
-                                const Text('Collection Time'),
-                                Row(
-                                   children: [
-                                   Icon(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Collection Time'),
+                            Row(
+                              children: [
+                                Icon(
                                   Icons.access_time,
                                   size: 22.sp,
                                 ),
-                                   SizedBox(
+                                SizedBox(
                                   width: 8.w,
                                 ),
-                                   Text('8am',
+                                Text(provider.deliveryList[index].deliveryBoyDate!.toString().substring(0, 10),
                                     style: TextStyle(
                                         fontSize: 18.sp, color: Colors.black))
                               ],
@@ -322,20 +334,20 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                         )),
                         Expanded(
                             child: Column(
-                               mainAxisAlignment: MainAxisAlignment.start,
-                               crossAxisAlignment: CrossAxisAlignment.start,
-                               children: [
-                                const Text('Delivery Time'),
-                                SizedBox(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Delivery Time'),
+                            SizedBox(
                               width: 8.w,
                             ),
-                                Row(
-                                  children: [
-                                   Icon(
+                            Row(
+                              children: [
+                                Icon(
                                   Icons.access_time,
                                   size: 22.sp,
                                 ),
-                                   Text('10am',
+                                Text(provider.deliveryList[index].deliveryDate!.toString().substring(0, 10),
                                     style: TextStyle(
                                         fontSize: 18.sp, color: Colors.black))
                               ],
@@ -372,10 +384,8 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                           ),
                         ),
                       ),
-                     
                       SizedBox(
                         height: 30.h,
-
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: logogold,
@@ -393,7 +403,6 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                           ),
                         ),
                       ),
-                      
                       SizedBox(
                         height: 30.h,
                         child: ElevatedButton(
@@ -401,7 +410,7 @@ class _DeliveryPageState extends State<DeliveryPage> with TickerProviderStateMix
                             backgroundColor: Colors.red,
                             shape: RoundedRectangleBorder(
                               borderRadius:
-                              BorderRadius.circular(8), // <-- Radius
+                                  BorderRadius.circular(8), // <-- Radius
                             ),
                           ),
                           onPressed: () {

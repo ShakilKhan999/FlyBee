@@ -6,7 +6,7 @@ class LoginProvider extends ChangeNotifier {
   Future<bool> login(String mail, String pass) async {
     bool success = false;
     EasyLoading.show();
-    success = await ApiLogin().login(mail, pass);
+    success = await ApiLogin().login(mail.trim(), pass.trim());
     EasyLoading.dismiss();
     return success;
   }
