@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/utils/colors.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/login_provider.dart';
 
 class AccountPage extends StatefulWidget {
   static const String routeName = '/account';
@@ -16,13 +19,20 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  late LoginProvider loginProvider;
+
+  @override
+  void initState() {
+    print("init123");
+    loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    loginProvider = Provider.of<LoginProvider>(context, listen: false);
     
     double screenWidth = MediaQuery.of(context).size.width;
     _tabController = TabController(length: 2, vsync: this);
-
-
     return SafeArea(
       child: SafeArea(
         child: Scaffold(
@@ -87,9 +97,9 @@ class _AccountPageState extends State<AccountPage>
                               ),
                             ),
                             const SizedBox(height: 10),
-                            const Text(
+                             Text(
                               'Mr Donald',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
