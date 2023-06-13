@@ -5,8 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/utils/colors.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../providers/login_provider.dart';
+import '../utils/shared_preference.dart';
+import 'home_page.dart';
 
 class AccountPage extends StatefulWidget {
   static const String routeName = '/account';
@@ -20,13 +23,14 @@ class _AccountPageState extends State<AccountPage>
     with TickerProviderStateMixin {
   late TabController _tabController;
   late LoginProvider loginProvider;
+  //var name,id,mobile,mail;
 
   @override
   void initState() {
     print("init123");
-    loginProvider = Provider.of<LoginProvider>(context, listen: false);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     loginProvider = Provider.of<LoginProvider>(context, listen: false);
@@ -98,7 +102,7 @@ class _AccountPageState extends State<AccountPage>
                             ),
                             const SizedBox(height: 10),
                              Text(
-                              'Mr Donald',
+                              name.toString().length>12?name.toString().substring(0,12):name!,
                               style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
@@ -106,7 +110,7 @@ class _AccountPageState extends State<AccountPage>
                             ),
                             SizedBox(height: 8.h),
                             Text(
-                              'Branch ID: DHK-015',
+                              'Branch ID: $branch_id',
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 color: Colors.grey,
@@ -280,11 +284,11 @@ class _AccountPageState extends State<AccountPage>
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                   ),
-                  child: const ListTile(
+                  child:  ListTile(
                     leading: Icon(Icons.email),
                     trailing: Icon(Icons.verified_user_outlined,color: Colors.green,),
                     title: Text(
-                      'johndoe@example.com',
+                      '$mail',
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
@@ -297,11 +301,11 @@ class _AccountPageState extends State<AccountPage>
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                   ),
-                  child: const ListTile(
+                  child:  ListTile(
                     leading: Icon(Icons.phone_android),
                     trailing: Icon(Icons.verified_user_outlined,color: Colors.red,),
                     title: Text(
-                      '+88017000000000',
+                      '$mobile',
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
@@ -314,10 +318,10 @@ class _AccountPageState extends State<AccountPage>
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                   ),
-                  child: const ListTile(
+                  child:  ListTile(
                     leading: Icon(Icons.home_outlined),
                     title: Text(
-                      'Banani, Dhaka',
+                      '$address',
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
@@ -330,10 +334,10 @@ class _AccountPageState extends State<AccountPage>
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white
                   ),
-                  child: const ListTile(
+                  child:  ListTile(
                     leading: Icon(Icons.business_center_outlined),
                     title: Text(
-                      'Dutch Bangla Bank',
+                      '$bank',
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
@@ -389,109 +393,22 @@ class _AccountPageState extends State<AccountPage>
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicatorColor: const Color(0xFFfebe07),
                   tabs: const [
-                    Tab(text: 'Commission'),
                     Tab(text: 'Delivery'),
+                    Tab(text: 'Commission'),
                   ],
                 ),
                 SizedBox(
-                  height: 340.h,
+                  height: 290.h,
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      Stack(
-                        children: [
-                          // Center(
-                          //   child: Padding(
-                          //     padding:  EdgeInsets.symmetric(vertical: 8.0),
-                          //     child: Container(
-                          //       height: 340.h,width: screenWidth-30.w,
-                          //       decoration: BoxDecoration(
-                          //           color: logogold,
-                          //           borderRadius: BorderRadius.circular(12)
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          Positioned(
-                            top: 1,
-                            left: 15.w,
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 25.0),
-                                child: Container(
-                                  height: 230.h,width: screenWidth-30.w,
-                                  decoration: BoxDecoration(
-                                      color: logoblue,
-                                      borderRadius: BorderRadius.circular(12)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        SizedBox(height: 10.w,),
-                                        Container(
-                                          height: 50.h,
-                                          width: screenWidth-20.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: Colors.white
-                                          ),
-                                          child: const ListTile(
-                                            trailing: Text("4000 ৳"),
-                                            title: Text(
-                                              'Total Commission',
-                                              style: TextStyle(color: Colors.black),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 10.w,),
-                                        Container(
-                                          height: 50.h,
-                                          width: screenWidth-20.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: Colors.white
-                                          ),
-                                          child: const ListTile(
-                                            trailing: Text("4%"),
-                                            title: Text(
-                                              'Paid Commission',
-                                              style: TextStyle(color: Colors.black),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 10.w,),
-                                        Container(
-                                          height: 50.h,
-                                          width: screenWidth-20.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: Colors.white
-                                          ),
-                                          child: const ListTile(
-                                            trailing: Text("3000 ৳"),
-                                            title: Text(
-                                              'Due Commission',
-                                              style: TextStyle(color: Colors.black),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                       Stack(
                         children: [
                           Center(
                             child: Padding(
                               padding:  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Container(
-                                height: 340.h,width: screenWidth-30.w,
+                                height: 280.h,width: screenWidth-30.w,
                                 decoration: BoxDecoration(
                                     color: logogold,
                                     borderRadius: BorderRadius.circular(12)
@@ -506,7 +423,7 @@ class _AccountPageState extends State<AccountPage>
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Container(
-                                  height: 260.h,width: screenWidth-30.w,
+                                  height: 210.h,width: screenWidth-30.w,
                                   decoration: BoxDecoration(
                                       color: logoblue,
                                       borderRadius: BorderRadius.circular(12)
@@ -526,7 +443,7 @@ class _AccountPageState extends State<AccountPage>
                                           child: const ListTile(
                                             trailing: Text("2500 ৳"),
                                             title: Text(
-                                              'Cost Ammount',
+                                              'Collect Ammount',
                                               style: TextStyle(color: Colors.black),
                                             ),
                                           ),
@@ -542,7 +459,7 @@ class _AccountPageState extends State<AccountPage>
                                           child: const ListTile(
                                             trailing: Text("2%"),
                                             title: Text(
-                                              'Cost Percent',
+                                              'Payable Ammount',
                                               style: TextStyle(color: Colors.black),
                                             ),
                                           ),
@@ -558,23 +475,7 @@ class _AccountPageState extends State<AccountPage>
                                           child: const ListTile(
                                             trailing: Text("3000 ৳"),
                                             title: Text(
-                                              'Rider Ammount',
-                                              style: TextStyle(color: Colors.black),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 10.w,),
-                                        Container(
-                                          height: 50.h,
-                                          width: screenWidth-20.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: Colors.white
-                                          ),
-                                          child: const ListTile(
-                                            trailing: Text("2000 ৳"),
-                                            title: Text(
-                                              'Rider Withdraw',
+                                              'Due Collection',
                                               style: TextStyle(color: Colors.black),
                                             ),
                                           ),
@@ -627,11 +528,94 @@ class _AccountPageState extends State<AccountPage>
                                             textStyle: TextStyle(
                                                 fontSize: 16.sp,
                                                 fontWeight: FontWeight.w500)),
-                                        child:  SizedBox(height:20.h, width: 70.w,
-                                            child: const Center(child: Text("Total"))))
+                                        child:  SizedBox(height:20.h, width: 90.w,
+                                            child: const Center(child: Text("Commission"))))
                                   ],
                                 ),
                               ))
+                        ],
+                      ),
+                      Stack(
+                        children: [
+                          // Center(
+                          //   child: Padding(
+                          //     padding:  EdgeInsets.symmetric(vertical: 8.0),
+                          //     child: Container(
+                          //       height: 320.h,width: screenWidth-30.w,
+                          //       decoration: BoxDecoration(
+                          //           color: logogold,
+                          //           borderRadius: BorderRadius.circular(12)
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 25.0),
+                              child: Container(
+                                height: 210.h,width: screenWidth-30.w,
+                                decoration: BoxDecoration(
+                                    color: logoblue,
+                                    borderRadius: BorderRadius.circular(12)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 10.w,),
+                                      Container(
+                                        height: 50.h,
+                                        width: screenWidth-20.w,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            color: Colors.white
+                                        ),
+                                        child: const ListTile(
+                                          trailing: Text("4000 ৳"),
+                                          title: Text(
+                                            'Total Commission',
+                                            style: TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 10.w,),
+                                      Container(
+                                        height: 50.h,
+                                        width: screenWidth-20.w,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            color: Colors.white
+                                        ),
+                                        child: const ListTile(
+                                          trailing: Text("4%"),
+                                          title: Text(
+                                            'Paid Commission',
+                                            style: TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 10.w,),
+                                      Container(
+                                        height: 50.h,
+                                        width: screenWidth-20.w,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            color: Colors.white
+                                        ),
+                                        child: const ListTile(
+                                          trailing: Text("3000 ৳"),
+                                          title: Text(
+                                            'Due Commission',
+                                            style: TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ],

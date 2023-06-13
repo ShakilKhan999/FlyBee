@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flybee/models/user_model.dart';
+import 'package:flybee/utils/shared_preference.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,11 +17,26 @@ class ApiLogin {
           body: {'email': email, 'password': password});
       if (response.statusCode == 200 || response.statusCode == 201) {
         EasyLoading.dismiss();
-        user=userModelFromJson(response.body);
-        var dd = await json.decode(response.body);
-        print("token234: ${dd["accessToken"]}");
+        user = userModelFromJson(response.body);
+        // var dd = await json.decode(response.body);
+        // print("token234: ${dd["accessToken"]}");
+        SharedPref().setString(ACCESS_TOKEN, user.accessToken.toString());
+        SharedPref().setString(USER_ID, user.getUser![0].userID.toString());
+        SharedPref().setString(NID, user.getUser![0].nidFront.toString());
+        SharedPref().setString(BANK, user.getUser![0].bankName.toString());
+        SharedPref().setString(USER_ADDRESS, user.getUser![0].address.toString());
+        SharedPref().setString(BRANCH_ID, user.getUser![0].branchId.toString());
+        SharedPref()
+            .setString(USER_EMAIL, user.getUser![0].userEmail.toString());
+        SharedPref().setString(USER_NAME, user.getUser![0].userName.toString());
+        SharedPref()
+            .setString(USER_PHONE, user.getUser![0].userPhone.toString());
+        SharedPref().setString(USER_IMAGE, user.getUser![0].image.toString());
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('accessToken',dd["accessToken"]);
+        var token = prefs.getString(USER_NAME);
+        print("name234${token}");
+        // final SharedPreferences prefs = await SharedPreferences.getInstance();
+        // await prefs.setString('accessToken',dd["accessToken"]);
         return user;
       } else {
         EasyLoading.dismiss();

@@ -1,12 +1,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-String ACCESS_TOKEN = 'accessToken';
-String USER_ID = 'user_id';
-String USER_NAME = 'user_name';
-String USER_ADDRESS = 'user_address';
-String USER_EMAIL = 'user_email';
-String USER_PHONE = 'user_phone';
-String BRANCH_NO = 'branch_no';
+String ACCESS_TOKEN = "accessToken";
+String USER_ID = "userID";
+String USER_NAME = "userName";
+String USER_IMAGE="image";
+String USER_ADDRESS = "user_address";
+String USER_EMAIL = "userEmail";
+String USER_PHONE = "mobile";
+String BRANCH_ID = "branch_id";
+String DIVISION = "division";
+String DISTRICT="district";
+String UPAZILA="upazila";
+String BANK="bank";
+String NID="nid";
 
 class SharedPref {
   setString(String key, String value) async {
@@ -21,6 +27,6 @@ class SharedPref {
 
   Future<String?> getString(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(key);
+    return prefs.getString(key) as String;
   }
 }
