@@ -18,12 +18,13 @@ class PickUpPage extends StatefulWidget {
 class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
   late MarchantProvider marchantProvider;
   late TabController _tabController;
-  bool isExpanded=false;
+  bool isExpanded = false;
 
   @override
   void initState() {
     marchantProvider = Provider.of<MarchantProvider>(context, listen: false);
     marchantProvider.getMarchantList();
+    // marchantProvider.getRiderPickupStatusList();
     super.initState();
   }
 
@@ -147,7 +148,6 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
               Tab(text: 'Pickup List'),
               Tab(text: 'Return'),
               Tab(text: 'Status'),
-
             ],
           ),
           Expanded(
@@ -163,13 +163,13 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(
                               parent: AlwaysScrollableScrollPhysics()),
-                          itemCount:
-                              provider.marchantList.length,
+                          itemCount: provider.marchantList.length,
                           separatorBuilder: (context, index) => const SizedBox(
                             height: 5,
                           ),
                           itemBuilder: (context, index) {
-                            itemList = provider.merchantDataList[index].assignBranchPickupList!;
+                            itemList = provider.merchantDataList[index]
+                                .assignBranchPickupList!;
                             return Card(
                               elevation: 3,
                               shape: RoundedRectangleBorder(
@@ -177,9 +177,10 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                               child: ExpansionTile(
                                 iconColor: logoblue,
                                 collapsedIconColor: logogold,
-                                onExpansionChanged: (va){
+                                onExpansionChanged: (va) {
                                   setState(() {
-                                    isExpanded=isExpanded==true?false:true;
+                                    isExpanded =
+                                        isExpanded == true ? false : true;
                                     print(isExpanded);
                                   });
                                 },
@@ -188,91 +189,176 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 tilePadding:
                                     EdgeInsets.symmetric(horizontal: 10.w),
                                 title: Text(
-                                  provider.marchantList[index]
-                                      .userName! ?? 'N/A',
+                                  provider.marchantList[index].userName! ??
+                                      'N/A',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       letterSpacing: 1,
                                       fontSize: 14,
                                       color: Colors.black),
                                 ),
-                                subtitle: Text(provider.marchantList[index].address!,
-                                  style: TextStyle(fontWeight:FontWeight.w500),),
+                                subtitle: Text(
+                                  provider.marchantList[index].address!,
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
                                 children: itemList!.map((item) {
                                   return Padding(
                                     padding: const EdgeInsets.only(left: 15.0),
                                     child: ListTile(
                                       style: ListTileStyle.list,
                                       contentPadding:
-                                          const EdgeInsets.symmetric(horizontal: 16),
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 16),
                                       // leading: Icon(Icons.ac_unit_sharp),
                                       title: SizedBox(
                                         child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text("${index + 1}.  ", style: const TextStyle(fontWeight: FontWeight.bold),),
-                                            Expanded(
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: logogold.withOpacity(0.4),
-                                                  border: Border.all(),
-                                                  borderRadius: BorderRadius.circular(12)
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: Column(
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Container(
-                                                            child: Row(
-                                                              children: [
-                                                                Icon(Icons.price_change,color: logoblue,),
-                                                                Text("Fixed Price: ",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500),),
-                                                                Text("${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['fixed_cost']}",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500))
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            child: Row(
-                                                              children: [
-                                                                Icon(Icons.price_change,color: logoblue),
-                                                                Text("Selling Price: ",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500)),
-                                                                Text("${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['selling_price']}",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500))
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Container(
-                                                            child: Row(
-                                                              children: [
-                                                                Icon(Icons.monitor_weight_outlined,color: logoblue),
-                                                                Text("Weight: ",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500)),
-                                                                Text("${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['weight']}",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500))
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            child: Row(
-                                                              children: [
-                                                                Icon(Icons.shopping_bag_outlined,color: logoblue),
-                                                                Text("Quantity: ",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500)),
-                                                                Text("${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['qty']}",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500))
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
+                                            Text(
+                                              "${index + 1}.  ",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
                                             ),
+                                            Expanded(
+                                                child: Container(
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                      logogold.withOpacity(0.4),
+                                                  border: Border.all(),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(2.0),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(
+                                                                Icons
+                                                                    .price_change,
+                                                                color: logoblue,
+                                                              ),
+                                                              Text(
+                                                                "Fixed Price: ",
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        logoblue,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              Text(
+                                                                  "${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['fixed_cost']}",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          logoblue,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(
+                                                                  Icons
+                                                                      .price_change,
+                                                                  color:
+                                                                      logoblue),
+                                                              Text(
+                                                                  "Selling Price: ",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          logoblue,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500)),
+                                                              Text(
+                                                                  "${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['selling_price']}",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          logoblue,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500))
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(
+                                                                  Icons
+                                                                      .monitor_weight_outlined,
+                                                                  color:
+                                                                      logoblue),
+                                                              Text("Weight: ",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          logoblue,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500)),
+                                                              Text(
+                                                                  "${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['weight']}",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          logoblue,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(
+                                                                  Icons
+                                                                      .shopping_bag_outlined,
+                                                                  color:
+                                                                      logoblue),
+                                                              Text("Quantity: ",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          logoblue,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500)),
+                                                              Text(
+                                                                  "${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['qty']}",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          logoblue,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500))
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            )),
                                           ],
                                         ),
                                       ),
@@ -291,8 +377,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                           },
                         ),
                       );
-                    }
-                    else {
+                    } else {
                       return Container();
                     }
                   },
@@ -307,13 +392,17 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     );
                   },
                 ),
-                ListView.builder(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: _buildActivePickUpItem(index),
+                Consumer<MarchantProvider>(
+                  builder: (context, provider, child) {
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      itemCount: provider.statusPickupList!.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: _buildPickUpStatusItem(index, provider),
+                        );
+                      },
                     );
                   },
                 ),
@@ -321,6 +410,126 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildPickUpStatusItem(int index, MarchantProvider provider) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Card(
+        elevation: 3,
+        child: ExpansionTile(
+          iconColor: logoblue,
+          collapsedIconColor: logogold,
+          title: Text(
+            '${provider.statusPickupList![index].productInfo4} ${index + 1}',
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+            ),
+          ),
+          subtitle: Text(provider.statusPickupList![index].senderAddress9!),
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                        border: Border(
+                      bottom: BorderSide(
+                        color: Colors.black,
+                        width: 0.5,
+                      ),
+                    )),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Marchant Address'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_pin,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(
+                                'Dhaka',
+                                style: TextStyle(fontSize: 18.sp),
+                              ))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Branch Address'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_pin,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(
+                                ('Chittagong'),
+                                style: TextStyle(fontSize: 18.sp),
+                              ))
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                    decoration: const BoxDecoration(
+                        border: Border(
+                      bottom: BorderSide(
+                        color: Colors.black,
+                        width: 0.5,
+                      ),
+                    )),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Order Pickup Time'),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.access_time,
+                                  size: 22.sp,
+                                ),
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                Text('8am',
+                                    style: TextStyle(
+                                        fontSize: 18.sp, color: Colors.black))
+                              ],
+                            ),
+                          ],
+                        )),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

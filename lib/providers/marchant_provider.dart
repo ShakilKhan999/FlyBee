@@ -6,6 +6,7 @@ import 'package:flybee/api_helper/marchat_response.dart';
 import 'package:flybee/models/Merchant_data_model.dart';
 import 'package:flybee/models/marchat_model.dart';
 import 'package:flybee/models/merchant_pickup_model.dart';
+import 'package:flybee/models/rider_pickup_status_model.dart';
 
 class MarchantProvider extends ChangeNotifier {
   MarchantModel? marchantModel;
@@ -13,6 +14,10 @@ class MarchantProvider extends ChangeNotifier {
 
   MerchantPickUpModel? merchantPickUpModel;
   List<MerchantDataModel> merchantDataList = [];
+  
+  RiderPickUpStatusModel? riderPickUpStatusModel;
+  List<StatusPickupList>? statusPickupList;
+
 
   getMarchantList() async {
     marchantList = [];
@@ -29,6 +34,9 @@ class MarchantProvider extends ChangeNotifier {
             marchantModel, merchantPickUpModel!.assignBranchPickupList!));
       }
     }
+
+    await getRiderPickupStatusList();
+
     EasyLoading.dismiss();
     notifyListeners();
   }
@@ -36,5 +44,13 @@ class MarchantProvider extends ChangeNotifier {
   productInfoMapMaker(String info){
     var properties = json.decode(info);
     return properties;
+  }
+
+  getRiderPickupStatusList() async {
+    statusPickupList = [];
+    riderPickUpStatusModel = await MarchantResponse().getMerchantPickupStatusList();
+    statusPickupList!.addAll(riderPickUpStatusModel!.statusPickupList!);
+    notifyListeners();
+
   }
 }
