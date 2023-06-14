@@ -228,21 +228,70 @@ class _DeliveryPageState extends State<DeliveryPage>
   }
 
   Widget _buildDeliveryItem(int index, DeliveryProvider provider) {
+    print(provider.deliveryList[index].productInfo4!.toString());
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Card(
         elevation: 3,
         child: ExpansionTile(
           iconColor: logoblue,
           collapsedIconColor: logogold,
-          title: Text(
-            provider.deliveryList[index].productInfo4!,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-            ),
+          title: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Row(
+                      children: [
+                        Icon(Icons.price_change),
+                        Text("Fixed Price: "),
+                        Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['fixed_cost']}")
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Icon(Icons.price_change),
+                        Text("Selling Price: "),
+                        Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['selling_price']}")
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Row(
+                      children: [
+                        Icon(Icons.monitor_weight_outlined),
+                        Text("Weight: "),
+                        Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['weight']}")
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Icon(Icons.shopping_bag_outlined),
+                        Text("Quantity: "),
+                        Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['qty']}")
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
-          subtitle: Text(provider.deliveryList[index].recipientAddress24!),
+          subtitle: Row(
+            children: [
+              Icon(Icons.location_on_outlined),
+              Expanded(child: Text(provider.deliveryList[index].recipientAddress24!)),
+            ],
+          ),
           children: [
             Padding(
               padding:
@@ -364,31 +413,31 @@ class _DeliveryPageState extends State<DeliveryPage>
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      // SizedBox(
+                      //   height: 30.h,
+                      //   // width: 115.w,
+                      //   child: ElevatedButton(
+                      //     style: ElevatedButton.styleFrom(
+                      //       backgroundColor: const Color(0xFF01B075),
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius:
+                      //             BorderRadius.circular(8), // <-- Radius
+                      //       ),
+                      //     ),
+                      //     onPressed: () {
+                      //       setState(() {});
+                      //     },
+                      //     child: Text(
+                      //       'Partial Delivery',
+                      //       style: TextStyle(fontSize: 14.sp),
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 30.h,
-                        // width: 115.w,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF01B075),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8), // <-- Radius
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {});
-                          },
-                          child: Text(
-                            'Partial Delivery',
-                            style: TextStyle(fontSize: 14.sp),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30.h,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: logogold,
+                            backgroundColor: logoblue,
                             shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.circular(8), // <-- Radius

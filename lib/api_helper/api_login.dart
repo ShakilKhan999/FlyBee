@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flybee/models/user_model.dart';
 import 'package:flybee/utils/shared_preference.dart';
 import 'package:http/http.dart';
@@ -39,6 +41,14 @@ class ApiLogin {
         // await prefs.setString('accessToken',dd["accessToken"]);
         return user;
       } else {
+        Fluttertoast.showToast(
+          msg: "Wrong username or password",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         EasyLoading.dismiss();
       }
     } catch (e) {

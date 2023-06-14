@@ -18,6 +18,7 @@ class PickUpPage extends StatefulWidget {
 class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
   late MarchantProvider marchantProvider;
   late TabController _tabController;
+  bool isExpanded=false;
 
   @override
   void initState() {
@@ -129,7 +130,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     List<AssignBranchPickupList>? itemList = [];
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -144,7 +145,9 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
             indicatorColor: logoblue,
             tabs: const [
               Tab(text: 'Pickup List'),
+              Tab(text: 'Return'),
               Tab(text: 'Status'),
+
             ],
           ),
           Expanded(
@@ -174,6 +177,12 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                               child: ExpansionTile(
                                 iconColor: logoblue,
                                 collapsedIconColor: logogold,
+                                onExpansionChanged: (va){
+                                  setState(() {
+                                    isExpanded=isExpanded==true?false:true;
+                                    print(isExpanded);
+                                  });
+                                },
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)),
                                 tilePadding:
@@ -187,7 +196,8 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                       fontSize: 14,
                                       color: Colors.black),
                                 ),
-                                subtitle: Text(provider.marchantList[index].address!),
+                                subtitle: Text(provider.marchantList[index].address!,
+                                  style: TextStyle(fontWeight:FontWeight.w500),),
                                 children: itemList!.map((item) {
                                   return Padding(
                                     padding: const EdgeInsets.only(left: 15.0),
@@ -202,10 +212,66 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                           children: [
                                             Text("${index + 1}.  ", style: const TextStyle(fontWeight: FontWeight.bold),),
                                             Expanded(
-                                              child: Text(
-                                                item.productInfo4!,
-                                                style: const TextStyle(color: Colors.black),
-                                              ),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: logogold.withOpacity(0.4),
+                                                  border: Border.all(),
+                                                  borderRadius: BorderRadius.circular(12)
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(Icons.price_change,color: logoblue,),
+                                                                Text("Fixed Price: ",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500),),
+                                                                Text("${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['fixed_cost']}",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500))
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(Icons.price_change,color: logoblue),
+                                                                Text("Selling Price: ",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500)),
+                                                                Text("${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['selling_price']}",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500))
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(Icons.monitor_weight_outlined,color: logoblue),
+                                                                Text("Weight: ",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500)),
+                                                                Text("${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['weight']}",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500))
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(Icons.shopping_bag_outlined,color: logoblue),
+                                                                Text("Quantity: ",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500)),
+                                                                Text("${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['qty']}",style: TextStyle(color: logoblue,fontWeight: FontWeight.w500))
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
                                             ),
                                           ],
                                         ),
@@ -229,6 +295,16 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     else {
                       return Container();
                     }
+                  },
+                ),
+                ListView.builder(
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      child: _buildActivePickUpItem(index),
+                    );
                   },
                 ),
                 ListView.builder(

@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -19,6 +20,11 @@ class DeliveryProvider extends ChangeNotifier {
 
     notifyListeners();
 
+  }
+
+   productInfoMapMaker(String info){
+    var properties = json.decode(info);
+    return properties;
   }
 
 }

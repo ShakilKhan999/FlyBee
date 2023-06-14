@@ -1,16 +1,16 @@
 class BasicUserInfoModel{
-  String name;
-  String mail;
-  String id;
+  String? name;
+  String? mail;
+  String? id;
   String? division;
   String? district;
   String? area;
-  String mobile;
-  String image;
-  String bank;
-  String Nid;
-  String accessToken;
-  String branch;
+  String? mobile;
+  String? image;
+  String? bank;
+  String? Nid;
+  String? accessToken;
+  String? branch;
 
   BasicUserInfoModel(
       this.name,

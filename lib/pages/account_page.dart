@@ -124,7 +124,7 @@ class _AccountPageState extends State<AccountPage>
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(15)
                               ),
-                              child: Row(
+                              child: address==""|| address==null?Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Icon(Icons.location_pin,color: Colors.black,),
@@ -165,6 +165,12 @@ class _AccountPageState extends State<AccountPage>
                                     ],
                                   ),
                                   SizedBox(width: 10.w,)
+                                ],
+                              ):Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Icon(Icons.location_pin,color: Colors.black,),
+                                  Text(address!),
                                 ],
                               ),
                             )
@@ -457,7 +463,7 @@ class _AccountPageState extends State<AccountPage>
                                               color: Colors.white
                                           ),
                                           child: const ListTile(
-                                            trailing: Text("2%"),
+                                            trailing: Text("200 ৳"),
                                             title: Text(
                                               'Payable Ammount',
                                               style: TextStyle(color: Colors.black),
@@ -587,7 +593,7 @@ class _AccountPageState extends State<AccountPage>
                                             color: Colors.white
                                         ),
                                         child: const ListTile(
-                                          trailing: Text("4%"),
+                                          trailing: Text("400 ৳"),
                                           title: Text(
                                             'Paid Commission',
                                             style: TextStyle(color: Colors.black),

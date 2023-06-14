@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginProvider extends ChangeNotifier {
   UserModel? userInfo;
-  BasicUserInfoModel? basicUserInfoModel;
+  late BasicUserInfoModel basicUserInfoModel;
   String? name;
 
   Future<bool> login(String mail, String pass) async {
@@ -22,18 +22,16 @@ class LoginProvider extends ChangeNotifier {
     return success;
   }
 
-  // Future<void> getuserProfileinfo()async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   basicUserInfoModel!.name!= await prefs.getString(USER_NAME);
-  //   print("name123"+basicUserInfoModel!.name);
-  //   basicUserInfoModel!.id!=  await prefs.getString(USER_ID);
-  //   print(basicUserInfoModel!.id);
-  //   basicUserInfoModel!.image!= await SharedPref().getString(USER_IMAGE);
-  //   basicUserInfoModel!.mail!= await SharedPref().getString(USER_EMAIL);
-  //   basicUserInfoModel!.mobile!= await SharedPref().getString(USER_PHONE);
-  //   basicUserInfoModel!.Nid!= await SharedPref().getString(NID);
-  //   basicUserInfoModel!.branch!= await SharedPref().getString(BRANCH_NO);
-  //   basicUserInfoModel!.bank!= await SharedPref().getString(BANK);
-  //   notifyListeners();
-  // }
+  Future<void> getinfo() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    basicUserInfoModel.name =await prefs.getString(USER_NAME);
+    basicUserInfoModel.id=await prefs.getString(USER_ID);
+    basicUserInfoModel.mobile=await prefs.getString(USER_PHONE);
+    basicUserInfoModel.mail=await prefs.getString(USER_EMAIL);
+    basicUserInfoModel.branch=await prefs.getString(BRANCH_ID);
+    basicUserInfoModel.Nid=await prefs.getString(NID);
+    basicUserInfoModel.bank=await prefs.getString(BANK);
+    basicUserInfoModel.area=await prefs.getString(USER_ADDRESS);
+    notifyListeners();
+  }
 }

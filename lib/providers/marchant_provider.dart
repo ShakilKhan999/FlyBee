@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flybee/api_helper/marchat_response.dart';
@@ -29,5 +31,10 @@ class MarchantProvider extends ChangeNotifier {
     }
     EasyLoading.dismiss();
     notifyListeners();
+  }
+
+  productInfoMapMaker(String info){
+    var properties = json.decode(info);
+    return properties;
   }
 }
