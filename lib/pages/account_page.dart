@@ -24,6 +24,8 @@ class _AccountPageState extends State<AccountPage>
   late TabController _tabController;
   late LoginProvider loginProvider;
   //var name,id,mobile,mail;
+  ScrollController _scrollController = ScrollController();
+
 
   @override
   void initState() {
@@ -41,6 +43,7 @@ class _AccountPageState extends State<AccountPage>
       child: SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -72,7 +75,15 @@ class _AccountPageState extends State<AccountPage>
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ),
-                                Icon(Icons.navigate_next,color: Colors.white,size: 40.sp,)
+                                IconButton(onPressed: (){
+                                  _scrollController.animateTo(
+                                    _scrollController.position.maxScrollExtent,
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.easeOut,
+                                  );
+
+                                },
+                                    icon: Icon(Icons.navigate_next,color: Colors.white,size: 40.sp,))
                               ],
                             ),
                           ),

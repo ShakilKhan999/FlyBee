@@ -242,12 +242,12 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                         Container(
                                                           child: Row(
                                                             children: [
-                                                              Icon(
+                                                              const Icon(
                                                                 Icons
                                                                     .price_change,
                                                                 color: logoblue,
                                                               ),
-                                                              Text(
+                                                              const Text(
                                                                 "Fixed Price: ",
                                                                 style: TextStyle(
                                                                     color:
@@ -258,7 +258,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                               ),
                                                               Text(
                                                                   "${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['fixed_cost']}",
-                                                                  style: TextStyle(
+                                                                  style: const TextStyle(
                                                                       color:
                                                                           logoblue,
                                                                       fontWeight:
@@ -270,12 +270,12 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                         Container(
                                                           child: Row(
                                                             children: [
-                                                              Icon(
+                                                              const Icon(
                                                                   Icons
                                                                       .price_change,
                                                                   color:
                                                                       logoblue),
-                                                              Text(
+                                                              const Text(
                                                                   "Selling Price: ",
                                                                   style: TextStyle(
                                                                       color:
@@ -285,7 +285,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                               .w500)),
                                                               Text(
                                                                   "${provider.productInfoMapMaker(item!.productInfo4!.toString())[0]['selling_price']}",
-                                                                  style: TextStyle(
+                                                                  style: const TextStyle(
                                                                       color:
                                                                           logoblue,
                                                                       fontWeight:
@@ -422,15 +422,173 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
         child: ExpansionTile(
           iconColor: logoblue,
           collapsedIconColor: logogold,
-          title: Text(
-            '${provider.statusPickupList![index].productInfo4} ${index + 1}',
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-            ),
+          title: ListTile(
+            style: ListTileStyle.list,
+            contentPadding:
+            const EdgeInsets.symmetric(
+                horizontal: 16),
+            leading: Icon(Icons.hail),
+            title: Text("Pick-Up Completed",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15.sp),),
+            dense: true,
+            onTap: () {
+              // Navigator.pushNamed(
+              //     context, ItemDetailsPage.routeName);
+            },
           ),
           subtitle: Text(provider.statusPickupList![index].senderAddress9!),
           children: [
+            SizedBox(
+              child: Row(
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${index + 1}.  ",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color:
+                            logogold.withOpacity(0.4),
+                            border: Border.all(),
+                            borderRadius:
+                            BorderRadius.circular(
+                                12)),
+                        child: Padding(
+                          padding:
+                          const EdgeInsets.all(2.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment
+                                    .spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons
+                                              .price_change,
+                                          color: logoblue,
+                                        ),
+                                        const Text(
+                                          "Fixed Price: ",
+                                          style: TextStyle(
+                                              color:
+                                              logoblue,
+                                              fontWeight:
+                                              FontWeight
+                                                  .w500),
+                                        ),
+                                        Text(
+                                            "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['fixed_cost']}",
+                                            style: const TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500))
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                            Icons
+                                                .price_change,
+                                            color:
+                                            logoblue),
+                                        const Text(
+                                            "Selling Price: ",
+                                            style: TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500)),
+                                        Text(
+                                            "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['selling_price']}",
+                                            style: const TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500))
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment
+                                    .spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                            Icons
+                                                .monitor_weight_outlined,
+                                            color:
+                                            logoblue),
+                                        Text("Weight: ",
+                                            style: TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500)),
+                                        Text(
+                                            "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['weight']}",
+                                            style: TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500))
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                            Icons
+                                                .shopping_bag_outlined,
+                                            color:
+                                            logoblue),
+                                        Text("Quantity: ",
+                                            style: TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500)),
+                                        Text(
+                                            "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['qty']}",
+                                            style: TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500))
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      )),
+                ],
+              ),
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
