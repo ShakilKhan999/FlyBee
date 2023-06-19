@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/providers/delivery_provider.dart';
@@ -21,6 +24,7 @@ class _DeliveryPageState extends State<DeliveryPage>
   void initState() {
     deliveryProvider = Provider.of<DeliveryProvider>(context, listen: false);
     deliveryProvider.getDeliveryList();
+    // deliveryProvider.getDeliveryStatusList();
     super.initState();
   }
 
@@ -55,6 +59,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
+                    provider.deliveryList.isEmpty?const Center(child: Text("Delivery list is empty",style: TextStyle(color: Colors.black),)):
                     ListView.builder(
                       physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics()),
@@ -67,14 +72,15 @@ class _DeliveryPageState extends State<DeliveryPage>
                     ),
                     ListView.builder(
                       physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      itemCount: 10,
+                      parent: AlwaysScrollableScrollPhysics()),
+                      itemCount: provider.statusDeliveryList == null ? 0: provider.statusDeliveryList!.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          child: _buildActiveDeliveryItem(index),
-                        );
+                    return Container(
+                      child: _buildActiveDeliveryItem(index, provider),
+                    );
                       },
-                    ),
+                       )
+                    
                   ],
                 ),
               );
@@ -85,7 +91,8 @@ class _DeliveryPageState extends State<DeliveryPage>
     );
   }
 
-  Widget _buildActiveDeliveryItem(int index) {
+  Widget _buildActiveDeliveryItem(int index,DeliveryProvider provider) {
+    // log(provider.statusDeliveryList!.length.toString());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
@@ -93,15 +100,173 @@ class _DeliveryPageState extends State<DeliveryPage>
         child: ExpansionTile(
           iconColor: logoblue,
           collapsedIconColor: logogold,
-          title: Text(
-            'Product ${index + 1}',
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-            ),
+          title: ListTile(
+            style: ListTileStyle.list,
+            contentPadding:
+            const EdgeInsets.symmetric(
+                horizontal: 16),
+            leading: Icon(Icons.hail),
+            title: Text("Delivery Completed",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15.sp),),
+            dense: true,
+            onTap: () {
+              // Navigator.pushNamed(
+              //     context, ItemDetailsPage.routeName);
+            },
           ),
-          subtitle: const Text('Mirpur, Dhaka'),
+          subtitle: Text(provider.statusDeliveryList![index].senderAddress9!),
           children: [
+            SizedBox(
+              child: Row(
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${index + 1}.  ",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color:
+                            logogold.withOpacity(0.4),
+                            border: Border.all(),
+                            borderRadius:
+                            BorderRadius.circular(
+                                12)),
+                        child: Padding(
+                          padding:
+                          const EdgeInsets.all(2.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment
+                                    .spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons
+                                              .price_change,
+                                          color: logoblue,
+                                        ),
+                                        const Text(
+                                          "Fixed Price: ",
+                                          style: TextStyle(
+                                              color:
+                                              logoblue,
+                                              fontWeight:
+                                              FontWeight
+                                                  .w500),
+                                        ),
+                                        Text(
+                                            "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['fixed_cost']}",
+                                            style: const TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500))
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                            Icons
+                                                .price_change,
+                                            color:
+                                            logoblue),
+                                        const Text(
+                                            "Selling Price: ",
+                                            style: TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500)),
+                                        Text(
+                                            "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['selling_price']}",
+                                            style: const TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500))
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment
+                                    .spaceBetween,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                            Icons
+                                                .monitor_weight_outlined,
+                                            color:
+                                            logoblue),
+                                        Text("Weight: ",
+                                            style: TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500)),
+                                        Text(
+                                            "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['weight']}",
+                                            style: TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500))
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                            Icons
+                                                .shopping_bag_outlined,
+                                            color:
+                                            logoblue),
+                                        Text("Quantity: ",
+                                            style: TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500)),
+                                        Text(
+                                            "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['qty']}",
+                                            style: TextStyle(
+                                                color:
+                                                logoblue,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w500))
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      )),
+                ],
+              ),
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
@@ -122,7 +287,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Branch Address'),
+                          const Text('Marchant Address'),
                           Row(
                             children: [
                               Icon(
@@ -139,7 +304,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                           SizedBox(
                             height: 10.h,
                           ),
-                          const Text('User Address'),
+                          const Text('Branch Address'),
                           Row(
                             children: [
                               Icon(
@@ -173,7 +338,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Collection Time'),
+                            const Text('Order Pickup Time'),
                             Row(
                               children: [
                                 Icon(
@@ -187,29 +352,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                                     style: TextStyle(
                                         fontSize: 18.sp, color: Colors.black))
                               ],
-                            )
-                          ],
-                        )),
-                        Expanded(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Delivery Time'),
-                            SizedBox(
-                              width: 8.w,
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.access_time,
-                                  size: 22.sp,
-                                ),
-                                Text('10am',
-                                    style: TextStyle(
-                                        fontSize: 18.sp, color: Colors.black))
-                              ],
-                            )
                           ],
                         )),
                       ],

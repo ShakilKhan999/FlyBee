@@ -154,6 +154,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
             child: TabBarView(
               controller: _tabController,
               children: [
+              
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
                     if (provider.marchantList.isNotEmpty) {
@@ -378,7 +379,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                         ),
                       );
                     } else {
-                      return Container();
+                      return Container(child: Text('Pick up list is empty'),);
                     }
                   },
                 ),

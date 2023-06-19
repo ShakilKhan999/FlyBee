@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flybee/models/marchat_model.dart';
 import 'package:flybee/models/merchant_pickup_model.dart';
 import 'package:flybee/models/rider_pickup_status_model.dart';
@@ -10,6 +11,7 @@ import '../utils/shared_preference.dart';
 
 class MarchantResponse {
   Future<MarchantModel?> getMarchantList() async {
+    EasyLoading.show();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = await prefs.getString(USER_ID)!;
     print("riderid235:$id");
@@ -25,14 +27,17 @@ class MarchantResponse {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
+      EasyLoading.dismiss();
       return marchantModelFromJson(await response.stream.bytesToString());
     } else {
+      EasyLoading.dismiss();
       return null;
     }
   }
 
   Future<MerchantPickUpModel?> getMerchantPickupList(
       {required String phone}) async {
+        EasyLoading.show();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = await prefs.getString(USER_ID)!;
     String branch_id = await prefs.getString(BRANCH_ID)!;
@@ -54,8 +59,10 @@ class MarchantResponse {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
+       EasyLoading.dismiss();
       return merchantPickUpModelFromJson(await response.stream.bytesToString());
     } else {
+      EasyLoading.dismiss();
       return null;
     }
   }
