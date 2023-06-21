@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -59,28 +58,34 @@ class _DeliveryPageState extends State<DeliveryPage>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    provider.deliveryList.isEmpty?const Center(child: Text("Delivery list is empty",style: TextStyle(color: Colors.black),)):
+                    provider.deliveryList.isEmpty
+                        ? const Center(
+                            child: Text(
+                            "Delivery list is empty",
+                            style: TextStyle(color: Colors.black),
+                          ))
+                        : ListView.builder(
+                            physics: const BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics()),
+                            itemCount: provider.deliveryList.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                child: _buildDeliveryItem(index, provider),
+                              );
+                            },
+                          ),
                     ListView.builder(
                       physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics()),
-                      itemCount: provider.deliveryList.length,
+                      itemCount: provider.statusDeliveryList == null
+                          ? 0
+                          : provider.statusDeliveryList!.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          child: _buildDeliveryItem(index, provider),
+                          child: _buildActiveDeliveryItem(index, provider),
                         );
                       },
-                    ),
-                    ListView.builder(
-                      physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                      itemCount: provider.statusDeliveryList == null ? 0: provider.statusDeliveryList!.length,
-                      itemBuilder: (context, index) {
-                    return Container(
-                      child: _buildActiveDeliveryItem(index, provider),
-                    );
-                      },
-                       )
-                    
+                    )
                   ],
                 ),
               );
@@ -91,7 +96,7 @@ class _DeliveryPageState extends State<DeliveryPage>
     );
   }
 
-  Widget _buildActiveDeliveryItem(int index,DeliveryProvider provider) {
+  Widget _buildActiveDeliveryItem(int index, DeliveryProvider provider) {
     // log(provider.statusDeliveryList!.length.toString());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -102,11 +107,12 @@ class _DeliveryPageState extends State<DeliveryPage>
           collapsedIconColor: logogold,
           title: ListTile(
             style: ListTileStyle.list,
-            contentPadding:
-            const EdgeInsets.symmetric(
-                horizontal: 16),
-            leading: Icon(Icons.hail),
-            title: Text("Delivery Completed",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15.sp),),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            leading: const Icon(Icons.hail),
+            title: Text(
+              "Delivery Completed",
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
+            ),
             dense: true,
             onTap: () {
               // Navigator.pushNamed(
@@ -117,153 +123,108 @@ class _DeliveryPageState extends State<DeliveryPage>
           children: [
             SizedBox(
               child: Row(
-                crossAxisAlignment:
-                CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "${index + 1}.  ",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Expanded(
                       child: Container(
-                        decoration: BoxDecoration(
-                            color:
-                            logogold.withOpacity(0.4),
-                            border: Border.all(),
-                            borderRadius:
-                            BorderRadius.circular(
-                                12)),
-                        child: Padding(
-                          padding:
-                          const EdgeInsets.all(2.0),
-                          child: Column(
+                    decoration: BoxDecoration(
+                        color: logogold.withOpacity(0.4),
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment
-                                    .spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons
-                                              .price_change,
+                              Container(
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.price_change,
+                                      color: logoblue,
+                                    ),
+                                    const Text(
+                                      "Fixed Price: ",
+                                      style: TextStyle(
                                           color: logoblue,
-                                        ),
-                                        const Text(
-                                          "Fixed Price: ",
-                                          style: TextStyle(
-                                              color:
-                                              logoblue,
-                                              fontWeight:
-                                              FontWeight
-                                                  .w500),
-                                        ),
-                                        Text(
-                                            "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['fixed_cost']}",
-                                            style: const TextStyle(
-                                                color:
-                                                logoblue,
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500))
-                                      ],
+                                          fontWeight: FontWeight.w500),
                                     ),
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                            Icons
-                                                .price_change,
-                                            color:
-                                            logoblue),
-                                        const Text(
-                                            "Selling Price: ",
-                                            style: TextStyle(
-                                                color:
-                                                logoblue,
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500)),
-                                        Text(
-                                            "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['selling_price']}",
-                                            style: const TextStyle(
-                                                color:
-                                                logoblue,
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500))
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                    Text(
+                                        "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['fixed_cost']}",
+                                        style: const TextStyle(
+                                            color: logoblue,
+                                            fontWeight: FontWeight.w500))
+                                  ],
+                                ),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment
-                                    .spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                            Icons
-                                                .monitor_weight_outlined,
-                                            color:
-                                            logoblue),
-                                        Text("Weight: ",
-                                            style: TextStyle(
-                                                color:
-                                                logoblue,
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500)),
-                                        Text(
-                                            "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['weight']}",
-                                            style: TextStyle(
-                                                color:
-                                                logoblue,
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500))
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                            Icons
-                                                .shopping_bag_outlined,
-                                            color:
-                                            logoblue),
-                                        Text("Quantity: ",
-                                            style: TextStyle(
-                                                color:
-                                                logoblue,
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500)),
-                                        Text(
-                                            "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['qty']}",
-                                            style: TextStyle(
-                                                color:
-                                                logoblue,
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500))
-                                      ],
-                                    ),
-                                  )
-                                ],
+                              Container(
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.price_change,
+                                        color: logoblue),
+                                    const Text("Selling Price: ",
+                                        style: TextStyle(
+                                            color: logoblue,
+                                            fontWeight: FontWeight.w500)),
+                                    Text(
+                                        "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['selling_price']}",
+                                        style: const TextStyle(
+                                            color: logoblue,
+                                            fontWeight: FontWeight.w500))
+                                  ],
+                                ),
                               )
                             ],
                           ),
-                        ),
-                      )),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.monitor_weight_outlined,
+                                        color: logoblue),
+                                    const Text("Weight: ",
+                                        style: TextStyle(
+                                            color: logoblue,
+                                            fontWeight: FontWeight.w500)),
+                                    Text(
+                                        "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['weight']}",
+                                        style: const TextStyle(
+                                            color: logoblue,
+                                            fontWeight: FontWeight.w500))
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.shopping_bag_outlined,
+                                        color: logoblue),
+                                    const Text("Quantity: ",
+                                        style: TextStyle(
+                                            color: logoblue,
+                                            fontWeight: FontWeight.w500)),
+                                    Text(
+                                        "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['qty']}",
+                                        style: const TextStyle(
+                                            color: logoblue,
+                                            fontWeight: FontWeight.w500))
+                                  ],
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  )),
                 ],
               ),
             ),
@@ -381,58 +342,73 @@ class _DeliveryPageState extends State<DeliveryPage>
           collapsedIconColor: logogold,
           title: Column(
             children: [
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Container(
+              //       child: Row(
+              //         children: [
+              //           const Icon(Icons.price_change),
+              //           const Text("Fixed Price: "),
+              //           Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['fixed_cost']}")
+              //         ],
+              //       ),
+              //     ),
+              //
+              // Container(
+              //       child: Row(
+              //         children: [
+              //           const Icon(Icons.price_change),
+              //           const Text("Selling Price: "),
+              //           Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['selling_price']}")
+              //         ],
+              //       ),
+              //     )
+              //   ],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Container(
+              //       child: Row(
+              //         children: [
+              //           const Icon(Icons.monitor_weight_outlined),
+              //           const Text("Weight: "),
+              //           Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['weight']}")
+              //         ],
+              //       ),
+              //     ),
+              //     Container(
+              //       child: Row(
+              //         children: [
+              //           const Icon(Icons.shopping_bag_outlined),
+              //           const Text("Quantity: "),
+              //           Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['qty']}")
+              //         ],
+              //       ),
+              //     )
+              //   ],
+              // )
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.price_change),
-                        Text("Fixed Price: "),
-                        Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['fixed_cost']}")
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.price_change),
-                        Text("Selling Price: "),
-                        Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['selling_price']}")
-                      ],
-                    ),
-                  )
+                  Icon(Icons.people),
+                  Text(provider.deliveryList[index].recipientName21!),
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.monitor_weight_outlined),
-                        Text("Weight: "),
-                        Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['weight']}")
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.shopping_bag_outlined),
-                        Text("Quantity: "),
-                        Text("${deliveryProvider.productInfoMapMaker(provider.deliveryList[index].productInfo4!.toString())[0]['qty']}")
-                      ],
-                    ),
-                  )
+                  Icon(Icons.phone),
+                  Text(provider.deliveryList[index].recipientPhone20!),
                 ],
-              )
+              ),
             ],
           ),
           subtitle: Row(
             children: [
-              Icon(Icons.location_on_outlined),
-              Expanded(child: Text(provider.deliveryList[index].recipientAddress24!)),
+              const Icon(Icons.location_on_outlined),
+              Expanded(
+                  child:
+                      Text(provider.deliveryList[index].recipientAddress24!)),
             ],
           ),
           children: [
@@ -442,180 +418,216 @@ class _DeliveryPageState extends State<DeliveryPage>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black,
-                        width: 0.5,
-                      ),
-                    )),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  // Container(
+                  //   decoration: const BoxDecoration(
+                  //       border: Border(
+                  //     bottom: BorderSide(
+                  //       color: Colors.black,
+                  //       width: 0.5,
+                  //     ),
+                  //   )),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+                  //     child: Column(
+                  //       mainAxisAlignment: MainAxisAlignment.start,
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         const Text('Branch Address'),
+                  //         Row(
+                  //           children: [
+                  //             Icon(
+                  //               Icons.location_pin,
+                  //               size: 22.sp,
+                  //             ),
+                  //             Expanded(
+                  //                 child: Text(
+                  //                 provider.deliveryList[index].senderAddress9!,
+                  //               style: TextStyle(fontSize: 18.sp),
+                  //             ))
+                  //           ],
+                  //         ),
+                  //         SizedBox(
+                  //           height: 10.h,
+                  //         ),
+                  //         const Text('User Address'),
+                  //         Row(
+                  //           children: [
+                  //             Icon(
+                  //               Icons.location_pin,
+                  //               size: 22.sp,
+                  //             ),
+                  //             Expanded(
+                  //                 child: Text(
+                  //               (provider.deliveryList[index].recipientAddress24!),
+                  //               style: TextStyle(fontSize: 18.sp),
+                  //             ))
+                  //           ],
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // Container(
+                  //   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                  //   decoration: const BoxDecoration(
+                  //       border: Border(
+                  //     bottom: BorderSide(
+                  //       color: Colors.black,
+                  //       width: 0.5,
+                  //     ),
+                  //   )),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //           child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.start,
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           const Text('Collection Time'),
+                  //           Row(
+                  //             children: [
+                  //               Icon(
+                  //                 Icons.access_time,
+                  //                 size: 22.sp,
+                  //               ),
+                  //               SizedBox(
+                  //                 width: 8.w,
+                  //               ),
+                  //               Text(provider.deliveryList[index].deliveryBoyDate!.toString().substring(0, 10),
+                  //                   style: TextStyle(
+                  //                       fontSize: 18.sp, color: Colors.black))
+                  //             ],
+                  //           )
+                  //         ],
+                  //       )),
+                  //       Expanded(
+                  //           child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.start,
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           const Text('Delivery Time'),
+                  //           SizedBox(
+                  //             width: 8.w,
+                  //           ),
+                  //           Row(
+                  //             children: [
+                  //               Icon(
+                  //                 Icons.access_time,
+                  //                 size: 22.sp,
+                  //               ),
+                  //               Text(provider.deliveryList[index].deliveryDate!.toString().substring(0, 10),
+                  //                   style: TextStyle(
+                  //                       fontSize: 18.sp, color: Colors.black))
+                  //             ],
+                  //           )
+                  //         ],
+                  //       ))
+                  //     ],
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 15.h,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     // SizedBox(
+                  //     //   height: 30.h,
+                  //     //   // width: 115.w,
+                  //     //   child: ElevatedButton(
+                  //     //     style: ElevatedButton.styleFrom(
+                  //     //       backgroundColor: const Color(0xFF01B075),
+                  //     //       shape: RoundedRectangleBorder(
+                  //     //         borderRadius:
+                  //     //             BorderRadius.circular(8), // <-- Radius
+                  //     //       ),
+                  //     //     ),
+                  //     //     onPressed: () {
+                  //     //       setState(() {});
+                  //     //     },
+                  //     //     child: Text(
+                  //     //       'Partial Delivery',
+                  //     //       style: TextStyle(fontSize: 14.sp),
+                  //     //     ),
+                  //     //   ),
+                  //     // ),
+                  //     SizedBox(
+                  //       height: 30.h,
+                  //       child: ElevatedButton(
+                  //         style: ElevatedButton.styleFrom(
+                  //           backgroundColor: logoblue,
+                  //           shape: RoundedRectangleBorder(
+                  //             borderRadius:
+                  //                 BorderRadius.circular(8), // <-- Radius
+                  //           ),
+                  //         ),
+                  //         onPressed: () {
+                  //           setState(() {});
+                  //         },
+                  //         child: Text(
+                  //           'Full Delivery',
+                  //           style: TextStyle(fontSize: 14.sp),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       height: 30.h,
+                  //       child: ElevatedButton(
+                  //         style: ElevatedButton.styleFrom(
+                  //           backgroundColor: Colors.red,
+                  //           shape: RoundedRectangleBorder(
+                  //             borderRadius:
+                  //                 BorderRadius.circular(8), // <-- Radius
+                  //           ),
+                  //         ),
+                  //         onPressed: () {
+                  //           setState(() {});
+                  //         },
+                  //         child: Text(
+                  //           'Return',
+                  //           style: TextStyle(fontSize: 14.sp),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )
+                  Column(
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         children: [
-                          const Text('Branch Address'),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_pin,
-                                size: 22.sp,
-                              ),
-                              Expanded(
-                                  child: Text(
-                                  provider.deliveryList[index].senderAddress9!,
-                                style: TextStyle(fontSize: 18.sp),
-                              ))
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          const Text('User Address'),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_pin,
-                                size: 22.sp,
-                              ),
-                              Expanded(
-                                  child: Text(
-                                (provider.deliveryList[index].recipientAddress24!),
-                                style: TextStyle(fontSize: 18.sp),
-                              ))
-                            ],
-                          )
+                          Icon(Icons.numbers),
+                          Text(provider.deliveryList[index].merchantInvoice != null
+                              ? 'Invoice No: ' +
+                                  provider.deliveryList[index].merchantInvoice!
+                              : 'Invoice No: N/A'),
                         ],
                       ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black,
-                        width: 0.5,
+                      Row(
+                        children: [
+                          Icon(Icons.ev_station),
+                          Text(provider.deliveryList[index].currentBranch!.branch != null
+                              ? 'Merchant Branch: ' +
+                                  provider.deliveryList[index].currentBranch!.branch.toString().substring(11)
+                              : 'Invoice No: N/A'),
+                        ],
                       ),
-                    )),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Collection Time'),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.access_time,
-                                  size: 22.sp,
-                                ),
-                                SizedBox(
-                                  width: 8.w,
-                                ),
-                                Text(provider.deliveryList[index].deliveryBoyDate!.toString().substring(0, 10),
-                                    style: TextStyle(
-                                        fontSize: 18.sp, color: Colors.black))
-                              ],
-                            )
-                          ],
-                        )),
-                        Expanded(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Delivery Time'),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.access_time,
-                                  size: 22.sp,
-                                ),
-                                Text(provider.deliveryList[index].deliveryDate!.toString().substring(0, 10),
-                                    style: TextStyle(
-                                        fontSize: 18.sp, color: Colors.black))
-                              ],
-                            )
-                          ],
-                        ))
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // SizedBox(
-                      //   height: 30.h,
-                      //   // width: 115.w,
-                      //   child: ElevatedButton(
-                      //     style: ElevatedButton.styleFrom(
-                      //       backgroundColor: const Color(0xFF01B075),
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius:
-                      //             BorderRadius.circular(8), // <-- Radius
-                      //       ),
-                      //     ),
-                      //     onPressed: () {
-                      //       setState(() {});
-                      //     },
-                      //     child: Text(
-                      //       'Partial Delivery',
-                      //       style: TextStyle(fontSize: 14.sp),
-                      //     ),
-                      //   ),
-                      // ),
-                      SizedBox(
-                        height: 30.h,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: logoblue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8), // <-- Radius
-                            ),
+                          Row(
+                            children: [
+                              Icon(Icons.phone),
+                              Text(provider.deliveryList[index].senderPhone5 != null ? provider.deliveryList[index].senderPhone5! : "N/A"),
+                            ],
                           ),
-                          onPressed: () {
-                            setState(() {});
-                          },
-                          child: Text(
-                            'Full Delivery',
-                            style: TextStyle(fontSize: 14.sp),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30.h,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8), // <-- Radius
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {});
-                          },
-                          child: Text(
-                            'Return',
-                            style: TextStyle(fontSize: 14.sp),
-                          ),
-                        ),
-                      ),
+                          Row(
+                            children: [
+                              Icon(Icons.money),
+                              Text(provider.deliveryList[index].collectionAmount != null ?provider.deliveryList[index].collectionAmount!.toString(): 'N/A'),
+                            ],
+                          )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

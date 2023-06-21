@@ -22,7 +22,8 @@ class DeliveryResponse {
       'Content-Type': 'application/x-www-form-urlencoded'
     };
     var request = http.Request(
-        'POST', Uri.parse('http://starxpress.online/api/rider_delivery_list'));
+        // 'POST', Uri.parse('http://starxpress.online/api/rider_delivery_list'));
+        'POST', Uri.parse('http://apps.starxpress.online/api/rider_delivery_list'));
     request.bodyFields = {'rider_user_id': id};
     request.headers.addAll(headers);
 
@@ -47,7 +48,8 @@ class DeliveryResponse {
       'Content-Type': 'application/x-www-form-urlencoded'
     };
     var request = http.Request('POST',
-        Uri.parse('http://starxpress.online/api/rider_delivery_status_list'));
+        // Uri.parse('http://starxpress.online/api/rider_delivery_status_list'));
+        Uri.parse('http://apps.starxpress.online/api/rider_delivery_status_list'));
     request.bodyFields = {'rider_user_id': '${await SharedPref().getString(USER_ID)}'};
     request.headers.addAll(headers);
 
