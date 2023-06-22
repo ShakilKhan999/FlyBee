@@ -1,3 +1,6 @@
+// To parse this JSON data, do
+//
+//     final deliveryModel = deliveryModelFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -35,21 +38,21 @@ class AssignDeliveryList {
     dynamic totalCost6;
     dynamic collectionAmount7;
     int? iPaymentType8;
-    SenderCategory1? senderCategory1;
-    PickupType2? pickupType2;
+    String? senderCategory1;
+    String? pickupType2;
     DateTime? pickupDate3;
     String? senderRefNo4;
     String? senderPhone5;
-    SenderName6? senderName6;
-    dynamic senderClientId7;
+    String? senderName6;
+    int? senderClientId7;
     dynamic senderClientBranchId8;
     String? senderAddress9;
     int? senderCountryId10;
     int? senderDivisionId11;
     int? senderDistrictId12;
     int? senderUpazilaId13;
-    RecipientCategory14? recipientCategory14;
-    DeliveryType15? deliveryType15;
+    String? recipientCategory14;
+    String? deliveryType15;
     int? iPackagingTypeId16;
     int? iShipmentMethodId17;
     int? iDeliveryStatusId18;
@@ -64,7 +67,7 @@ class AssignDeliveryList {
     int? recipientDistrictId27;
     int? recipientUpazilaId28;
     dynamic recipientBranchId29;
-    ISmsTemplateId30? iSmsTemplateId30;
+    String? iSmsTemplateId30;
     int? isTrackByRec;
     int? deliveryCostAmount;
     int? collectionAmount;
@@ -75,7 +78,7 @@ class AssignDeliveryList {
     int? merchantAmount;
     dynamic withdrawMerchantAmount;
     dynamic merchantToPayableUserId;
-    dynamic amountToWallet;
+    int? amountToWallet;
     dynamic amountFromWallet;
     dynamic trxIds;
     int? deliveryBoyId;
@@ -86,15 +89,15 @@ class AssignDeliveryList {
     dynamic pickupStatus;
     int? pickupCostPercent;
     int? pickupCostAmount;
-    dynamic pickupRiderAmount;
+    int? pickupRiderAmount;
     dynamic pickupWithdrawRiderAmount;
     dynamic pickupToPayableUserId;
-    dynamic pickupBoyId;
+    int? pickupBoyId;
     dynamic pickupBoyArea;
     DateTime? pickupBoyDate;
-    dynamic pickupDate;
+    DateTime? pickupDate;
     dynamic pickupBranchId;
-    dynamic deliveryRiderAmount;
+    int? deliveryRiderAmount;
     dynamic deliveryWithdrawRiderAmount;
     dynamic deliveryToPayableUserId;
     dynamic payableAmountToBranch;
@@ -103,7 +106,7 @@ class AssignDeliveryList {
     dynamic payableToCentralBranchUserId;
     int? iRelationId;
     String? iRelationPerson;
-    int? iReturnCauseId;
+    dynamic iReturnCauseId;
     String? uniqueUploadId;
     dynamic customerNo;
     int? currentBranchId;
@@ -117,15 +120,15 @@ class AssignDeliveryList {
     dynamic modifier;
     DeliveryBoyId? assignDeliveryListDeliveryBoyId;
     IRelation? iRelation;
-    IReturnCause? iReturnCause;
-    ServicesClass? services;
-    IProductTypeClass? iProductType;
-    IPriorityClass? iPriority;
-    IPaymentTypeClass? iPaymentType;
-    IPackagingTypeClass? iPackagingType;
-    IShipmentMethodClass? iShipmentMethod;
-    IDeliveryStatusClass? iDeliveryStatus;
-    ITrackingStatusClass? iTrackingStatus;
+    dynamic iReturnCause;
+    Services? services;
+    IProductType? iProductType;
+    IPriority? iPriority;
+    IPaymentType? iPaymentType;
+    IPackagingType? iPackagingType;
+    IShipmentMethod? iShipmentMethod;
+    IDeliveryStatus? iDeliveryStatus;
+    ITrackingStatus? iTrackingStatus;
     Branch? currentBranch;
     Branch? createdBranch;
     Creator1? creator1;
@@ -246,12 +249,12 @@ class AssignDeliveryList {
         totalCost6: json["total_cost_6"],
         collectionAmount7: json["collection_amount_7"],
         iPaymentType8: json["i_payment_type_8"],
-        senderCategory1: senderCategory1Values.map[json["sender_category_1"]]!,
-        pickupType2: pickupType2Values.map[json["pickup_type_2"]]!,
+        senderCategory1: json["sender_category_1"],
+        pickupType2: json["pickup_type_2"],
         pickupDate3: json["pickup_date_3"] == null ? null : DateTime.parse(json["pickup_date_3"]),
         senderRefNo4: json["sender_ref_no_4"],
         senderPhone5: json["sender_phone_5"],
-        senderName6: senderName6Values.map[json["sender_name_6"]]!,
+        senderName6: json["sender_name_6"],
         senderClientId7: json["sender_client_id_7"],
         senderClientBranchId8: json["sender_client_branch_id_8"],
         senderAddress9: json["sender_address_9"],
@@ -259,8 +262,8 @@ class AssignDeliveryList {
         senderDivisionId11: json["sender_division_id_11"],
         senderDistrictId12: json["sender_district_id_12"],
         senderUpazilaId13: json["sender_upazila_id_13"],
-        recipientCategory14: recipientCategory14Values.map[json["recipient_category_14"]]!,
-        deliveryType15: deliveryType15Values.map[json["delivery_type_15"]]!,
+        recipientCategory14: json["recipient_category_14"],
+        deliveryType15: json["delivery_type_15"],
         iPackagingTypeId16: json["i_packaging_type_id_16"],
         iShipmentMethodId17: json["i_shipment_method_id_17"],
         iDeliveryStatusId18: json["i_delivery_status_id_18"],
@@ -275,7 +278,7 @@ class AssignDeliveryList {
         recipientDistrictId27: json["recipient_district_id_27"],
         recipientUpazilaId28: json["recipient_upazila_id_28"],
         recipientBranchId29: json["recipient_branch_id_29"],
-        iSmsTemplateId30: iSmsTemplateId30Values.map[json["i_sms_template_id_30"]]!,
+        iSmsTemplateId30: json["i_sms_template_id_30"],
         isTrackByRec: json["is_track_by_rec"],
         deliveryCostAmount: json["delivery_cost_amount"],
         collectionAmount: json["collection_amount"],
@@ -303,7 +306,7 @@ class AssignDeliveryList {
         pickupBoyId: json["pickup_boy_id"],
         pickupBoyArea: json["pickup_boy_area"],
         pickupBoyDate: json["pickup_boy_date"] == null ? null : DateTime.parse(json["pickup_boy_date"]),
-        pickupDate: json["pickup_date"],
+        pickupDate: json["pickup_date"] == null ? null : DateTime.parse(json["pickup_date"]),
         pickupBranchId: json["pickup_branch_id"],
         deliveryRiderAmount: json["delivery_rider_amount"],
         deliveryWithdrawRiderAmount: json["delivery_withdraw_rider_amount"],
@@ -328,15 +331,15 @@ class AssignDeliveryList {
         modifier: json["modifier"],
         assignDeliveryListDeliveryBoyId: json["delivery_boy_id_"] == null ? null : DeliveryBoyId.fromJson(json["delivery_boy_id_"]),
         iRelation: json["i_relation"] == null ? null : IRelation.fromJson(json["i_relation"]),
-        iReturnCause: json["i_return_cause"] == null ? null : IReturnCause.fromJson(json["i_return_cause"]),
-        services: json["services"] == null ? null : ServicesClass.fromJson(json["services"]),
-        iProductType: json["i_product_type"] == null ? null : IProductTypeClass.fromJson(json["i_product_type"]),
-        iPriority: json["i_priority"] == null ? null : IPriorityClass.fromJson(json["i_priority"]),
-        iPaymentType: json["i_payment_type"] == null ? null : IPaymentTypeClass.fromJson(json["i_payment_type"]),
-        iPackagingType: json["i_packaging_type"] == null ? null : IPackagingTypeClass.fromJson(json["i_packaging_type"]),
-        iShipmentMethod: json["i_shipment_method"] == null ? null : IShipmentMethodClass.fromJson(json["i_shipment_method"]),
-        iDeliveryStatus: json["i_delivery_status"] == null ? null : IDeliveryStatusClass.fromJson(json["i_delivery_status"]),
-        iTrackingStatus: json["i_tracking_status"] == null ? null : ITrackingStatusClass.fromJson(json["i_tracking_status"]),
+        iReturnCause: json["i_return_cause"],
+        services: json["services"] == null ? null : Services.fromJson(json["services"]),
+        iProductType: json["i_product_type"] == null ? null : IProductType.fromJson(json["i_product_type"]),
+        iPriority: json["i_priority"] == null ? null : IPriority.fromJson(json["i_priority"]),
+        iPaymentType: json["i_payment_type"] == null ? null : IPaymentType.fromJson(json["i_payment_type"]),
+        iPackagingType: json["i_packaging_type"] == null ? null : IPackagingType.fromJson(json["i_packaging_type"]),
+        iShipmentMethod: json["i_shipment_method"] == null ? null : IShipmentMethod.fromJson(json["i_shipment_method"]),
+        iDeliveryStatus: json["i_delivery_status"] == null ? null : IDeliveryStatus.fromJson(json["i_delivery_status"]),
+        iTrackingStatus: json["i_tracking_status"] == null ? null : ITrackingStatus.fromJson(json["i_tracking_status"]),
         currentBranch: json["current_branch"] == null ? null : Branch.fromJson(json["current_branch"]),
         createdBranch: json["created_branch_"] == null ? null : Branch.fromJson(json["created_branch_"]),
         creator1: json["creator1_"] == null ? null : Creator1.fromJson(json["creator1_"]),
@@ -352,12 +355,12 @@ class AssignDeliveryList {
         "total_cost_6": totalCost6,
         "collection_amount_7": collectionAmount7,
         "i_payment_type_8": iPaymentType8,
-        "sender_category_1": senderCategory1Values.reverse[senderCategory1],
-        "pickup_type_2": pickupType2Values.reverse[pickupType2],
+        "sender_category_1": senderCategory1,
+        "pickup_type_2": pickupType2,
         "pickup_date_3": "${pickupDate3!.year.toString().padLeft(4, '0')}-${pickupDate3!.month.toString().padLeft(2, '0')}-${pickupDate3!.day.toString().padLeft(2, '0')}",
         "sender_ref_no_4": senderRefNo4,
         "sender_phone_5": senderPhone5,
-        "sender_name_6": senderName6Values.reverse[senderName6],
+        "sender_name_6": senderName6,
         "sender_client_id_7": senderClientId7,
         "sender_client_branch_id_8": senderClientBranchId8,
         "sender_address_9": senderAddress9,
@@ -365,8 +368,8 @@ class AssignDeliveryList {
         "sender_division_id_11": senderDivisionId11,
         "sender_district_id_12": senderDistrictId12,
         "sender_upazila_id_13": senderUpazilaId13,
-        "recipient_category_14": recipientCategory14Values.reverse[recipientCategory14],
-        "delivery_type_15": deliveryType15Values.reverse[deliveryType15],
+        "recipient_category_14": recipientCategory14,
+        "delivery_type_15": deliveryType15,
         "i_packaging_type_id_16": iPackagingTypeId16,
         "i_shipment_method_id_17": iShipmentMethodId17,
         "i_delivery_status_id_18": iDeliveryStatusId18,
@@ -381,7 +384,7 @@ class AssignDeliveryList {
         "recipient_district_id_27": recipientDistrictId27,
         "recipient_upazila_id_28": recipientUpazilaId28,
         "recipient_branch_id_29": recipientBranchId29,
-        "i_sms_template_id_30": iSmsTemplateId30Values.reverse[iSmsTemplateId30],
+        "i_sms_template_id_30": iSmsTemplateId30,
         "is_track_by_rec": isTrackByRec,
         "delivery_cost_amount": deliveryCostAmount,
         "collection_amount": collectionAmount,
@@ -409,7 +412,7 @@ class AssignDeliveryList {
         "pickup_boy_id": pickupBoyId,
         "pickup_boy_area": pickupBoyArea,
         "pickup_boy_date": "${pickupBoyDate!.year.toString().padLeft(4, '0')}-${pickupBoyDate!.month.toString().padLeft(2, '0')}-${pickupBoyDate!.day.toString().padLeft(2, '0')}",
-        "pickup_date": pickupDate,
+        "pickup_date": "${pickupDate!.year.toString().padLeft(4, '0')}-${pickupDate!.month.toString().padLeft(2, '0')}-${pickupDate!.day.toString().padLeft(2, '0')}",
         "pickup_branch_id": pickupBranchId,
         "delivery_rider_amount": deliveryRiderAmount,
         "delivery_withdraw_rider_amount": deliveryWithdrawRiderAmount,
@@ -434,7 +437,7 @@ class AssignDeliveryList {
         "modifier": modifier,
         "delivery_boy_id_": assignDeliveryListDeliveryBoyId?.toJson(),
         "i_relation": iRelation?.toJson(),
-        "i_return_cause": iReturnCause?.toJson(),
+        "i_return_cause": iReturnCause,
         "services": services?.toJson(),
         "i_product_type": iProductType?.toJson(),
         "i_priority": iPriority?.toJson(),
@@ -470,173 +473,116 @@ class DeliveryBoyId {
 }
 
 class Branch {
-    BranchEnum? branch;
+    String? branch;
 
     Branch({
         this.branch,
     });
 
     factory Branch.fromJson(Map<String, dynamic> json) => Branch(
-        branch: branchEnumValues.map[json["branch"]]!,
+        branch: json["branch"],
     );
 
     Map<String, dynamic> toJson() => {
-        "branch": branchEnumValues.reverse[branch],
+        "branch": branch,
     };
 }
 
-enum BranchEnum { DHAKA_CENTRAL_HUB }
-
-final branchEnumValues = EnumValues({
-    "Dhaka (Central Hub)": BranchEnum.DHAKA_CENTRAL_HUB
-});
-
 class Creator1 {
-    SenderName6? userName;
+    String? userName;
 
     Creator1({
         this.userName,
     });
 
     factory Creator1.fromJson(Map<String, dynamic> json) => Creator1(
-        userName: senderName6Values.map[json["userName"]]!,
+        userName: json["userName"],
     );
 
     Map<String, dynamic> toJson() => {
-        "userName": senderName6Values.reverse[userName],
+        "userName": userName,
     };
 }
 
-enum SenderName6 { BEFORE_BEAUTY, JOVIAL_THERAPY_BY_ESA, CHIA_SEED, AR_24_SHOP, ANUSHA, DAAMKOM24, QSS_FAMILY_BAZAR, RONY_GMAIL_COM }
+class IDeliveryStatus {
+    String? iDeliveryStatus;
 
-final senderName6Values = EnumValues({
-    "Anusha": SenderName6.ANUSHA,
-    "AR 24 shop": SenderName6.AR_24_SHOP,
-    "Before Beauty\t": SenderName6.BEFORE_BEAUTY,
-    "Chia seed": SenderName6.CHIA_SEED,
-    "DAAMKOM24": SenderName6.DAAMKOM24,
-    "Jovial therapy by esa": SenderName6.JOVIAL_THERAPY_BY_ESA,
-    "QSS Family Bazar": SenderName6.QSS_FAMILY_BAZAR,
-    "rony@gmail.com": SenderName6.RONY_GMAIL_COM
-});
-
-enum DeliveryType15 { HOME_DELIVERY }
-
-final deliveryType15Values = EnumValues({
-    "home_delivery": DeliveryType15.HOME_DELIVERY
-});
-
-class IDeliveryStatusClass {
-    IDeliveryStatusEnum? iDeliveryStatus;
-
-    IDeliveryStatusClass({
+    IDeliveryStatus({
         this.iDeliveryStatus,
     });
 
-    factory IDeliveryStatusClass.fromJson(Map<String, dynamic> json) => IDeliveryStatusClass(
-        iDeliveryStatus: iDeliveryStatusEnumValues.map[json["i_delivery_status"]]!,
+    factory IDeliveryStatus.fromJson(Map<String, dynamic> json) => IDeliveryStatus(
+        iDeliveryStatus: json["i_delivery_status"],
     );
 
     Map<String, dynamic> toJson() => {
-        "i_delivery_status": iDeliveryStatusEnumValues.reverse[iDeliveryStatus],
+        "i_delivery_status": iDeliveryStatus,
     };
 }
 
-enum IDeliveryStatusEnum { OUT_FOR_DELIVERY }
+class IPackagingType {
+    String? iPackagingType;
 
-final iDeliveryStatusEnumValues = EnumValues({
-    "Out For Delivery": IDeliveryStatusEnum.OUT_FOR_DELIVERY
-});
-
-class IPackagingTypeClass {
-    IPackagingTypeEnum? iPackagingType;
-
-    IPackagingTypeClass({
+    IPackagingType({
         this.iPackagingType,
     });
 
-    factory IPackagingTypeClass.fromJson(Map<String, dynamic> json) => IPackagingTypeClass(
-        iPackagingType: iPackagingTypeEnumValues.map[json["i_packaging_type"]]!,
+    factory IPackagingType.fromJson(Map<String, dynamic> json) => IPackagingType(
+        iPackagingType: json["i_packaging_type"],
     );
 
     Map<String, dynamic> toJson() => {
-        "i_packaging_type": iPackagingTypeEnumValues.reverse[iPackagingType],
+        "i_packaging_type": iPackagingType,
     };
 }
 
-enum IPackagingTypeEnum { LARGE }
+class IPaymentType {
+    String? iPaymentType;
 
-final iPackagingTypeEnumValues = EnumValues({
-    "Large": IPackagingTypeEnum.LARGE
-});
-
-class IPaymentTypeClass {
-    IPaymentTypeEnum? iPaymentType;
-
-    IPaymentTypeClass({
+    IPaymentType({
         this.iPaymentType,
     });
 
-    factory IPaymentTypeClass.fromJson(Map<String, dynamic> json) => IPaymentTypeClass(
-        iPaymentType: iPaymentTypeEnumValues.map[json["i_payment_type"]]!,
+    factory IPaymentType.fromJson(Map<String, dynamic> json) => IPaymentType(
+        iPaymentType: json["i_payment_type"],
     );
 
     Map<String, dynamic> toJson() => {
-        "i_payment_type": iPaymentTypeEnumValues.reverse[iPaymentType],
+        "i_payment_type": iPaymentType,
     };
 }
 
-enum IPaymentTypeEnum { COD }
+class IPriority {
+    String? iPriority;
 
-final iPaymentTypeEnumValues = EnumValues({
-    "COD": IPaymentTypeEnum.COD
-});
-
-class IPriorityClass {
-    IPriorityEnum? iPriority;
-
-    IPriorityClass({
+    IPriority({
         this.iPriority,
     });
 
-    factory IPriorityClass.fromJson(Map<String, dynamic> json) => IPriorityClass(
-        iPriority: iPriorityEnumValues.map[json["i_priority"]]!,
+    factory IPriority.fromJson(Map<String, dynamic> json) => IPriority(
+        iPriority: json["i_priority"],
     );
 
     Map<String, dynamic> toJson() => {
-        "i_priority": iPriorityEnumValues.reverse[iPriority],
+        "i_priority": iPriority,
     };
 }
 
-enum IPriorityEnum { GENERAL }
+class IProductType {
+    String? iProductType;
 
-final iPriorityEnumValues = EnumValues({
-    "General": IPriorityEnum.GENERAL
-});
-
-class IProductTypeClass {
-    IProductTypeEnum? iProductType;
-
-    IProductTypeClass({
+    IProductType({
         this.iProductType,
     });
 
-    factory IProductTypeClass.fromJson(Map<String, dynamic> json) => IProductTypeClass(
-        iProductType: iProductTypeEnumValues.map[json["i_product_type"]]!,
+    factory IProductType.fromJson(Map<String, dynamic> json) => IProductType(
+        iProductType: json["i_product_type"],
     );
 
     Map<String, dynamic> toJson() => {
-        "i_product_type": iProductTypeEnumValues.reverse[iProductType],
+        "i_product_type": iProductType,
     };
 }
-
-enum IProductTypeEnum { CUSTOMER_DOCUMENT, GIFT_ITEM, COSMETICS }
-
-final iProductTypeEnumValues = EnumValues({
-    "Cosmetics": IProductTypeEnum.COSMETICS,
-    "Customer Document": IProductTypeEnum.CUSTOMER_DOCUMENT,
-    "Gift Item": IProductTypeEnum.GIFT_ITEM
-});
 
 class IRelation {
     String? iRelation;
@@ -654,122 +600,50 @@ class IRelation {
     };
 }
 
-class IReturnCause {
-    String? iReturnCause;
+class IShipmentMethod {
+    String? iShipmentMethod;
 
-    IReturnCause({
-        this.iReturnCause,
-    });
-
-    factory IReturnCause.fromJson(Map<String, dynamic> json) => IReturnCause(
-        iReturnCause: json["i_return_cause"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "i_return_cause": iReturnCause,
-    };
-}
-
-class IShipmentMethodClass {
-    IShipmentMethodEnum? iShipmentMethod;
-
-    IShipmentMethodClass({
+    IShipmentMethod({
         this.iShipmentMethod,
     });
 
-    factory IShipmentMethodClass.fromJson(Map<String, dynamic> json) => IShipmentMethodClass(
-        iShipmentMethod: iShipmentMethodEnumValues.map[json["i_shipment_method"]]!,
+    factory IShipmentMethod.fromJson(Map<String, dynamic> json) => IShipmentMethod(
+        iShipmentMethod: json["i_shipment_method"],
     );
 
     Map<String, dynamic> toJson() => {
-        "i_shipment_method": iShipmentMethodEnumValues.reverse[iShipmentMethod],
+        "i_shipment_method": iShipmentMethod,
     };
 }
 
-enum IShipmentMethodEnum { REGULAR }
+class ITrackingStatus {
+    String? iTrackingStatus;
 
-final iShipmentMethodEnumValues = EnumValues({
-    "Regular": IShipmentMethodEnum.REGULAR
-});
-
-enum ISmsTemplateId30 { EMPTY, THE_1245 }
-
-final iSmsTemplateId30Values = EnumValues({
-    "": ISmsTemplateId30.EMPTY,
-    "1,2,4,5": ISmsTemplateId30.THE_1245
-});
-
-class ITrackingStatusClass {
-    ITrackingStatusEnum? iTrackingStatus;
-
-    ITrackingStatusClass({
+    ITrackingStatus({
         this.iTrackingStatus,
     });
 
-    factory ITrackingStatusClass.fromJson(Map<String, dynamic> json) => ITrackingStatusClass(
-        iTrackingStatus: iTrackingStatusEnumValues.map[json["i_tracking_status"]]!,
+    factory ITrackingStatus.fromJson(Map<String, dynamic> json) => ITrackingStatus(
+        iTrackingStatus: json["i_tracking_status"],
     );
 
     Map<String, dynamic> toJson() => {
-        "i_tracking_status": iTrackingStatusEnumValues.reverse[iTrackingStatus],
+        "i_tracking_status": iTrackingStatus,
     };
 }
 
-enum ITrackingStatusEnum { ORDER_PLACED }
+class Services {
+    String? services;
 
-final iTrackingStatusEnumValues = EnumValues({
-    "Order placed": ITrackingStatusEnum.ORDER_PLACED
-});
-
-enum PickupType2 { BRANCH_PICKUP }
-
-final pickupType2Values = EnumValues({
-    "branch_pickup": PickupType2.BRANCH_PICKUP
-});
-
-enum RecipientCategory14 { GENERAL_RECIPIENT }
-
-final recipientCategory14Values = EnumValues({
-    "general_recipient": RecipientCategory14.GENERAL_RECIPIENT
-});
-
-enum SenderCategory1 { GENERAL_SENDER }
-
-final senderCategory1Values = EnumValues({
-    "general_sender": SenderCategory1.GENERAL_SENDER
-});
-
-class ServicesClass {
-    ServicesEnum? services;
-
-    ServicesClass({
+    Services({
         this.services,
     });
 
-    factory ServicesClass.fromJson(Map<String, dynamic> json) => ServicesClass(
-        services: servicesEnumValues.map[json["services"]]!,
+    factory Services.fromJson(Map<String, dynamic> json) => Services(
+        services: json["services"],
     );
 
     Map<String, dynamic> toJson() => {
-        "services": servicesEnumValues.reverse[services],
+        "services": services,
     };
-}
-
-enum ServicesEnum { E_COMMERCE_SERVICE, PARCEL }
-
-final servicesEnumValues = EnumValues({
-    "E-commerce Service": ServicesEnum.E_COMMERCE_SERVICE,
-    "Parcel ": ServicesEnum.PARCEL
-});
-
-class EnumValues<T> {
-    Map<String, T> map;
-    late Map<T, String> reverseMap;
-
-    EnumValues(this.map);
-
-    Map<T, String> get reverse {
-        reverseMap = map.map((k, v) => MapEntry(v, k));
-        return reverseMap;
-    }
 }

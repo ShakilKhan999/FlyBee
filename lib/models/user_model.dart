@@ -26,8 +26,8 @@ class UserModel {
     int? isSetupConf;
     String? userType;
     List<SenderZoneDistrict>? senderZoneDistricts;
-    int? deliveryCostPackagesIdF;
-    DeliveryCostPackages? deliveryCostPackages;
+    dynamic deliveryCostPackagesIdF;
+    String? deliveryCostPackages;
 
     UserModel({
         this.success,
@@ -70,7 +70,7 @@ class UserModel {
         userType: json["user_type"],
         senderZoneDistricts: json["sender_zone_districts"] == null ? [] : List<SenderZoneDistrict>.from(json["sender_zone_districts"]!.map((x) => SenderZoneDistrict.fromJson(x))),
         deliveryCostPackagesIdF: json["delivery_cost_packages_id_f"],
-        deliveryCostPackages: json["delivery_cost_packages"] == null ? null : DeliveryCostPackages.fromJson(json["delivery_cost_packages"]),
+        deliveryCostPackages: json["delivery_cost_packages"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -92,7 +92,7 @@ class UserModel {
         "user_type": userType,
         "sender_zone_districts": senderZoneDistricts == null ? [] : List<dynamic>.from(senderZoneDistricts!.map((x) => x.toJson())),
         "delivery_cost_packages_id_f": deliveryCostPackagesIdF,
-        "delivery_cost_packages": deliveryCostPackages?.toJson(),
+        "delivery_cost_packages": deliveryCostPackages,
     };
 }
 
@@ -116,46 +116,6 @@ class Branch {
     };
 }
 
-class DeliveryCostPackages {
-    String? packageName;
-    int? insideDhakaFirstKg;
-    int? insideDhakaAdditionalKg;
-    int? subDhakaFirstKg;
-    int? subDhakaAdditionalKg;
-    int? outsideDhakaFirstKg;
-    int? outsideDhakaAdditionalKg;
-
-    DeliveryCostPackages({
-        this.packageName,
-        this.insideDhakaFirstKg,
-        this.insideDhakaAdditionalKg,
-        this.subDhakaFirstKg,
-        this.subDhakaAdditionalKg,
-        this.outsideDhakaFirstKg,
-        this.outsideDhakaAdditionalKg,
-    });
-
-    factory DeliveryCostPackages.fromJson(Map<String, dynamic> json) => DeliveryCostPackages(
-        packageName: json["package_name"],
-        insideDhakaFirstKg: json["inside_dhaka_first_kg"],
-        insideDhakaAdditionalKg: json["inside_dhaka_additional_kg"],
-        subDhakaFirstKg: json["sub_dhaka_first_kg"],
-        subDhakaAdditionalKg: json["sub_dhaka_additional_kg"],
-        outsideDhakaFirstKg: json["outside_dhaka_first_kg"],
-        outsideDhakaAdditionalKg: json["outside_dhaka_additional_kg"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "package_name": packageName,
-        "inside_dhaka_first_kg": insideDhakaFirstKg,
-        "inside_dhaka_additional_kg": insideDhakaAdditionalKg,
-        "sub_dhaka_first_kg": subDhakaFirstKg,
-        "sub_dhaka_additional_kg": subDhakaAdditionalKg,
-        "outside_dhaka_first_kg": outsideDhakaFirstKg,
-        "outside_dhaka_additional_kg": outsideDhakaAdditionalKg,
-    };
-}
-
 class GetUser {
     int? userId;
     String? userName;
@@ -169,12 +129,12 @@ class GetUser {
     String? userPhone;
     dynamic mobile;
     int? userType;
-    String? employeeId;
+    dynamic employeeId;
     dynamic createDate;
     String? tblUsersUserStatus;
     dynamic userStatus;
     int? isKey;
-    String? tokenCode;
+    dynamic tokenCode;
     String? image;
     String? modified;
     String? creator;
@@ -194,7 +154,7 @@ class GetUser {
     dynamic nidBack;
     dynamic files;
     String? branchId;
-    int? deliveryCostPackagesIdF;
+    dynamic deliveryCostPackagesIdF;
     int? riderCommissionPackagesIdF;
 
     GetUser({
