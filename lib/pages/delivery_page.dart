@@ -35,7 +35,7 @@ class _DeliveryPageState extends State<DeliveryPage>
 
   @override
   Widget build(BuildContext context) {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Column(
@@ -49,6 +49,7 @@ class _DeliveryPageState extends State<DeliveryPage>
             indicatorColor: logoblue,
             tabs: const [
               Tab(text: 'Delivery List'),
+              Tab(text: 'Return'),
               Tab(text: 'Status'),
             ],
           ),
@@ -74,6 +75,16 @@ class _DeliveryPageState extends State<DeliveryPage>
                               );
                             },
                           ),
+                ListView.builder(
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      child: _buildActivePickUpItem(index),
+                    );
+                  },
+                ),
                     ListView.builder(
                       physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics()),
@@ -627,6 +638,163 @@ class _DeliveryPageState extends State<DeliveryPage>
                             ],
                           )
                     ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+    Widget _buildActivePickUpItem(int index) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Card(
+        elevation: 3,
+        child: ExpansionTile(
+          iconColor: logoblue,
+          collapsedIconColor: logogold,
+          title: Text(
+            'Product ${index + 1}',
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+            ),
+          ),
+          subtitle: const Text('Mirpur, Dhaka'),
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                        border: Border(
+                      bottom: BorderSide(
+                        color: Colors.black,
+                        width: 0.5,
+                      ),
+                    )),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Marchant Address'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_pin,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(
+                                'Dhaka',
+                                style: TextStyle(fontSize: 18.sp),
+                              ))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Branch Address'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_pin,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(
+                                ('Chittagong'),
+                                style: TextStyle(fontSize: 18.sp),
+                              ))
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                    decoration: const BoxDecoration(
+                        border: Border(
+                      bottom: BorderSide(
+                        color: Colors.black,
+                        width: 0.5,
+                      ),
+                    )),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Order Pickup Time'),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.access_time,
+                                  size: 22.sp,
+                                ),
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                Text('8am',
+                                    style: TextStyle(
+                                        fontSize: 18.sp, color: Colors.black))
+                              ],
+                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     ElevatedButton(
+                            //       style: ElevatedButton.styleFrom(
+                            //         backgroundColor: const Color(0xFF01B075),
+                            //         shape: RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.circular(8), // <-- Radius
+                            //         ),
+                            //       ),
+                            //       onPressed: () {
+                            //         setState(() {});
+                            //       },
+                            //       child: const Text(
+                            //         'Submit',
+                            //         style: TextStyle(fontSize: 17),
+                            //       ),
+                            //     ),
+                            //     SizedBox(
+                            //       width: 50.w,
+                            //     ),
+                            //     ElevatedButton(
+                            //       style: ElevatedButton.styleFrom(
+                            //         backgroundColor: Colors.red,
+                            //         shape: RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.circular(8), // <-- Radius
+                            //         ),
+                            //       ),
+                            //       onPressed: () {
+                            //         setState(() {});
+                            //       },
+                            //       child: const Text(
+                            //         'Cancel',
+                            //         style: TextStyle(fontSize: 17),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // )
+                          ],
+                        )),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.h,
                   ),
                 ],
               ),
