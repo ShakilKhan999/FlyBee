@@ -42,8 +42,7 @@ class MarchantResponse {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = await prefs.getString(USER_ID)!;
     String branch_id = await prefs.getString(BRANCH_ID)!;
-    print("riderid234:$id");
-    print("riderbranchid234:$branch_id");
+    log('phone : '+phone);
     var headers = {
       'accesstoken': 'Bearer ${await SharedPref().getString(ACCESS_TOKEN)}',
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -54,7 +53,7 @@ class MarchantResponse {
     request.bodyFields = {
       'rider_user_id': id,
       'rider_branch_id': branch_id,
-      'marchant_user_phone': phone
+      'merchant_user_phone': phone
     };
     request.headers.addAll(headers);
 
