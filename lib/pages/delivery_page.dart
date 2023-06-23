@@ -75,16 +75,16 @@ class _DeliveryPageState extends State<DeliveryPage>
                               );
                             },
                           ),
-                ListView.builder(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: _buildActivePickUpItem(index),
-                    );
-                  },
-                ),
+                    ListView.builder(
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: _buildActivePickUpItem(index),
+                        );
+                      },
+                    ),
                     ListView.builder(
                       physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics()),
@@ -343,6 +343,10 @@ class _DeliveryPageState extends State<DeliveryPage>
   }
 
   Widget _buildDeliveryItem(int index, DeliveryProvider provider) {
+    int selectedRadioValue = 1;
+    double chargeAmount = 0.0;
+    TextEditingController _chargeAmountController = TextEditingController();
+
     print(provider.deliveryList[index].productInfo4!.toString());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -604,13 +608,13 @@ class _DeliveryPageState extends State<DeliveryPage>
                   //   ],
                   // )
                   Column(
-
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Icon(Icons.numbers),
-                          Text(provider.deliveryList[index].merchantInvoice != null
+                          Text(provider.deliveryList[index].merchantInvoice !=
+                                  null
                               ? 'Invoice No: ' +
                                   provider.deliveryList[index].merchantInvoice!
                               : 'Invoice No: N/A'),
@@ -619,24 +623,94 @@ class _DeliveryPageState extends State<DeliveryPage>
                       Row(
                         children: [
                           Icon(Icons.ev_station),
-                          Text(provider.deliveryList[index].currentBranch!.branch != null
+                          Text(provider.deliveryList[index].currentBranch!
+                                      .branch !=
+                                  null
                               ? 'Merchant Branch: ' +
-                                  provider.deliveryList[index].currentBranch!.branch.toString().substring(11)
+                                  provider
+                                      .deliveryList[index].currentBranch!.branch
+                                      .toString()
+                                      .substring(11)
                               : 'Invoice No: N/A'),
                         ],
                       ),
+                      Row(
+                        children: [
+                          Icon(Icons.phone),
+                          Text(provider.deliveryList[index].senderPhone5 != null
+                              ? provider.deliveryList[index].senderPhone5!
+                              : "N/A"),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.money),
+                          Text(provider.deliveryList[index].collectionAmount !=
+                                  null
+                              ? provider.deliveryList[index].collectionAmount!
+                                  .toString()
+                              : 'N/A'),
+                        ],
+                      ),
+                      Column(
+                        children: [
                           Row(
                             children: [
-                              Icon(Icons.phone),
-                              Text(provider.deliveryList[index].senderPhone5 != null ? provider.deliveryList[index].senderPhone5! : "N/A"),
+                              Radio(
+                                value: 1,
+                                groupValue: selectedRadioValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedRadioValue = value!;
+                                  });
+                                },
+                              ),
+                              Text('Delivered'),
+                              Radio(
+                                value: 2,
+                                groupValue: selectedRadioValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedRadioValue = value!;
+                                  });
+                                },
+                              ),
+                              Text('Return'),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Icon(Icons.money),
-                              Text(provider.deliveryList[index].collectionAmount != null ?provider.deliveryList[index].collectionAmount!.toString(): 'N/A'),
-                            ],
-                          )
+                          Visibility(
+                            visible: selectedRadioValue == 2,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left:
+                                      32.0), // Adjust the left padding as needed
+                              child: TextField(
+                                controller: _chargeAmountController,
+                                onChanged: (value) {
+                                  setState(() {
+                                    chargeAmount =
+                                        double.tryParse(value) ?? 0.0;
+                                  });
+                                },
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  labelText: 'Charge Amount',
+                                ),
+                              ),
+                            ),
+                          ),
+                          if (selectedRadioValue == 2)
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top:
+                                      16.0), // Adjust the top padding as needed
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                child: Text('Save'),
+                              ),
+                            ),
+                        ],
+                      )
                     ],
                   ),
                 ],
@@ -647,7 +721,8 @@ class _DeliveryPageState extends State<DeliveryPage>
       ),
     );
   }
-    Widget _buildActivePickUpItem(int index) {
+
+  Widget _buildActivePickUpItem(int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
