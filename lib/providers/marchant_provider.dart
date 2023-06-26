@@ -22,7 +22,6 @@ class MarchantProvider extends ChangeNotifier {
   getMarchantList() async {
     marchantList = [];
     merchantDataList = [];
-    EasyLoading.show();
     marchantModel = await MarchantResponse().getMarchantList();
     marchantList.addAll(marchantModel!.riderMerchants!);
 
@@ -37,7 +36,6 @@ class MarchantProvider extends ChangeNotifier {
 
     await getRiderPickupStatusList();
 
-    EasyLoading.dismiss();
     notifyListeners();
   }
 

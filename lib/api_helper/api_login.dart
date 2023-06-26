@@ -15,7 +15,8 @@ class ApiLogin {
     late UserModel user;
     try {
       Response response = await post(
-          Uri.parse('http://starxpress.online/api/user/login'),
+          // Uri.parse('http://starxpress.online/api/user/login'),
+          Uri.parse('http://apps.starxpress.online/api/user/login'),
           body: {'email': email, 'password': password});
       if (response.statusCode == 200 || response.statusCode == 201) {
         EasyLoading.dismiss();
@@ -23,7 +24,7 @@ class ApiLogin {
         // var dd = await json.decode(response.body);
         // print("token234: ${dd["accessToken"]}");
         SharedPref().setString(ACCESS_TOKEN, user.accessToken.toString());
-        SharedPref().setString(USER_ID, user.getUser![0].userID.toString());
+        SharedPref().setString(USER_ID, user.getUser![0].userId.toString());
         SharedPref().setString(NID, user.getUser![0].nidFront.toString());
         SharedPref().setString(BANK, user.getUser![0].bankName.toString());
         SharedPref().setString(USER_ADDRESS, user.getUser![0].address.toString());

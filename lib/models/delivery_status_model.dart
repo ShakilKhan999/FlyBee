@@ -1,34 +1,34 @@
 // To parse this JSON data, do
 //
-//     final deliveryModel = deliveryModelFromJson(jsonString);
+//     final deliveryStatus = deliveryStatusFromJson(jsonString);
 
 import 'dart:convert';
 
-DeliveryModel deliveryModelFromJson(String str) => DeliveryModel.fromJson(json.decode(str));
+DeliveryStatus deliveryStatusFromJson(String str) => DeliveryStatus.fromJson(json.decode(str));
 
-String deliveryModelToJson(DeliveryModel data) => json.encode(data.toJson());
+String deliveryStatusToJson(DeliveryStatus data) => json.encode(data.toJson());
 
-class DeliveryModel {
+class DeliveryStatus {
     String? riderUserId;
-    List<AssignDeliveryList>? assignDeliveryList;
+    List<StatusDeliveryList>? statusDeliveryList;
 
-    DeliveryModel({
+    DeliveryStatus({
         this.riderUserId,
-        this.assignDeliveryList,
+        this.statusDeliveryList,
     });
 
-    factory DeliveryModel.fromJson(Map<String, dynamic> json) => DeliveryModel(
+    factory DeliveryStatus.fromJson(Map<String, dynamic> json) => DeliveryStatus(
         riderUserId: json["rider_user_id"],
-        assignDeliveryList: json["assign_delivery_list"] == null ? [] : List<AssignDeliveryList>.from(json["assign_delivery_list"]!.map((x) => AssignDeliveryList.fromJson(x))),
+        statusDeliveryList: json["status_delivery_list"] == null ? [] : List<StatusDeliveryList>.from(json["status_delivery_list"]!.map((x) => StatusDeliveryList.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "rider_user_id": riderUserId,
-        "assign_delivery_list": assignDeliveryList == null ? [] : List<dynamic>.from(assignDeliveryList!.map((x) => x.toJson())),
+        "status_delivery_list": statusDeliveryList == null ? [] : List<dynamic>.from(statusDeliveryList!.map((x) => x.toJson())),
     };
 }
 
-class AssignDeliveryList {
+class StatusDeliveryList {
     int? id;
     int? servicesId1;
     int? iProductTypeId2;
@@ -78,39 +78,39 @@ class AssignDeliveryList {
     int? merchantAmount;
     dynamic withdrawMerchantAmount;
     dynamic merchantToPayableUserId;
-    int? amountToWallet;
+    dynamic amountToWallet;
     dynamic amountFromWallet;
     dynamic trxIds;
     int? deliveryBoyId;
-    String? deliveryBoyArea;
+    dynamic deliveryBoyArea;
     DateTime? deliveryBoyDate;
     DateTime? deliveryDate;
     int? deliveryCostPercent;
     dynamic pickupStatus;
     int? pickupCostPercent;
     int? pickupCostAmount;
-    int? pickupRiderAmount;
+    dynamic pickupRiderAmount;
     dynamic pickupWithdrawRiderAmount;
     dynamic pickupToPayableUserId;
-    int? pickupBoyId;
+    dynamic pickupBoyId;
     dynamic pickupBoyArea;
     DateTime? pickupBoyDate;
-    DateTime? pickupDate;
+    dynamic pickupDate;
     dynamic pickupBranchId;
-    int? deliveryRiderAmount;
+    dynamic deliveryRiderAmount;
     dynamic deliveryWithdrawRiderAmount;
     dynamic deliveryToPayableUserId;
     dynamic payableAmountToBranch;
     dynamic payableAmountToCentralBranch;
     dynamic payableToBranchUserId;
     dynamic payableToCentralBranchUserId;
-    int? iRelationId;
-    String? iRelationPerson;
+    dynamic iRelationId;
+    dynamic iRelationPerson;
     dynamic iReturnCauseId;
     String? uniqueUploadId;
     dynamic customerNo;
     int? currentBranchId;
-    int? otp;
+    dynamic otp;
     dynamic otpVerified;
     int? createdBranchId;
     dynamic lastBranchId;
@@ -118,8 +118,8 @@ class AssignDeliveryList {
     dynamic modified;
     int? creator;
     dynamic modifier;
-    DeliveryBoyId? assignDeliveryListDeliveryBoyId;
-    IRelation? iRelation;
+    DeliveryBoyId? statusDeliveryListDeliveryBoyId;
+    dynamic iRelation;
     dynamic iReturnCause;
     Services? services;
     IProductType? iProductType;
@@ -133,7 +133,7 @@ class AssignDeliveryList {
     Branch? createdBranch;
     Creator1? creator1;
 
-    AssignDeliveryList({
+    StatusDeliveryList({
         this.id,
         this.servicesId1,
         this.iProductTypeId2,
@@ -223,7 +223,7 @@ class AssignDeliveryList {
         this.modified,
         this.creator,
         this.modifier,
-        this.assignDeliveryListDeliveryBoyId,
+        this.statusDeliveryListDeliveryBoyId,
         this.iRelation,
         this.iReturnCause,
         this.services,
@@ -239,7 +239,7 @@ class AssignDeliveryList {
         this.creator1,
     });
 
-    factory AssignDeliveryList.fromJson(Map<String, dynamic> json) => AssignDeliveryList(
+    factory StatusDeliveryList.fromJson(Map<String, dynamic> json) => StatusDeliveryList(
         id: json["id"],
         servicesId1: json["services_id_1"],
         iProductTypeId2: json["i_product_type_id_2"],
@@ -306,7 +306,7 @@ class AssignDeliveryList {
         pickupBoyId: json["pickup_boy_id"],
         pickupBoyArea: json["pickup_boy_area"],
         pickupBoyDate: json["pickup_boy_date"] == null ? null : DateTime.parse(json["pickup_boy_date"]),
-        pickupDate: json["pickup_date"] == null ? null : DateTime.parse(json["pickup_date"]),
+        pickupDate: json["pickup_date"],
         pickupBranchId: json["pickup_branch_id"],
         deliveryRiderAmount: json["delivery_rider_amount"],
         deliveryWithdrawRiderAmount: json["delivery_withdraw_rider_amount"],
@@ -329,8 +329,8 @@ class AssignDeliveryList {
         modified: json["modified"],
         creator: json["creator"],
         modifier: json["modifier"],
-        assignDeliveryListDeliveryBoyId: json["delivery_boy_id_"] == null ? null : DeliveryBoyId.fromJson(json["delivery_boy_id_"]),
-        iRelation: json["i_relation"] == null ? null : IRelation.fromJson(json["i_relation"]),
+        statusDeliveryListDeliveryBoyId: json["delivery_boy_id_"] == null ? null : DeliveryBoyId.fromJson(json["delivery_boy_id_"]),
+        iRelation: json["i_relation"],
         iReturnCause: json["i_return_cause"],
         services: json["services"] == null ? null : Services.fromJson(json["services"]),
         iProductType: json["i_product_type"] == null ? null : IProductType.fromJson(json["i_product_type"]),
@@ -412,7 +412,7 @@ class AssignDeliveryList {
         "pickup_boy_id": pickupBoyId,
         "pickup_boy_area": pickupBoyArea,
         "pickup_boy_date": "${pickupBoyDate!.year.toString().padLeft(4, '0')}-${pickupBoyDate!.month.toString().padLeft(2, '0')}-${pickupBoyDate!.day.toString().padLeft(2, '0')}",
-        "pickup_date": "${pickupDate!.year.toString().padLeft(4, '0')}-${pickupDate!.month.toString().padLeft(2, '0')}-${pickupDate!.day.toString().padLeft(2, '0')}",
+        "pickup_date": pickupDate,
         "pickup_branch_id": pickupBranchId,
         "delivery_rider_amount": deliveryRiderAmount,
         "delivery_withdraw_rider_amount": deliveryWithdrawRiderAmount,
@@ -435,8 +435,8 @@ class AssignDeliveryList {
         "modified": modified,
         "creator": creator,
         "modifier": modifier,
-        "delivery_boy_id_": assignDeliveryListDeliveryBoyId?.toJson(),
-        "i_relation": iRelation?.toJson(),
+        "delivery_boy_id_": statusDeliveryListDeliveryBoyId?.toJson(),
+        "i_relation": iRelation,
         "i_return_cause": iReturnCause,
         "services": services?.toJson(),
         "i_product_type": iProductType?.toJson(),
@@ -449,26 +449,6 @@ class AssignDeliveryList {
         "current_branch": currentBranch?.toJson(),
         "created_branch_": createdBranch?.toJson(),
         "creator1_": creator1?.toJson(),
-    };
-}
-
-class DeliveryBoyId {
-    String? userName;
-    int? userId;
-
-    DeliveryBoyId({
-        this.userName,
-        this.userId,
-    });
-
-    factory DeliveryBoyId.fromJson(Map<String, dynamic> json) => DeliveryBoyId(
-        userName: json["userName"],
-        userId: json["userID"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "userName": userName,
-        "userID": userId,
     };
 }
 
@@ -584,22 +564,6 @@ class IProductType {
     };
 }
 
-class IRelation {
-    String? iRelation;
-
-    IRelation({
-        this.iRelation,
-    });
-
-    factory IRelation.fromJson(Map<String, dynamic> json) => IRelation(
-        iRelation: json["i_relation"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "i_relation": iRelation,
-    };
-}
-
 class IShipmentMethod {
     String? iShipmentMethod;
 
@@ -645,5 +609,25 @@ class Services {
 
     Map<String, dynamic> toJson() => {
         "services": services,
+    };
+}
+
+class DeliveryBoyId {
+    String? userName;
+    int? userId;
+
+    DeliveryBoyId({
+        this.userName,
+        this.userId,
+    });
+
+    factory DeliveryBoyId.fromJson(Map<String, dynamic> json) => DeliveryBoyId(
+        userName: json["userName"],
+        userId: json["userID"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "userName": userName,
+        "userID": userId,
     };
 }

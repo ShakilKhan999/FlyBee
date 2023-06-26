@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
-String? name,id,mobile,mail,branch_id,nid,bank,address;
+String? name,id,mobile,mail,branch_id,nid,bank,address,branch;
 class _HomePageState extends State<HomePage> {
   
   int pageIndex = 0;

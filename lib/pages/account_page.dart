@@ -113,7 +113,7 @@ class _AccountPageState extends State<AccountPage>
                             ),
                             const SizedBox(height: 10),
                              Text(
-                              name.toString().length>12?name.toString().substring(0,12):name!,
+                              name.toString().length>12?name.toString().substring(0,9):name!,
                               style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
@@ -121,7 +121,7 @@ class _AccountPageState extends State<AccountPage>
                             ),
                             SizedBox(height: 8.h),
                             Text(
-                              'Branch ID: $branch_id',
+                              'Branch Name: $branch',
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 color: Colors.grey,
@@ -130,7 +130,7 @@ class _AccountPageState extends State<AccountPage>
                             SizedBox(height: 15.h),
 
                             Container(
-                              height: 40.h,width: screenWidth-50.w,
+                              height: 40.h,width: screenWidth-80.w,
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(15)
@@ -178,10 +178,10 @@ class _AccountPageState extends State<AccountPage>
                                   SizedBox(width: 10.w,)
                                 ],
                               ):Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Icon(Icons.location_pin,color: Colors.black,),
-                                  Text(address!),
+                                  Text( 'Address: $address',),
                                 ],
                               ),
                             )
@@ -343,55 +343,55 @@ class _AccountPageState extends State<AccountPage>
                     ),
                   ),
                 ),
-                SizedBox(height: 10.w,),
-                Container(
-                  height: 50.h,
-                  width: screenWidth-20.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.white
-                  ),
-                  child:  ListTile(
-                    leading: Icon(Icons.business_center_outlined),
-                    title: Text(
-                      '$bank',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10.w,),
-                Container(
-                  height: 50.h,
-                  width: screenWidth-20.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.white
-                  ),
-                  child: const ListTile(
-                    leading: Icon(Icons.person_outline),
-                    title: Text(
-                      'Rider',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10.w,),
-                Container(
-                  height: 50.h,
-                  width: screenWidth-20.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.white
-                  ),
-                  child: const ListTile(
-                    leading: Icon(Icons.featured_video_outlined),
-                    trailing:Icon(Icons.navigate_next) ,
-                    title: Text(
-                      'NID',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
+                // SizedBox(height: 10.w,),
+                // Container(
+                //   height: 50.h,
+                //   width: screenWidth-20.w,
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(12),
+                //       color: Colors.white
+                //   ),
+                //   child:  ListTile(
+                //     leading: Icon(Icons.business_center_outlined),
+                //     title: Text(
+                //       '$bank',
+                //       style: TextStyle(color: Colors.black),
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(height: 10.w,),
+                // Container(
+                //   height: 50.h,
+                //   width: screenWidth-20.w,
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(12),
+                //       color: Colors.white
+                //   ),
+                //   child: const ListTile(
+                //     leading: Icon(Icons.person_outline),
+                //     title: Text(
+                //       'Rider',
+                //       style: TextStyle(color: Colors.black),
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(height: 10.w,),
+                // Container(
+                //   height: 50.h,
+                //   width: screenWidth-20.w,
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(12),
+                //       color: Colors.white
+                //   ),
+                //   child: const ListTile(
+                //     leading: Icon(Icons.featured_video_outlined),
+                //     trailing:Icon(Icons.navigate_next) ,
+                //     title: Text(
+                //       'NID',
+                //       style: TextStyle(color: Colors.black),
+                //     ),
+                //   ),
+                // ),
                 const Divider(),
                 SizedBox(height: 20.h),
                 Container(
@@ -421,18 +421,15 @@ class _AccountPageState extends State<AccountPage>
                     children: [
                       Stack(
                         children: [
-                          Center(
-                            child: Padding(
-                              padding:  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Container(
-                                height: 280.h,width: screenWidth-30.w,
-                                decoration: BoxDecoration(
-                                    color: logogold,
-                                    borderRadius: BorderRadius.circular(12)
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Center(
+                          //   // child: Container(
+                          //   //   height: 280.h,width: screenWidth-30.w,
+                          //   //   decoration: BoxDecoration(
+                          //   //       color: logogold,
+                          //   //       borderRadius: BorderRadius.circular(12)
+                          //   //   ),
+                          //   // ),
+                          // ),
                           Positioned(
                             top: 1,
                             left: 15.w,
@@ -440,7 +437,7 @@ class _AccountPageState extends State<AccountPage>
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Container(
-                                  height: 210.h,width: screenWidth-30.w,
+                                  height: 100.h,width: screenWidth-30.w,
                                   decoration: BoxDecoration(
                                       color: logoblue,
                                       borderRadius: BorderRadius.circular(12)
@@ -465,38 +462,7 @@ class _AccountPageState extends State<AccountPage>
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 10.w,),
-                                        Container(
-                                          height: 50.h,
-                                          width: screenWidth-20.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: Colors.white
-                                          ),
-                                          child: const ListTile(
-                                            trailing: Text("200 ৳"),
-                                            title: Text(
-                                              'Payable Ammount',
-                                              style: TextStyle(color: Colors.black),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 10.w,),
-                                        Container(
-                                          height: 50.h,
-                                          width: screenWidth-20.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: Colors.white
-                                          ),
-                                          child: const ListTile(
-                                            trailing: Text("3000 ৳"),
-                                            title: Text(
-                                              'Due Collection',
-                                              style: TextStyle(color: Colors.black),
-                                            ),
-                                          ),
-                                        ),
+                                        
                                       ],
                                     ),
                                   ),
@@ -504,52 +470,53 @@ class _AccountPageState extends State<AccountPage>
                               ),
                             ),
                           ),
-                          Positioned(
-                              bottom: 15.h,left: 16.w,
-                              child: SizedBox(
-                                height: 50.h,width: screenWidth-30,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    ElevatedButton(onPressed: (){
-                                      showFlexibleBottomSheet(
-                                        minHeight: 0,
-                                        initHeight: 0.3,
-                                        maxHeight: 1,
-                                        context: context,
-                                        builder: collectionbuildBottomSheet,
-                                        anchors: [0, 0.5, 1],
-                                        isSafeArea: true,
-                                      );
-                                    },
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: logoblue,
-                                            textStyle: TextStyle(
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.w500)),
-                                        child: SizedBox(height:20.h, width: 70.w,
-                                            child: const Center(child: Text("Collection")))),
-                                    ElevatedButton(onPressed: (){
-                                      showFlexibleBottomSheet(
-                                        minHeight: 0,
-                                        initHeight: 0.3,
-                                        maxHeight: 1,
-                                        context: context,
-                                        builder: totalbuildBottomSheet,
-                                        anchors: [0, 0.5, 1],
-                                        isSafeArea: true,
-                                      );
-                                    },
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: logoblue,
-                                            textStyle: TextStyle(
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.w500)),
-                                        child:  SizedBox(height:20.h, width: 90.w,
-                                            child: const Center(child: Text("Commission"))))
-                                  ],
-                                ),
-                              ))
+                          // Positioned(
+                          //     bottom: 15.h,left: 16.w,
+                          //     child: SizedBox(
+                          //       height: 50.h,width: screenWidth-30,
+                          //       child: Row(
+                          //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          //         children: [
+                          //           ElevatedButton(onPressed: (){
+                          //             showFlexibleBottomSheet(
+                          //               minHeight: 0,
+                          //               initHeight: 0.3,
+                          //               maxHeight: 1,
+                          //               context: context,
+                          //               builder: collectionbuildBottomSheet,
+                          //               anchors: [0, 0.5, 1],
+                          //               isSafeArea: true,
+                          //             );
+                          //           },
+                          //               style: ElevatedButton.styleFrom(
+                          //                   backgroundColor: logoblue,
+                          //                   textStyle: TextStyle(
+                          //                       fontSize: 16.sp,
+                          //                       fontWeight: FontWeight.w500)),
+                          //               child: SizedBox(height:20.h, width: 70.w,
+                          //                   child: const Center(child: Text("Collection")))),
+                          //           ElevatedButton(onPressed: (){
+                          //             showFlexibleBottomSheet(
+                          //               minHeight: 0,
+                          //               initHeight: 0.3,
+                          //               maxHeight: 1,
+                          //               context: context,
+                          //               builder: totalbuildBottomSheet,
+                          //               anchors: [0, 0.5, 1],
+                          //               isSafeArea: true,
+                          //             );
+                          //           },
+                          //               style: ElevatedButton.styleFrom(
+                          //                   backgroundColor: logoblue,
+                          //                   textStyle: TextStyle(
+                          //                       fontSize: 16.sp,
+                          //                       fontWeight: FontWeight.w500)),
+                          //               child:  SizedBox(height:20.h, width: 90.w,
+                          //                   child: const Center(child: Text("Commission"))))
+                          //         ],
+                          //       ),
+                          //     )
+                          //     )
                         ],
                       ),
                       Stack(
@@ -679,38 +646,38 @@ class _AccountPageState extends State<AccountPage>
                 ),
               ),
             ),
-            SizedBox(height: 10.w,),
-            Container(
-              height: 50.h,
-              width: MediaQuery.of(context).size.width-20.w,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.white
-              ),
-              child: const ListTile(
-                trailing: Text("2000 ৳"),
-                title: Text(
-                  'Paid Collection Ammount',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ),
-            SizedBox(height: 10.w,),
-            Container(
-              height: 50.h,
-              width: MediaQuery.of(context).size.width-20.w,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.white
-              ),
-              child: const ListTile(
-                trailing: Text("2000 ৳"),
-                title: Text(
-                  'Due Collection Ammount',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ),
+            // SizedBox(height: 10.w,),
+            // Container(
+            //   height: 50.h,
+            //   width: MediaQuery.of(context).size.width-20.w,
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(12),
+            //       color: Colors.white
+            //   ),
+            //   child: const ListTile(
+            //     trailing: Text("2000 ৳"),
+            //     title: Text(
+            //       'Paid Collection Ammount',
+            //       style: TextStyle(color: Colors.black),
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 10.w,),
+            // Container(
+            //   height: 50.h,
+            //   width: MediaQuery.of(context).size.width-20.w,
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(12),
+            //       color: Colors.white
+            //   ),
+            //   child: const ListTile(
+            //     trailing: Text("2000 ৳"),
+            //     title: Text(
+            //       'Due Collection Ammount',
+            //       style: TextStyle(color: Colors.black),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       )
