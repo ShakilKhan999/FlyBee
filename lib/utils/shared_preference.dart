@@ -8,6 +8,7 @@ String USER_ADDRESS = "user_address";
 String USER_EMAIL = "userEmail";
 String USER_PHONE = "mobile";
 String BRANCH_ID = "branch_id";
+String BRANCH_NAME = "branch";
 String DIVISION = "division";
 String DISTRICT="district";
 String UPAZILA="upazila";

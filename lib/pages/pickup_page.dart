@@ -131,7 +131,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     List<AssignBranchPickupList>? itemList = [];
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -146,7 +146,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
             indicatorColor: logoblue,
             tabs: const [
               Tab(text: 'Pickup List'),
-              // Tab(text: 'Return'),
+              Tab(text: 'Return'),
               Tab(text: 'Status'),
             ],
           ),
@@ -178,10 +178,10 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                               child: ExpansionTile(
                                 iconColor: logoblue,
                                 collapsedIconColor: logogold,
-                                onExpansionChanged: (va) {
+                                onExpansionChanged: (value) {
                                   setState(() {
                                     isExpanded =
-                                        isExpanded == true ? false : true;
+                                        isExpanded == false ? true : false;
                                     print(isExpanded);
                                   });
                                 },
@@ -412,16 +412,17 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     }
                   },
                 ),
-                // ListView.builder(
-                //   physics: const BouncingScrollPhysics(
-                //       parent: AlwaysScrollableScrollPhysics()),
-                //   itemCount: 10,
-                //   itemBuilder: (context, index) {
-                //     return Container(
-                //       child: _buildActivePickUpItem(index),
-                //     );
-                //   },
-                // ),
+
+                ListView.builder(
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      child: _buildActivePickUpItem(index),
+                    );
+                  },
+                ),
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
                     return ListView.builder(
@@ -466,115 +467,335 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
               //     context, ItemDetailsPage.routeName);
             },
           ),
-          subtitle: Text(provider.statusPickupList![index].senderAddress9!),
+          // subtitle: Text(provider.statusPickupList![index].senderAddress9!),
           children: [
-            SizedBox(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            // SizedBox(
+            //   child: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text(
+            //         "${index + 1}.  ",
+            //         style: const TextStyle(fontWeight: FontWeight.bold),
+            //       ),
+            //       Expanded(
+            //           child: Padding(
+            //             padding: const EdgeInsets.all(2.0),
+            //             child: Column(
+            //               children: [
+            //                 Row(
+            //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //                   children: [
+            //                     Container(
+            //                       child: Row(
+            //                         children: [
+            //                           const Icon(
+            //                             Icons.price_change,
+            //                             color: logoblue,
+            //                           ),
+            //                           const Text(
+            //                             "Fixed Price: ",
+            //                             style: TextStyle(
+            //                                 color: logoblue,
+            //                                 fontWeight: FontWeight.w500),
+            //                           ),
+            //                           Text(
+            //                               "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['fixed_cost']}",
+            //                               style: const TextStyle(
+            //                                   color: logoblue,
+            //                                   fontWeight: FontWeight.w500))
+            //                         ],
+            //                       ),
+            //                     ),
+            //                     Container(
+            //                       child: Row(
+            //                         children: [
+            //                           const Icon(Icons.price_change,
+            //                               color: logoblue),
+            //                           const Text("Selling Price: ",
+            //                               style: TextStyle(
+            //                                   color: logoblue,
+            //                                   fontWeight: FontWeight.w500)),
+            //                           Text(
+            //                               "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['selling_price']}",
+            //                               style: const TextStyle(
+            //                                   color: logoblue,
+            //                                   fontWeight: FontWeight.w500))
+            //                         ],
+            //                       ),
+            //                     )
+            //                   ],
+            //                 ),
+            //                 Row(
+            //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //                   children: [
+            //                     Container(
+            //                       child: Row(
+            //                         children: [
+            //                           const Icon(Icons.monitor_weight_outlined,
+            //                               color: logoblue),
+            //                           const Text("Weight: ",
+            //                               style: TextStyle(
+            //                                   color: logoblue,
+            //                                   fontWeight: FontWeight.w500)),
+            //                           Text(
+            //                               "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['weight']}",
+            //                               style: const TextStyle(
+            //                                   color: logoblue,
+            //                                   fontWeight: FontWeight.w500))
+            //                         ],
+            //                       ),
+            //                     ),
+            //                     Container(
+            //                       child: Row(
+            //                         children: [
+            //                           const Icon(Icons.shopping_bag_outlined,
+            //                               color: logoblue),
+            //                           const Text("Quantity: ",
+            //                               style: TextStyle(
+            //                                   color: logoblue,
+            //                                   fontWeight: FontWeight.w500)),
+            //                           Text(
+            //                               "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['qty']}",
+            //                               style: const TextStyle(
+            //                                   color: logoblue,
+            //                                   fontWeight: FontWeight.w500))
+            //                         ],
+            //                       ),
+            //                     )
+            //                   ],
+            //                 )
+            //               ],
+            //             ),
+            //           )),
+            //     ],
+            //   ),
+            // ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "${index + 1}.  ",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Expanded(
-                      child: Container(
-                    decoration: BoxDecoration(
-                        color: logogold.withOpacity(0.4),
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(12)),
+                  Container(
+                    decoration: const BoxDecoration(
+                        border: Border(
+                      bottom: BorderSide(
+                        color: Colors.black,
+                        width: 0.5,
+                      ),
+                    )),
                     child: Padding(
-                      padding: const EdgeInsets.all(2.0),
+                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const Text('Pickup Status'),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.price_change,
-                                      color: logoblue,
-                                    ),
-                                    const Text(
-                                      "Fixed Price: ",
-                                      style: TextStyle(
-                                          color: logoblue,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Text(
-                                        "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['fixed_cost']}",
-                                        style: const TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
+                              Icon(
+                                Icons.cancel,
+                                size: 22.sp,
                               ),
-                              Container(
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.price_change,
-                                        color: logoblue),
-                                    const Text("Selling Price: ",
-                                        style: TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500)),
-                                    Text(
-                                        "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['selling_price']}",
-                                        style: const TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
+                              Expanded(
+                                  child: Text(provider.statusPickupList![index].pickupStatus.toString()),
+                                  
+                                  )
+                            ],
+                          ),
+                          const Text('Marchant Name'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider.statusPickupList![index].senderName6!),
                               )
                             ],
                           ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Marchant Address'),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.monitor_weight_outlined,
-                                        color: logoblue),
-                                    const Text("Weight: ",
-                                        style: TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500)),
-                                    Text(
-                                        "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['weight']}",
-                                        style: const TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
+                              Icon(
+                                Icons.location_pin,
+                                size: 22.sp,
                               ),
-                              Container(
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.shopping_bag_outlined,
-                                        color: logoblue),
-                                    const Text("Quantity: ",
-                                        style: TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500)),
-                                    Text(
-                                        "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['qty']}",
-                                        style: const TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
-                              )
+                              Expanded(
+                                  child: Text(provider.statusPickupList![index].senderAddress9!),
+                                  
+                                  )
                             ],
-                          )
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Marchant Phone'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.phone,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider.statusPickupList![index].senderPhone5!),
+                                  
+                                  )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Marchant Branch'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider.statusPickupList![index].currentBranch!.branch.toString()),
+                                  
+                                  )
+                            ],
+                          ),
+                           SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Marchant Invoice'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider.statusPickupList![index].merchantInvoice!),
+                                  
+                                  )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Customer Name'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider.statusPickupList![index].recipientName21!),
+                                  
+                                  )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Customer Phone'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.phone,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider.statusPickupList![index].recipientPhone20!),
+                                  
+                                  )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Customer Address'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.home,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider.statusPickupList![index].recipientAddress24!),
+                                  
+                                  )
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                  )),
+                  ),
+                  // Container(
+                  //   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                  //   decoration: const BoxDecoration(
+                  //       border: Border(
+                  //     bottom: BorderSide(
+                  //       color: Colors.black,
+                  //       width: 0.5,
+                  //     ),
+                  //   )),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //           child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.start,
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           const Text('Order Pickup Time'),
+                  //           Row(
+                  //             children: [
+                  //               Icon(
+                  //                 Icons.access_time,
+                  //                 size: 22.sp,
+                  //               ),
+                  //               SizedBox(
+                  //                 width: 8.w,
+                  //               ),
+                  //               Text('8am',
+                  //                   style: TextStyle(
+                  //                       fontSize: 18.sp, color: Colors.black))
+                  //             ],
+                  //           ),
+                  //         ],
+                  //       )),
+                  //     ],
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 15.h,
+                  // ),
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActivePickUpItem(int index) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Card(
+        elevation: 3,
+        child: ExpansionTile(
+          iconColor: logoblue,
+          collapsedIconColor: logogold,
+          title: Text(
+            'Product ${index + 1}',
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+            ),
+          ),
+          subtitle: const Text('Mirpur, Dhaka'),
+          children: [
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
@@ -661,6 +882,44 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                         fontSize: 18.sp, color: Colors.black))
                               ],
                             ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     ElevatedButton(
+                            //       style: ElevatedButton.styleFrom(
+                            //         backgroundColor: const Color(0xFF01B075),
+                            //         shape: RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.circular(8), // <-- Radius
+                            //         ),
+                            //       ),
+                            //       onPressed: () {
+                            //         setState(() {});
+                            //       },
+                            //       child: const Text(
+                            //         'Submit',
+                            //         style: TextStyle(fontSize: 17),
+                            //       ),
+                            //     ),
+                            //     SizedBox(
+                            //       width: 50.w,
+                            //     ),
+                            //     ElevatedButton(
+                            //       style: ElevatedButton.styleFrom(
+                            //         backgroundColor: Colors.red,
+                            //         shape: RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.circular(8), // <-- Radius
+                            //         ),
+                            //       ),
+                            //       onPressed: () {
+                            //         setState(() {});
+                            //       },
+                            //       child: const Text(
+                            //         'Cancel',
+                            //         style: TextStyle(fontSize: 17),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // )
                           ],
                         )),
                       ],
@@ -677,162 +936,4 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
       ),
     );
   }
-
-  // Widget _buildActivePickUpItem(int index) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-  //     child: Card(
-  //       elevation: 3,
-  //       child: ExpansionTile(
-  //         iconColor: logoblue,
-  //         collapsedIconColor: logogold,
-  //         title: Text(
-  //           'Product ${index + 1}',
-  //           style: const TextStyle(
-  //             color: Colors.black,
-  //             fontSize: 20,
-  //           ),
-  //         ),
-  //         subtitle: const Text('Mirpur, Dhaka'),
-  //         children: [
-  //           Padding(
-  //             padding:
-  //                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
-  //             child: Column(
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               children: [
-  //                 Container(
-  //                   decoration: const BoxDecoration(
-  //                       border: Border(
-  //                     bottom: BorderSide(
-  //                       color: Colors.black,
-  //                       width: 0.5,
-  //                     ),
-  //                   )),
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-  //                     child: Column(
-  //                       mainAxisAlignment: MainAxisAlignment.start,
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         const Text('Marchant Address'),
-  //                         Row(
-  //                           children: [
-  //                             Icon(
-  //                               Icons.location_pin,
-  //                               size: 22.sp,
-  //                             ),
-  //                             Expanded(
-  //                                 child: Text(
-  //                               'Dhaka',
-  //                               style: TextStyle(fontSize: 18.sp),
-  //                             ))
-  //                           ],
-  //                         ),
-  //                         SizedBox(
-  //                           height: 10.h,
-  //                         ),
-  //                         const Text('Branch Address'),
-  //                         Row(
-  //                           children: [
-  //                             Icon(
-  //                               Icons.location_pin,
-  //                               size: 22.sp,
-  //                             ),
-  //                             Expanded(
-  //                                 child: Text(
-  //                               ('Chittagong'),
-  //                               style: TextStyle(fontSize: 18.sp),
-  //                             ))
-  //                           ],
-  //                         )
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 Container(
-  //                   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-  //                   decoration: const BoxDecoration(
-  //                       border: Border(
-  //                     bottom: BorderSide(
-  //                       color: Colors.black,
-  //                       width: 0.5,
-  //                     ),
-  //                   )),
-  //                   child: Row(
-  //                     children: [
-  //                       Expanded(
-  //                           child: Column(
-  //                         mainAxisAlignment: MainAxisAlignment.start,
-  //                         crossAxisAlignment: CrossAxisAlignment.start,
-  //                         children: [
-  //                           const Text('Order Pickup Time'),
-  //                           Row(
-  //                             children: [
-  //                               Icon(
-  //                                 Icons.access_time,
-  //                                 size: 22.sp,
-  //                               ),
-  //                               SizedBox(
-  //                                 width: 8.w,
-  //                               ),
-  //                               Text('8am',
-  //                                   style: TextStyle(
-  //                                       fontSize: 18.sp, color: Colors.black))
-  //                             ],
-  //                           ),
-  //                           // Row(
-  //                           //   mainAxisAlignment: MainAxisAlignment.center,
-  //                           //   children: [
-  //                           //     ElevatedButton(
-  //                           //       style: ElevatedButton.styleFrom(
-  //                           //         backgroundColor: const Color(0xFF01B075),
-  //                           //         shape: RoundedRectangleBorder(
-  //                           //           borderRadius: BorderRadius.circular(8), // <-- Radius
-  //                           //         ),
-  //                           //       ),
-  //                           //       onPressed: () {
-  //                           //         setState(() {});
-  //                           //       },
-  //                           //       child: const Text(
-  //                           //         'Submit',
-  //                           //         style: TextStyle(fontSize: 17),
-  //                           //       ),
-  //                           //     ),
-  //                           //     SizedBox(
-  //                           //       width: 50.w,
-  //                           //     ),
-  //                           //     ElevatedButton(
-  //                           //       style: ElevatedButton.styleFrom(
-  //                           //         backgroundColor: Colors.red,
-  //                           //         shape: RoundedRectangleBorder(
-  //                           //           borderRadius: BorderRadius.circular(8), // <-- Radius
-  //                           //         ),
-  //                           //       ),
-  //                           //       onPressed: () {
-  //                           //         setState(() {});
-  //                           //       },
-  //                           //       child: const Text(
-  //                           //         'Cancel',
-  //                           //         style: TextStyle(fontSize: 17),
-  //                           //       ),
-  //                           //     ),
-  //                           //   ],
-  //                           // )
-  //                         ],
-  //                       )),
-  //                     ],
-  //                   ),
-  //                 ),
-  //                 SizedBox(
-  //                   height: 15.h,
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

@@ -6,6 +6,10 @@ import 'package:flybee/providers/delivery_provider.dart';
 import 'package:flybee/utils/colors.dart';
 import 'package:provider/provider.dart';
 
+import '../models/merchant_pickup_model.dart';
+import '../providers/marchant_provider.dart';
+import 'item_details.dart';
+
 class DeliveryPage extends StatefulWidget {
   static const String routeName = '/delivery';
   const DeliveryPage({Key? key}) : super(key: key);
@@ -18,7 +22,7 @@ class _DeliveryPageState extends State<DeliveryPage>
     with TickerProviderStateMixin {
   late DeliveryProvider deliveryProvider;
   late TabController _tabController;
-
+   bool isExpanded = false;
   @override
   void initState() {
     deliveryProvider = Provider.of<DeliveryProvider>(context, listen: false);
@@ -35,6 +39,7 @@ class _DeliveryPageState extends State<DeliveryPage>
 
   @override
   Widget build(BuildContext context) {
+    List<AssignBranchPickupList>? itemList = [];
     _tabController = TabController(length: 3, vsync: this);
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -75,6 +80,259 @@ class _DeliveryPageState extends State<DeliveryPage>
                               );
                             },
                           ),
+                    // Consumer<MarchantProvider>(
+                    //   builder: (context, provider, child) {
+                    //     return Container(
+                    //       padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    //       child: ListView.builder(
+                    //         shrinkWrap: true,
+                    //         physics: const BouncingScrollPhysics(
+                    //             parent: AlwaysScrollableScrollPhysics()),
+                    //         itemCount: provider.marchantList.length,
+                    //         itemBuilder: (context, index) {
+                    //           int serial = 0;
+                    //           itemList = provider.merchantDataList[index]
+                    //               .assignBranchPickupList!;
+                    //           return Card(
+                    //             elevation: 3,
+                    //             shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(10)),
+                    //             child: ExpansionTile(
+                    //               iconColor: logoblue,
+                    //               collapsedIconColor: logogold,
+                    //               onExpansionChanged: (va) {
+                    //                 setState(() {
+                    //                   isExpanded =
+                    //                       isExpanded == true ? false : true;
+                    //                   print(isExpanded);
+                    //                 });
+                    //               },
+                    //               shape: RoundedRectangleBorder(
+                    //                   borderRadius: BorderRadius.circular(10)),
+                    //               // tilePadding:
+                    //               //     EdgeInsets.symmetric(horizontal: 10.w),
+                    //               //     leading: Container(
+                    //               //       height: 20,
+                    //               //       width: 20,
+                    //               //       child: Checkbox(onChanged: (value) {
+
+                    //               //       }, value: false,),
+                    //               //     ),
+                    //               title: Text(
+                    //                 provider.marchantList[index].userName! ??
+                    //                     'N/A',
+                    //                 style: const TextStyle(
+                    //                     fontWeight: FontWeight.bold,
+                    //                     letterSpacing: 1,
+                    //                     fontSize: 14,
+                    //                     color: Colors.black),
+                    //               ),
+                    //               subtitle: Column(
+                    //                 crossAxisAlignment:
+                    //                     CrossAxisAlignment.start,
+                    //                 children: [
+                    //                   Text(
+                    //                     'Phone: ${provider.marchantList[index].userPhone!}',
+                    //                     style: const TextStyle(
+                    //                         fontWeight: FontWeight.w500),
+                    //                   ),
+                    //                   Text(
+                    //                     'Address: ${provider.marchantList[index].address!}',
+                    //                     style: const TextStyle(
+                    //                         fontWeight: FontWeight.w500),
+                    //                   ),
+                    //                   Text(
+                    //                     'Item Count : ${itemList!.length.toString()}',
+                    //                     style: const TextStyle(
+                    //                         fontWeight: FontWeight.w500),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //               children: itemList!.map((item) {
+                    //                 serial++;
+                    //                 return Column(
+                    //                   crossAxisAlignment:
+                    //                       CrossAxisAlignment.end,
+                    //                   children: [
+                    //                     serial == 1
+                    //                         ? Container(
+                    //                             height: 50,
+                    //                             child: Row(
+                    //                               mainAxisAlignment:
+                    //                                   MainAxisAlignment.end,
+                    //                               children: [
+                    //                                 Text('Select All'),
+                    //                                 Checkbox(
+                    //                                   onChanged: (value) {},
+                    //                                   value: false,
+                    //                                 ),
+                    //                               ],
+                    //                             ),
+                    //                           )
+                    //                         : Container(),
+                    //                     Padding(
+                    //                       padding:
+                    //                           const EdgeInsets.only(left: 15.0),
+                    //                       child: ListTile(
+                    //                         style: ListTileStyle.list,
+                    //                         contentPadding:
+                    //                             const EdgeInsets.symmetric(
+                    //                                 horizontal: 16),
+                    //                         // leading: Checkbox(onChanged: (bool? value) {  }, value: false,),
+                    //                         trailing: Container(
+                    //                           height: 20,
+                    //                           width: 20,
+                    //                           child: Checkbox(
+                    //                             onChanged: (value) {},
+                    //                             value: false,
+                    //                           ),
+                    //                         ),
+                    //                         title: SizedBox(
+                    //                           child: Row(
+                    //                             crossAxisAlignment:
+                    //                                 CrossAxisAlignment.start,
+                    //                             children: [
+                    //                               Text(
+                    //                                 "${serial}.  ",
+                    //                                 style: const TextStyle(
+                    //                                     fontWeight:
+                    //                                         FontWeight.bold),
+                    //                               ),
+                    //                               Expanded(
+                    //                                   child: Container(
+                    //                                 decoration: BoxDecoration(
+                    //                                     color: logogold
+                    //                                         .withOpacity(0.4),
+                    //                                     border: Border.all(),
+                    //                                     borderRadius:
+                    //                                         BorderRadius
+                    //                                             .circular(12)),
+                    //                                 child: Padding(
+                    //                                   padding:
+                    //                                       const EdgeInsets.all(
+                    //                                           2.0),
+                    //                                   child: Column(
+                    //                                     children: [
+                    //                                       Column(
+                    //                                         mainAxisAlignment:
+                    //                                             MainAxisAlignment
+                    //                                                 .spaceBetween,
+                    //                                         children: [
+                    //                                           Container(
+                    //                                             child: Row(
+                    //                                               children: [
+                    //                                                 const Icon(
+                    //                                                   Icons
+                    //                                                       .emoji_people,
+                    //                                                   color:
+                    //                                                       logoblue,
+                    //                                                 ),
+                    //                                                 const Text(
+                    //                                                   "Customer Name: ",
+                    //                                                   style: TextStyle(
+                    //                                                       color:
+                    //                                                           logoblue,
+                    //                                                       fontWeight:
+                    //                                                           FontWeight.w500),
+                    //                                                 ),
+                    //                                                 Text(
+                    //                                                     "${item.recipientName21}",
+                    //                                                     style: const TextStyle(
+                    //                                                         color:
+                    //                                                             logoblue,
+                    //                                                         fontWeight:
+                    //                                                             FontWeight.w500))
+                    //                                               ],
+                    //                                             ),
+                    //                                           ),
+                    //                                           Container(
+                    //                                             child: Row(
+                    //                                               children: [
+                    //                                                 const Icon(
+                    //                                                     Icons
+                    //                                                         .phone,
+                    //                                                     color:
+                    //                                                         logoblue),
+                    //                                                 const Text(
+                    //                                                     "Customer Phone: ",
+                    //                                                     style: TextStyle(
+                    //                                                         color:
+                    //                                                             logoblue,
+                    //                                                         fontWeight:
+                    //                                                             FontWeight.w500)),
+                    //                                                 Text(
+                    //                                                     "${item.recipientPhone20}",
+                    //                                                     style: const TextStyle(
+                    //                                                         color:
+                    //                                                             logoblue,
+                    //                                                         fontWeight:
+                    //                                                             FontWeight.w500))
+                    //                                               ],
+                    //                                             ),
+                    //                                           ),
+                    //                                           Row(
+                    //                                             children: [
+                    //                                               const Icon(
+                    //                                                   Icons
+                    //                                                       .numbers,
+                    //                                                   color:
+                    //                                                       logoblue),
+                    //                                               const Text(
+                    //                                                   "Invoice: ",
+                    //                                                   style: TextStyle(
+                    //                                                       color:
+                    //                                                           logoblue,
+                    //                                                       fontWeight:
+                    //                                                           FontWeight.w500)),
+                    //                                               Text(
+                    //                                                   "${item.merchantInvoice}",
+                    //                                                   style: const TextStyle(
+                    //                                                       color:
+                    //                                                           logoblue,
+                    //                                                       fontWeight:
+                    //                                                           FontWeight.w500))
+                    //                                             ],
+                    //                                           )
+                    //                                         ],
+                    //                                       ),
+                    //                                     ],
+                    //                                   ),
+                    //                                 ),
+                    //                               )),
+                    //                             ],
+                    //                           ),
+                    //                         ),
+                    //                         dense: true,
+                    //                         onTap: () {
+                    //                           Navigator.pushNamed(context,
+                    //                               ItemDetailsPage.routeName);
+                    //                         },
+                    //                       ),
+                    //                     ),
+                    //                     serial == itemList!.length
+                    //                         ? Row(
+                    //                             mainAxisAlignment:
+                    //                                 MainAxisAlignment.center,
+                    //                             children: [
+                    //                               ElevatedButton(
+                    //                                   onPressed: () {},
+                    //                                   child: Text(
+                    //                                       'Collect Pickup')),
+                    //                             ],
+                    //                           )
+                    //                         : Container()
+                    //                   ],
+                    //                 );
+                    //               }).toList(),
+                    //             ),
+                    //           );
+
+                    //           // Text('${deptData[index]['name']}');
+                    //         },
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
                     ListView.builder(
                       physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics()),
@@ -130,115 +388,115 @@ class _DeliveryPageState extends State<DeliveryPage>
               //     context, ItemDetailsPage.routeName);
             },
           ),
-          subtitle: Text(provider.statusDeliveryList![index].senderAddress9!),
+          // subtitle: Text(provider.statusDeliveryList![index].senderAddress9!),
           children: [
-            SizedBox(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${index + 1}.  ",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Expanded(
-                      child: Container(
-                    decoration: BoxDecoration(
-                        color: logogold.withOpacity(0.4),
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.price_change,
-                                      color: logoblue,
-                                    ),
-                                    const Text(
-                                      "Fixed Price: ",
-                                      style: TextStyle(
-                                          color: logoblue,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Text(
-                                        "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['fixed_cost']}",
-                                        style: const TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.price_change,
-                                        color: logoblue),
-                                    const Text("Selling Price: ",
-                                        style: TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500)),
-                                    Text(
-                                        "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['selling_price']}",
-                                        style: const TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.monitor_weight_outlined,
-                                        color: logoblue),
-                                    const Text("Weight: ",
-                                        style: TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500)),
-                                    Text(
-                                        "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['weight']}",
-                                        style: const TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.shopping_bag_outlined,
-                                        color: logoblue),
-                                    const Text("Quantity: ",
-                                        style: TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500)),
-                                    Text(
-                                        "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['qty']}",
-                                        style: const TextStyle(
-                                            color: logoblue,
-                                            fontWeight: FontWeight.w500))
-                                  ],
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  )),
-                ],
-              ),
-            ),
+            // SizedBox(
+            //   child: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text(
+            //         "${index + 1}.  ",
+            //         style: const TextStyle(fontWeight: FontWeight.bold),
+            //       ),
+            //       Expanded(
+            //           child: Container(
+            //         decoration: BoxDecoration(
+            //             color: logogold.withOpacity(0.4),
+            //             border: Border.all(),
+            //             borderRadius: BorderRadius.circular(12)),
+            //         child: Padding(
+            //           padding: const EdgeInsets.all(2.0),
+            //           child: Column(
+            //             children: [
+            //               Row(
+            //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //                 children: [
+            //                   Container(
+            //                     child: Row(
+            //                       children: [
+            //                         const Icon(
+            //                           Icons.price_change,
+            //                           color: logoblue,
+            //                         ),
+            //                         const Text(
+            //                           "Fixed Price: ",
+            //                           style: TextStyle(
+            //                               color: logoblue,
+            //                               fontWeight: FontWeight.w500),
+            //                         ),
+            //                         Text(
+            //                             "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['fixed_cost']}",
+            //                             style: const TextStyle(
+            //                                 color: logoblue,
+            //                                 fontWeight: FontWeight.w500))
+            //                       ],
+            //                     ),
+            //                   ),
+            //                   Container(
+            //                     child: Row(
+            //                       children: [
+            //                         const Icon(Icons.price_change,
+            //                             color: logoblue),
+            //                         const Text("Selling Price: ",
+            //                             style: TextStyle(
+            //                                 color: logoblue,
+            //                                 fontWeight: FontWeight.w500)),
+            //                         Text(
+            //                             "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['selling_price']}",
+            //                             style: const TextStyle(
+            //                                 color: logoblue,
+            //                                 fontWeight: FontWeight.w500))
+            //                       ],
+            //                     ),
+            //                   )
+            //                 ],
+            //               ),
+            //               Row(
+            //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //                 children: [
+            //                   Container(
+            //                     child: Row(
+            //                       children: [
+            //                         const Icon(Icons.monitor_weight_outlined,
+            //                             color: logoblue),
+            //                         const Text("Weight: ",
+            //                             style: TextStyle(
+            //                                 color: logoblue,
+            //                                 fontWeight: FontWeight.w500)),
+            //                         Text(
+            //                             "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['weight']}",
+            //                             style: const TextStyle(
+            //                                 color: logoblue,
+            //                                 fontWeight: FontWeight.w500))
+            //                       ],
+            //                     ),
+            //                   ),
+            //                   Container(
+            //                     child: Row(
+            //                       children: [
+            //                         const Icon(Icons.shopping_bag_outlined,
+            //                             color: logoblue),
+            //                         const Text("Quantity: ",
+            //                             style: TextStyle(
+            //                                 color: logoblue,
+            //                                 fontWeight: FontWeight.w500)),
+            //                         Text(
+            //                             "${provider.productInfoMapMaker(provider.statusDeliveryList![index].productInfo4.toString())[0]['qty']}",
+            //                             style: const TextStyle(
+            //                                 color: logoblue,
+            //                                 fontWeight: FontWeight.w500))
+            //                       ],
+            //                     ),
+            //                   )
+            //                 ],
+            //               )
+            //             ],
+            //           ),
+            //         ),
+            //       )),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
@@ -259,80 +517,105 @@ class _DeliveryPageState extends State<DeliveryPage>
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Marchant Address'),
+                          const Text('Delivery Status'),
                           Row(
                             children: [
                               Icon(
-                                Icons.location_pin,
+                                Icons.done,
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(
-                                'Dhaka',
-                                style: TextStyle(fontSize: 18.sp),
-                              ))
+                                 child: 
+                                 Text(provider.statusDeliveryList![index].iDeliveryStatus!.iDeliveryStatus.toString())
+                                 )
+                              
                             ],
                           ),
                           SizedBox(
                             height: 10.h,
                           ),
-                          const Text('Branch Address'),
+                          const Text('Marchant Name'),
                           Row(
                             children: [
                               Icon(
-                                Icons.location_pin,
+                                Icons.person,
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(
-                                ('Chittagong'),
-                                style: TextStyle(fontSize: 18.sp),
-                              ))
+                               child: Text(provider.statusDeliveryList![index].senderName6!))
                             ],
-                          )
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Marchant Address'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.home,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                               child: Text(provider.statusDeliveryList![index].senderAddress9!))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Marchant Phone'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.phone,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                               child: Text(provider.statusDeliveryList![index].senderPhone5!))
+                            ],
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black,
-                        width: 0.5,
-                      ),
-                    )),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Order Pickup Time'),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.access_time,
-                                  size: 22.sp,
-                                ),
-                                SizedBox(
-                                  width: 8.w,
-                                ),
-                                Text('8am',
-                                    style: TextStyle(
-                                        fontSize: 18.sp, color: Colors.black))
-                              ],
-                            ),
-                          ],
-                        )),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
+                  // Container(
+                  //   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                  //   decoration: const BoxDecoration(
+                  //       border: Border(
+                  //     bottom: BorderSide(
+                  //       color: Colors.black,
+                  //       width: 0.5,
+                  //     ),
+                  //   )),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //           child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.start,
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           const Text('Order Pickup Time'),
+                  //           Row(
+                  //             children: [
+                  //               Icon(
+                  //                 Icons.access_time,
+                  //                 size: 22.sp,
+                  //               ),
+                  //               SizedBox(
+                  //                 width: 8.w,
+                  //               ),
+                  //               Text('8am',
+                  //                   style: TextStyle(
+                  //                       fontSize: 18.sp, color: Colors.black))
+                  //             ],
+                  //           ),
+                  //         ],
+                  //       )),
+                  //     ],
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 15.h,
+                  // ),
                 ],
               ),
             ),
@@ -825,44 +1108,6 @@ class _DeliveryPageState extends State<DeliveryPage>
                                         fontSize: 18.sp, color: Colors.black))
                               ],
                             ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     ElevatedButton(
-                            //       style: ElevatedButton.styleFrom(
-                            //         backgroundColor: const Color(0xFF01B075),
-                            //         shape: RoundedRectangleBorder(
-                            //           borderRadius: BorderRadius.circular(8), // <-- Radius
-                            //         ),
-                            //       ),
-                            //       onPressed: () {
-                            //         setState(() {});
-                            //       },
-                            //       child: const Text(
-                            //         'Submit',
-                            //         style: TextStyle(fontSize: 17),
-                            //       ),
-                            //     ),
-                            //     SizedBox(
-                            //       width: 50.w,
-                            //     ),
-                            //     ElevatedButton(
-                            //       style: ElevatedButton.styleFrom(
-                            //         backgroundColor: Colors.red,
-                            //         shape: RoundedRectangleBorder(
-                            //           borderRadius: BorderRadius.circular(8), // <-- Radius
-                            //         ),
-                            //       ),
-                            //       onPressed: () {
-                            //         setState(() {});
-                            //       },
-                            //       child: const Text(
-                            //         'Cancel',
-                            //         style: TextStyle(fontSize: 17),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // )
                           ],
                         )),
                       ],
