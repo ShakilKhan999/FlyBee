@@ -19,6 +19,9 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
   late MarchantProvider marchantProvider;
   late TabController _tabController;
   bool isExpanded = false;
+  bool allSelected=false;
+  bool singleChk=false;
+  List<bool> chkList=[];
 
   @override
   void initState() {
@@ -171,6 +174,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                             int serial = 0;
                             itemList = provider.merchantDataList[index]
                                 .assignBranchPickupList!;
+                            List<bool> checkboxValues = List<bool>.generate(itemList!.length, (index) => true);
                             return Card(
                               elevation: 3,
                               shape: RoundedRectangleBorder(
@@ -226,6 +230,8 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                   ],
                                 ),
                                 children: itemList!.map((item) {
+
+                                  print(checkboxValues);
                                   serial++;
                                   return Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -238,8 +244,12 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                 children: [
                                                   Text('Select All'),
                                                   Checkbox(
-                                                    onChanged: (value) {},
-                                                    value: false,
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        allSelected=allSelected?false:true;
+                                                      });
+                                                    },
+                                                    value: allSelected,
                                                   ),
                                                 ],
                                               ),
@@ -258,8 +268,13 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                             height: 20,
                                             width: 20,
                                             child: Checkbox(
-                                              onChanged: (value) {},
-                                              value: false,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  singleChk=singleChk?false:true;
+                                                 // print(checkboxValues[0]);
+                                                });
+                                              },
+                                              value: allSelected?allSelected:singleChk,
                                             ),
                                           ),
                                           title: SizedBox(
