@@ -12,6 +12,7 @@ import 'item_details.dart';
 
 class DeliveryPage extends StatefulWidget {
   static const String routeName = '/delivery';
+
   const DeliveryPage({Key? key}) : super(key: key);
 
   @override
@@ -22,7 +23,8 @@ class _DeliveryPageState extends State<DeliveryPage>
     with TickerProviderStateMixin {
   late DeliveryProvider deliveryProvider;
   late TabController _tabController;
-   bool isExpanded = false;
+  bool isExpanded = false;
+  String _selectedValue = '';
   @override
   void initState() {
     deliveryProvider = Provider.of<DeliveryProvider>(context, listen: false);
@@ -333,14 +335,256 @@ class _DeliveryPageState extends State<DeliveryPage>
                     //     );
                     //   },
                     // ),
-                    ListView.builder(
-                      physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          child: _buildActivePickUpItem(index),
-                        );
+                    Consumer<MarchantProvider>(
+                      builder: (context, provider, child) {
+                        if (provider.marchantList.isNotEmpty) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
+                              itemCount: provider.marchantList.length,
+                              separatorBuilder: (context, index) => const SizedBox(
+                                height: 5,
+                              ),
+                              itemBuilder: (context, index) {
+                                int serial = 0;
+                                itemList = provider
+                                    .merchantDataList[index].assignBranchPickupList!
+                                    .cast<AssignBranchPickupList>();
+                                return Card(
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: ExpansionTile(
+                                    iconColor: logoblue,
+                                    collapsedIconColor: logogold,
+                                    onExpansionChanged: (value) {
+                                      setState(() {
+                                        isExpanded =
+                                        isExpanded == false ? true : false;
+                                        print(isExpanded);
+                                      });
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10)),
+                                    title: Text(
+                                      provider.marchantList[index].userName! ??
+                                          'N/A',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1,
+                                          fontSize: 14,
+                                          color: Colors.black),
+                                    ),
+                                    subtitle: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Phone: ${provider.marchantList[index].userPhone!}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          'Address: ${provider.marchantList[index].address!}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          'Item Count : ${itemList!.length.toString()}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                    children: itemList!.map((item) {
+                                      serial++;
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          serial == 1
+                                              ? Container(
+                                            height: 50,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                              children: [
+                                                Text('Select All'),
+                                                Checkbox(
+                                                  onChanged: (value) {},
+                                                  value: false,
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                              : Container(),
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(left: 15.0),
+                                            child: ListTile(
+                                              style: ListTileStyle.list,
+                                              contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 16),
+                                              // leading: Checkbox(onChanged: (bool? value) {  }, value: false,),
+                                              trailing: Container(
+                                                height: 20,
+                                                width: 20,
+                                                child: Checkbox(
+                                                  onChanged: (value) {},
+                                                  value: false,
+                                                ),
+                                              ),
+                                              title: SizedBox(
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "${serial}.  ",
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                          FontWeight.bold),
+                                                    ),
+                                                    Expanded(
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                              color: logogold
+                                                                  .withOpacity(0.4),
+                                                              border: Border.all(),
+                                                              borderRadius:
+                                                              BorderRadius.circular(
+                                                                  12)),
+                                                          child: Padding(
+                                                            padding:
+                                                            const EdgeInsets.all(
+                                                                2.0),
+                                                            child: Column(
+                                                              children: [
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      child: Row(
+                                                                        children: [
+                                                                          const Icon(
+                                                                            Icons
+                                                                                .emoji_people,
+                                                                            color:
+                                                                            logoblue,
+                                                                          ),
+                                                                          const Text(
+                                                                            "Customer Name: ",
+                                                                            style: TextStyle(
+                                                                                color:
+                                                                                logoblue,
+                                                                                fontWeight:
+                                                                                FontWeight.w500),
+                                                                          ),
+                                                                          Text(
+                                                                              "${item.recipientName21}",
+                                                                              style: const TextStyle(
+                                                                                  color:
+                                                                                  logoblue,
+                                                                                  fontWeight:
+                                                                                  FontWeight.w500))
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    Container(
+                                                                      child: Row(
+                                                                        children: [
+                                                                          const Icon(
+                                                                              Icons
+                                                                                  .phone,
+                                                                              color:
+                                                                              logoblue),
+                                                                          const Text(
+                                                                              "Customer Phone: ",
+                                                                              style: TextStyle(
+                                                                                  color:
+                                                                                  logoblue,
+                                                                                  fontWeight:
+                                                                                  FontWeight.w500)),
+                                                                          Text(
+                                                                              "${item.recipientPhone20}",
+                                                                              style: const TextStyle(
+                                                                                  color:
+                                                                                  logoblue,
+                                                                                  fontWeight:
+                                                                                  FontWeight.w500))
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        const Icon(
+                                                                            Icons
+                                                                                .numbers,
+                                                                            color:
+                                                                            logoblue),
+                                                                        const Text(
+                                                                            "Invoice: ",
+                                                                            style: TextStyle(
+                                                                                color:
+                                                                                logoblue,
+                                                                                fontWeight:
+                                                                                FontWeight.w500)),
+                                                                        Text(
+                                                                            "${item.merchantInvoice}",
+                                                                            style: const TextStyle(
+                                                                                color:
+                                                                                logoblue,
+                                                                                fontWeight:
+                                                                                FontWeight.w500))
+                                                                      ],
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        )),
+                                                  ],
+                                                ),
+                                              ),
+                                              dense: true,
+                                              onTap: () {
+                                                Navigator.pushNamed(context,
+                                                    ItemDetailsPage.routeName);
+                                              },
+                                            ),
+                                          ),
+                                          serial == itemList!.length
+                                              ? Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: [
+                                              ElevatedButton(
+                                                  onPressed: () {},
+                                                  child:
+                                                  Text('Collect Pickup')),
+                                            ],
+                                          )
+                                              : Container()
+                                        ],
+                                      );
+                                    }).toList(),
+                                  ),
+                                );
+
+                                // Text('${deptData[index]['name']}');
+                              },
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            child: const Text('Pick up list is empty'),
+                          );
+                        }
                       },
                     ),
                     ListView.builder(
@@ -376,11 +620,19 @@ class _DeliveryPageState extends State<DeliveryPage>
           collapsedIconColor: logogold,
           title: ListTile(
             style: ListTileStyle.list,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            contentPadding:  EdgeInsets.symmetric(horizontal: 5.sp),
             leading: const Icon(Icons.hail),
-            title: Text(
-              "Delivery Completed",
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
+            title: Row(
+              children: [
+                Text(
+                  "Delivery Completed",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
+                ),
+                SizedBox(width: 5.w,),
+                Text('Marchant Number :'+ (provider
+                    .statusDeliveryList![index]
+                    .merchantInvoice.toString()))
+              ],
             ),
             dense: true,
             onTap: () {
@@ -525,10 +777,28 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                 child: 
-                                 Text(provider.statusDeliveryList![index].iDeliveryStatus!.iDeliveryStatus.toString())
-                                 )
-                              
+                                  child: Text(provider
+                                      .statusDeliveryList![index]
+                                      .iDeliveryStatus!
+                                      .iDeliveryStatus
+                                      .toString()))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Invoice'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.numbers,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider
+                                      .statusDeliveryList![index]
+                                      .id
+                                      .toString()))
                             ],
                           ),
                           SizedBox(
@@ -542,7 +812,8 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                               child: Text(provider.statusDeliveryList![index].senderName6!))
+                                  child: Text(provider
+                                      .statusDeliveryList![index].senderName6!))
                             ],
                           ),
                           SizedBox(
@@ -556,7 +827,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                               child: Text(provider.statusDeliveryList![index].senderAddress9!))
+                                  child: Text(provider
+                                      .statusDeliveryList![index]
+                                      .senderAddress9!))
                             ],
                           ),
                           SizedBox(
@@ -570,8 +843,74 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                               child: Text(provider.statusDeliveryList![index].senderPhone5!))
+                                  child: Text(provider
+                                      .statusDeliveryList![index]
+                                      .senderPhone5!))
                             ],
+                          ),
+                          const Text('Marchant Branch'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider
+                                      .statusDeliveryList![index]
+                                      .currentBranch!.branch.toString()))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Customer Name'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider
+                                      .statusDeliveryList![index]
+                                      .recipientName21!))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Customer Address'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.home,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider
+                                      .statusDeliveryList![index]
+                                      .recipientAddress24!))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Customer Number'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.phone,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider
+                                      .statusDeliveryList![index]
+                                      .recipientPhone20!))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
                           ),
                         ],
                       ),
@@ -626,9 +965,7 @@ class _DeliveryPageState extends State<DeliveryPage>
   }
 
   Widget _buildDeliveryItem(int index, DeliveryProvider provider) {
-    int selectedRadioValue = 1;
-    double chargeAmount = 0.0;
-    TextEditingController _chargeAmountController = TextEditingController();
+    String selectedValue = '';
 
     print(provider.deliveryList[index].productInfo4!.toString());
     return Padding(
@@ -940,60 +1277,39 @@ class _DeliveryPageState extends State<DeliveryPage>
                           Row(
                             children: [
                               Radio(
-                                value: 1,
-                                groupValue: selectedRadioValue,
+                                value: 'Delivered',
+                                groupValue: selectedValue,
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedRadioValue = value!;
+                                    selectedValue = value!;
                                   });
                                 },
                               ),
                               Text('Delivered'),
+                            ],
+                          ),
+                          Row(
+                            children: [
                               Radio(
-                                value: 2,
-                                groupValue: selectedRadioValue,
+                                value: 'Return',
+                                groupValue: selectedValue,
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedRadioValue = value!;
+                                    selectedValue = value!;
                                   });
                                 },
                               ),
                               Text('Return'),
                             ],
                           ),
-                          Visibility(
-                            visible: selectedRadioValue == 2,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left:
-                                      32.0), // Adjust the left padding as needed
-                              child: TextField(
-                                controller: _chargeAmountController,
-                                onChanged: (value) {
-                                  setState(() {
-                                    chargeAmount =
-                                        double.tryParse(value) ?? 0.0;
-                                  });
-                                },
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  labelText: 'Charge Amount',
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (selectedRadioValue == 2)
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top:
-                                      16.0), // Adjust the top padding as needed
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                child: Text('Save'),
+                          if (selectedValue == 'Return')
+                            TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Arrived',
                               ),
                             ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ],
@@ -1005,123 +1321,124 @@ class _DeliveryPageState extends State<DeliveryPage>
     );
   }
 
-  Widget _buildActivePickUpItem(int index) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Card(
-        elevation: 3,
-        child: ExpansionTile(
-          iconColor: logoblue,
-          collapsedIconColor: logogold,
-          title: Text(
-            'Product ${index + 1}',
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-            ),
-          ),
-          subtitle: const Text('Mirpur, Dhaka'),
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black,
-                        width: 0.5,
-                      ),
-                    )),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Marchant Address'),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_pin,
-                                size: 22.sp,
-                              ),
-                              Expanded(
-                                  child: Text(
-                                'Dhaka',
-                                style: TextStyle(fontSize: 18.sp),
-                              ))
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          const Text('Branch Address'),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_pin,
-                                size: 22.sp,
-                              ),
-                              Expanded(
-                                  child: Text(
-                                ('Chittagong'),
-                                style: TextStyle(fontSize: 18.sp),
-                              ))
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black,
-                        width: 0.5,
-                      ),
-                    )),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Order Pickup Time'),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.access_time,
-                                  size: 22.sp,
-                                ),
-                                SizedBox(
-                                  width: 8.w,
-                                ),
-                                Text('8am',
-                                    style: TextStyle(
-                                        fontSize: 18.sp, color: Colors.black))
-                              ],
-                            ),
-                          ],
-                        )),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildActivePickUpItem(int index) {
+  //
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 8.0),
+  //     child: Card(
+  //       elevation: 3,
+  //       child: ExpansionTile(
+  //         iconColor: logoblue,
+  //         collapsedIconColor: logogold,
+  //         title: Text(
+  //           'Product ${index + 1}',
+  //           style: const TextStyle(
+  //             color: Colors.black,
+  //             fontSize: 20,
+  //           ),
+  //         ),
+  //         subtitle: const Text('Mirpur, Dhaka'),
+  //         children: [
+  //           Padding(
+  //             padding:
+  //                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               children: [
+  //                 Container(
+  //                   decoration: const BoxDecoration(
+  //                       border: Border(
+  //                     bottom: BorderSide(
+  //                       color: Colors.black,
+  //                       width: 0.5,
+  //                     ),
+  //                   )),
+  //                   child: Padding(
+  //                     padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+  //                     child: Column(
+  //                       mainAxisAlignment: MainAxisAlignment.start,
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: [
+  //                         const Text('Marchant Address'),
+  //                         Row(
+  //                           children: [
+  //                             Icon(
+  //                               Icons.location_pin,
+  //                               size: 22.sp,
+  //                             ),
+  //                             Expanded(
+  //                                 child: Text(
+  //                               'Dhaka',
+  //                               style: TextStyle(fontSize: 18.sp),
+  //                             ))
+  //                           ],
+  //                         ),
+  //                         SizedBox(
+  //                           height: 10.h,
+  //                         ),
+  //                         const Text('Branch Address'),
+  //                         Row(
+  //                           children: [
+  //                             Icon(
+  //                               Icons.location_pin,
+  //                               size: 22.sp,
+  //                             ),
+  //                             Expanded(
+  //                                 child: Text(
+  //                               ('Chittagong'),
+  //                               style: TextStyle(fontSize: 18.sp),
+  //                             ))
+  //                           ],
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 Container(
+  //                   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+  //                   decoration: const BoxDecoration(
+  //                       border: Border(
+  //                     bottom: BorderSide(
+  //                       color: Colors.black,
+  //                       width: 0.5,
+  //                     ),
+  //                   )),
+  //                   child: Row(
+  //                     children: [
+  //                       Expanded(
+  //                           child: Column(
+  //                         mainAxisAlignment: MainAxisAlignment.start,
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //                         children: [
+  //                           const Text('Order Pickup Time'),
+  //                           Row(
+  //                             children: [
+  //                               Icon(
+  //                                 Icons.access_time,
+  //                                 size: 22.sp,
+  //                               ),
+  //                               SizedBox(
+  //                                 width: 8.w,
+  //                               ),
+  //                               Text('8am',
+  //                                   style: TextStyle(
+  //                                       fontSize: 18.sp, color: Colors.black))
+  //                             ],
+  //                           ),
+  //                         ],
+  //                       )),
+  //                     ],
+  //                   ),
+  //                 ),
+  //                 SizedBox(
+  //                   height: 15.h,
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }
