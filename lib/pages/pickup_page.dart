@@ -174,7 +174,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                             int serial = 0;
                             itemList = provider.merchantDataList[index]
                                 .assignBranchPickupList!;
-                            List<bool> checkboxValues = List<bool>.generate(itemList!.length, (index) => true);
+                            List<bool> checkboxStates = List<bool>.filled(itemList!.length, false);
                             return Card(
                               elevation: 3,
                               shape: RoundedRectangleBorder(
@@ -231,7 +231,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 ),
                                 children: itemList!.map((item) {
 
-                                  print(checkboxValues);
+                                  //print(checkboxValues);
                                   serial++;
                                   return Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -270,11 +270,12 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                             child: Checkbox(
                                               onChanged: (value) {
                                                 setState(() {
+                                                  checkboxStates[index] = value ?? false;
                                                   singleChk=singleChk?false:true;
                                                  // print(checkboxValues[0]);
                                                 });
                                               },
-                                              value: allSelected?allSelected:singleChk,
+                                              value: allSelected?true:checkboxStates[index],
                                             ),
                                           ),
                                           title: SizedBox(
