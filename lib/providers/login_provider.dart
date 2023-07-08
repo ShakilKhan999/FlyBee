@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
+import 'package:flybee/api_helper/account_response.dart';
 import 'package:flybee/api_helper/api_login.dart';
 import 'package:flybee/models/basic_userInfo_model.dart';
 import 'package:flybee/models/user_model.dart';
@@ -32,6 +33,8 @@ class LoginProvider extends ChangeNotifier {
     basicUserInfoModel.Nid=await prefs.getString(NID);
     basicUserInfoModel.bank=await prefs.getString(BANK);
     basicUserInfoModel.area=await prefs.getString(USER_ADDRESS);
+
+
     notifyListeners();
   }
 }

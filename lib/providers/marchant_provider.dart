@@ -18,6 +18,8 @@ class MarchantProvider extends ChangeNotifier {
   RiderPickUpStatusModel? riderPickUpStatusModel;
   List<StatusPickupList>? statusPickupList;
 
+  List<bool> pickupBools=[];
+  List<List<bool>> merchantBools=[];
 
   getMarchantList() async {
     marchantList = [];
@@ -33,11 +35,30 @@ class MarchantProvider extends ChangeNotifier {
             marchantModel, merchantPickUpModel!.assignBranchPickupList!));
       }
     }
-
+     tempBoolListMaker();
+    print(merchantBools);
     await getRiderPickupStatusList();
-
     notifyListeners();
   }
+
+  void tempBoolListMaker() {
+    for (int i = 0; i < merchantDataList.length; i++) {
+      List<bool> temp = [];
+      for (int j = 0; j < merchantDataList[i].assignBranchPickupList!.length; j++) {
+        print("bool adding123");
+        temp.add(false);
+      }
+      if(temp.isNotEmpty)
+        {
+          merchantBools.add([...temp]);
+        }
+
+      temp.clear();
+      print("bool addinglength 123" + merchantBools.length.toString());
+    }
+    notifyListeners();
+  }
+
 
   productInfoMapMaker(String info){
     var properties = json.decode(info);

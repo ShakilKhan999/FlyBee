@@ -2,11 +2,14 @@
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flybee/pages/change_pass_menu.dart';
+import 'package:flybee/pages/edit_profile_menu.dart';
 import 'package:flybee/utils/colors.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../providers/account_provider.dart';
 import '../providers/login_provider.dart';
 import '../utils/shared_preference.dart';
 import 'home_page.dart';
@@ -23,12 +26,14 @@ class _AccountPageState extends State<AccountPage>
     with TickerProviderStateMixin {
   late TabController _tabController;
   late LoginProvider loginProvider;
+  DateTime selectedDate = DateTime.now();
   //var name,id,mobile,mail;
   ScrollController _scrollController = ScrollController();
-
+  late AccountProvider accountProvider;
 
   @override
   void initState() {
+    accountProvider = Provider.of<AccountProvider>(context, listen: false);
     print("init123");
     super.initState();
   }
@@ -189,6 +194,51 @@ class _AccountPageState extends State<AccountPage>
                         ),
                       ),
                     ),
+                    Positioned(
+                      top:50.h,left:10.w,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(90),
+                            color: Colors.white.withOpacity(0.4)
+                          ),
+                            child: PopupMenuButton<String>(
+                              itemBuilder: (BuildContext
+                              context) =>
+                              <PopupMenuEntry<String>>[
+                                const PopupMenuItem<String>(
+                                  value: 'option1',
+                                  child: Text('Edit'),
+                                ),
+                                const PopupMenuItem<String>(
+                                  value: 'option2',
+                                  child: Text(
+                                      'Change Password'),
+                                ),
+                              ],
+                              onSelected: (String value) {
+                                // Handle option selection here
+                                switch (value) {
+                                  case 'option1':
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Opacity(opacity:0.9,child: EditProfileMenu());
+                                      },
+                                    );
+                                    break;
+                                  case 'option2':
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Opacity(opacity:0.9,child: ChangePasswordMenu());
+                                      },
+                                    );
+                                    break;
+                                }
+                              },
+                              icon:  Icon(
+                                  Icons.edit,color: Colors.white,size: 24.sp,),
+                            )))
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -393,218 +443,254 @@ class _AccountPageState extends State<AccountPage>
                 //   ),
                 // ),
                 const Divider(),
-                SizedBox(height: 20.h),
-                Container(
-                  height: 30,
-                  width: screenWidth-100.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: logogold
-                  ),
-                  child: Center(child: Text("৳ Balance",style: TextStyle(color: Colors.white,fontSize: 18.sp,fontWeight: FontWeight.w600),)),
-                ),
-                TabBar(
-                  controller: _tabController,
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.grey,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  indicatorColor: const Color(0xFFfebe07),
-                  tabs: const [
-                    Tab(text: 'Delivery'),
-                    Tab(text: 'Commission'),
-                  ],
-                ),
-                SizedBox(
-                  height: 290.h,
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      Stack(
-                        children: [
-                          // Center(
-                          //   // child: Container(
-                          //   //   height: 280.h,width: screenWidth-30.w,
-                          //   //   decoration: BoxDecoration(
-                          //   //       color: logogold,
-                          //   //       borderRadius: BorderRadius.circular(12)
-                          //   //   ),
-                          //   // ),
-                          // ),
-                          Positioned(
-                            top: 1,
-                            left: 15.w,
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                Padding(
+                  padding:  EdgeInsets.all(5.sp),
+                  child: Card(
+                    elevation: 12,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20.h),
+                        Container(
+                          height: 30,
+                          width: screenWidth-100.w,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: logogold
+                          ),
+                          child: Center(child: Text("৳ Balance",style: TextStyle(color: Colors.white,fontSize: 18.sp,fontWeight: FontWeight.w600),)),
+                        ),
+                        SizedBox(height: 15.h,),
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () => _selectDate(context),
                                 child: Container(
-                                  height: 100.h,width: screenWidth-30.w,
                                   decoration: BoxDecoration(
-                                      color: logoblue,
-                                      borderRadius: BorderRadius.circular(12)
+                                    border: Border.all(width: 0.8,color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(12)
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        SizedBox(height: 10.w,),
-                                        Container(
-                                          height: 50.h,
-                                          width: screenWidth-20.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: Colors.white
-                                          ),
-                                          child: const ListTile(
-                                            trailing: Text("2500 ৳"),
-                                            title: Text(
-                                              'Collect Ammount',
-                                              style: TextStyle(color: Colors.black),
-                                            ),
-                                          ),
-                                        ),
-                                        
-                                      ],
+                                    child: Text(
+                                      '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                                      style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                          // Positioned(
-                          //     bottom: 15.h,left: 16.w,
-                          //     child: SizedBox(
-                          //       height: 50.h,width: screenWidth-30,
-                          //       child: Row(
-                          //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          //         children: [
-                          //           ElevatedButton(onPressed: (){
-                          //             showFlexibleBottomSheet(
-                          //               minHeight: 0,
-                          //               initHeight: 0.3,
-                          //               maxHeight: 1,
-                          //               context: context,
-                          //               builder: collectionbuildBottomSheet,
-                          //               anchors: [0, 0.5, 1],
-                          //               isSafeArea: true,
-                          //             );
-                          //           },
-                          //               style: ElevatedButton.styleFrom(
-                          //                   backgroundColor: logoblue,
-                          //                   textStyle: TextStyle(
-                          //                       fontSize: 16.sp,
-                          //                       fontWeight: FontWeight.w500)),
-                          //               child: SizedBox(height:20.h, width: 70.w,
-                          //                   child: const Center(child: Text("Collection")))),
-                          //           ElevatedButton(onPressed: (){
-                          //             showFlexibleBottomSheet(
-                          //               minHeight: 0,
-                          //               initHeight: 0.3,
-                          //               maxHeight: 1,
-                          //               context: context,
-                          //               builder: totalbuildBottomSheet,
-                          //               anchors: [0, 0.5, 1],
-                          //               isSafeArea: true,
-                          //             );
-                          //           },
-                          //               style: ElevatedButton.styleFrom(
-                          //                   backgroundColor: logoblue,
-                          //                   textStyle: TextStyle(
-                          //                       fontSize: 16.sp,
-                          //                       fontWeight: FontWeight.w500)),
-                          //               child:  SizedBox(height:20.h, width: 90.w,
-                          //                   child: const Center(child: Text("Commission"))))
-                          //         ],
-                          //       ),
-                          //     )
-                          //     )
-                        ],
-                      ),
-                      Stack(
-                        children: [
-                          // Center(
-                          //   child: Padding(
-                          //     padding:  EdgeInsets.symmetric(vertical: 8.0),
-                          //     child: Container(
-                          //       height: 320.h,width: screenWidth-30.w,
-                          //       decoration: BoxDecoration(
-                          //           color: logogold,
-                          //           borderRadius: BorderRadius.circular(12)
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 25.0),
-                              child: Container(
-                                height: 210.h,width: screenWidth-30.w,
-                                decoration: BoxDecoration(
-                                    color: logoblue,
-                                    borderRadius: BorderRadius.circular(12)
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(height: 10.w,),
-                                      Container(
-                                        height: 50.h,
-                                        width: screenWidth-20.w,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(12),
-                                            color: Colors.white
-                                        ),
-                                        child: const ListTile(
-                                          trailing: Text("4000 ৳"),
-                                          title: Text(
-                                            'Total Commission',
-                                            style: TextStyle(color: Colors.black),
+                        ),
+                        TabBar(
+                          controller: _tabController,
+                          labelColor: Colors.black,
+                          unselectedLabelColor: Colors.grey,
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          indicatorColor: const Color(0xFFfebe07),
+                          tabs: const [
+                            Tab(text: 'Delivery'),
+                            Tab(text: 'Commission'),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 290.h,
+                          child: TabBarView(
+                            controller: _tabController,
+                            children: [
+                              Stack(
+                                children: [
+                                  // Center(
+                                  //   // child: Container(
+                                  //   //   height: 280.h,width: screenWidth-30.w,
+                                  //   //   decoration: BoxDecoration(
+                                  //   //       color: logogold,
+                                  //   //       borderRadius: BorderRadius.circular(12)
+                                  //   //   ),
+                                  //   // ),
+                                  // ),
+                                  Positioned(
+                                    top: 1,
+                                    left: 15.w,
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                        child: Container(
+                                          height: 100.h,width: screenWidth-30.w,
+                                          decoration: BoxDecoration(
+                                              color: logoblue,
+                                              borderRadius: BorderRadius.circular(12)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(height: 10.w,),
+                                                Container(
+                                                  height: 50.h,
+                                                  width: screenWidth-20.w,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      color: Colors.white
+                                                  ),
+                                                  child: const ListTile(
+                                                    trailing: Text("2500 ৳"),
+                                                    title: Text(
+                                                      'Collect Ammount',
+                                                      style: TextStyle(color: Colors.black),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 10.w,),
-                                      Container(
-                                        height: 50.h,
-                                        width: screenWidth-20.w,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(12),
-                                            color: Colors.white
-                                        ),
-                                        child: const ListTile(
-                                          trailing: Text("400 ৳"),
-                                          title: Text(
-                                            'Paid Commission',
-                                            style: TextStyle(color: Colors.black),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 10.w,),
-                                      Container(
-                                        height: 50.h,
-                                        width: screenWidth-20.w,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(12),
-                                            color: Colors.white
-                                        ),
-                                        child: const ListTile(
-                                          trailing: Text("3000 ৳"),
-                                          title: Text(
-                                            'Due Commission',
-                                            style: TextStyle(color: Colors.black),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                  // Positioned(
+                                  //     bottom: 15.h,left: 16.w,
+                                  //     child: SizedBox(
+                                  //       height: 50.h,width: screenWidth-30,
+                                  //       child: Row(
+                                  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  //         children: [
+                                  //           ElevatedButton(onPressed: (){
+                                  //             showFlexibleBottomSheet(
+                                  //               minHeight: 0,
+                                  //               initHeight: 0.3,
+                                  //               maxHeight: 1,
+                                  //               context: context,
+                                  //               builder: collectionbuildBottomSheet,
+                                  //               anchors: [0, 0.5, 1],
+                                  //               isSafeArea: true,
+                                  //             );
+                                  //           },
+                                  //               style: ElevatedButton.styleFrom(
+                                  //                   backgroundColor: logoblue,
+                                  //                   textStyle: TextStyle(
+                                  //                       fontSize: 16.sp,
+                                  //                       fontWeight: FontWeight.w500)),
+                                  //               child: SizedBox(height:20.h, width: 70.w,
+                                  //                   child: const Center(child: Text("Collection")))),
+                                  //           ElevatedButton(onPressed: (){
+                                  //             showFlexibleBottomSheet(
+                                  //               minHeight: 0,
+                                  //               initHeight: 0.3,
+                                  //               maxHeight: 1,
+                                  //               context: context,
+                                  //               builder: totalbuildBottomSheet,
+                                  //               anchors: [0, 0.5, 1],
+                                  //               isSafeArea: true,
+                                  //             );
+                                  //           },
+                                  //               style: ElevatedButton.styleFrom(
+                                  //                   backgroundColor: logoblue,
+                                  //                   textStyle: TextStyle(
+                                  //                       fontSize: 16.sp,
+                                  //                       fontWeight: FontWeight.w500)),
+                                  //               child:  SizedBox(height:20.h, width: 90.w,
+                                  //                   child: const Center(child: Text("Commission"))))
+                                  //         ],
+                                  //       ),
+                                  //     )
+                                  //     )
+                                ],
                               ),
-                            ),
+                              Stack(
+                                children: [
+                                  // Center(
+                                  //   child: Padding(
+                                  //     padding:  EdgeInsets.symmetric(vertical: 8.0),
+                                  //     child: Container(
+                                  //       height: 320.h,width: screenWidth-30.w,
+                                  //       decoration: BoxDecoration(
+                                  //           color: logogold,
+                                  //           borderRadius: BorderRadius.circular(12)
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 25.0),
+                                      child: Container(
+                                        height: 210.h,width: screenWidth-30.w,
+                                        decoration: BoxDecoration(
+                                            color: logoblue,
+                                            borderRadius: BorderRadius.circular(12)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              SizedBox(height: 10.w,),
+                                              Container(
+                                                height: 50.h,
+                                                width: screenWidth-20.w,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(12),
+                                                    color: Colors.white
+                                                ),
+                                                child:  ListTile(
+                                                  trailing: Text("${accountProvider.commissionCalculator('total')} ৳"),
+                                                  title: Text(
+                                                    'Total Commission',
+                                                    style: TextStyle(color: Colors.black),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 10.w,),
+                                              Container(
+                                                height: 50.h,
+                                                width: screenWidth-20.w,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(12),
+                                                    color: Colors.white
+                                                ),
+                                                child:  ListTile(
+                                                  trailing: Text("${accountProvider.commissionCalculator('paid')} ৳"),
+                                                  title: Text(
+                                                    'Paid Commission',
+                                                    style: TextStyle(color: Colors.black),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 10.w,),
+                                              Container(
+                                                height: 50.h,
+                                                width: screenWidth-20.w,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(12),
+                                                    color: Colors.white
+                                                ),
+                                                child:  ListTile(
+                                                  trailing: Text("${accountProvider.commissionCalculator('due')} ৳"),
+                                                  title: Text(
+                                                    'Due Commission',
+                                                    style: TextStyle(color: Colors.black),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -755,5 +841,28 @@ class _AccountPageState extends State<AccountPage>
         )
     );
   }
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2030),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light().copyWith(
+              primary: Theme.of(context).primaryColor,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
 
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
 }

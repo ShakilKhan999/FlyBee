@@ -35,7 +35,7 @@ class DeliveryProvider extends ChangeNotifier {
   }
   getDeliveryStatusList() async {
     statusDeliveryList = [];
-    deliveryStatus = await DeliveryResponse().getDeliveryStatusList();
+    deliveryStatus = (await DeliveryResponse().getDeliveryStatusList()) as DeliveryStatus?;
     statusDeliveryList!.addAll(deliveryStatus!.statusDeliveryList!);
     notifyListeners();
 
