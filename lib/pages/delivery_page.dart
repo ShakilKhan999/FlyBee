@@ -19,12 +19,14 @@ class DeliveryPage extends StatefulWidget {
   State<DeliveryPage> createState() => _DeliveryPageState();
 }
 
+enum RadioOption { delivered, returned }
+
 class _DeliveryPageState extends State<DeliveryPage>
     with TickerProviderStateMixin {
   late DeliveryProvider deliveryProvider;
   late TabController _tabController;
   bool isExpanded = false;
-  String _selectedValue = '';
+  RadioOption _site = RadioOption.delivered;
   @override
   void initState() {
     deliveryProvider = Provider.of<DeliveryProvider>(context, listen: false);
@@ -345,13 +347,14 @@ class _DeliveryPageState extends State<DeliveryPage>
                               physics: const BouncingScrollPhysics(
                                   parent: AlwaysScrollableScrollPhysics()),
                               itemCount: provider.marchantList.length,
-                              separatorBuilder: (context, index) => const SizedBox(
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(
                                 height: 5,
                               ),
                               itemBuilder: (context, index) {
                                 int serial = 0;
-                                itemList = provider
-                                    .merchantDataList[index].assignBranchPickupList!
+                                itemList = provider.merchantDataList[index]
+                                    .assignBranchPickupList!
                                     .cast<AssignBranchPickupList>();
                                 return Card(
                                   elevation: 3,
@@ -361,14 +364,15 @@ class _DeliveryPageState extends State<DeliveryPage>
                                     iconColor: logoblue,
                                     collapsedIconColor: logogold,
                                     onExpansionChanged: (value) {
-                                      setState(() {
-                                        isExpanded =
-                                        isExpanded == false ? true : false;
-                                        print(isExpanded);
-                                      });
+                                      // setState(() {
+                                      //   isExpanded =
+                                      //   isExpanded == false ? true : false;
+                                      //   print(isExpanded);
+                                      // });
                                     },
                                     shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10)),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     title: Text(
                                       provider.marchantList[index].userName! ??
                                           'N/A',
@@ -379,7 +383,8 @@ class _DeliveryPageState extends State<DeliveryPage>
                                           color: Colors.black),
                                     ),
                                     subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Phone: ${provider.marchantList[index].userPhone!}',
@@ -401,32 +406,33 @@ class _DeliveryPageState extends State<DeliveryPage>
                                     children: itemList!.map((item) {
                                       serial++;
                                       return Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
                                         children: [
                                           serial == 1
                                               ? Container(
-                                            height: 50,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                              children: [
-                                                Text('Select All'),
-                                                Checkbox(
-                                                  onChanged: (value) {},
-                                                  value: false,
-                                                ),
-                                              ],
-                                            ),
-                                          )
+                                                  height: 50,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Text('Select All'),
+                                                      Checkbox(
+                                                        onChanged: (value) {},
+                                                        value: false,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
                                               : Container(),
                                           Padding(
-                                            padding:
-                                            const EdgeInsets.only(left: 15.0),
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0),
                                             child: ListTile(
                                               style: ListTileStyle.list,
                                               contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 16),
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16),
                                               // leading: Checkbox(onChanged: (bool? value) {  }, value: false,),
                                               trailing: Container(
                                                 height: 20,
@@ -439,115 +445,110 @@ class _DeliveryPageState extends State<DeliveryPage>
                                               title: SizedBox(
                                                 child: Row(
                                                   crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       "${serial}.  ",
                                                       style: const TextStyle(
                                                           fontWeight:
-                                                          FontWeight.bold),
+                                                              FontWeight.bold),
                                                     ),
                                                     Expanded(
                                                         child: Container(
-                                                          decoration: BoxDecoration(
-                                                              color: logogold
-                                                                  .withOpacity(0.4),
-                                                              border: Border.all(),
-                                                              borderRadius:
-                                                              BorderRadius.circular(
-                                                                  12)),
-                                                          child: Padding(
-                                                            padding:
-                                                            const EdgeInsets.all(
-                                                                2.0),
-                                                            child: Column(
-                                                              children: [
-                                                                Column(
-                                                                  mainAxisAlignment:
+                                                      decoration: BoxDecoration(
+                                                          color: logogold
+                                                              .withOpacity(0.4),
+                                                          border: Border.all(),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      12)),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(2.0),
+                                                        child: Column(
+                                                          children: [
+                                                            Column(
+                                                              mainAxisAlignment:
                                                                   MainAxisAlignment
                                                                       .spaceBetween,
-                                                                  children: [
-                                                                    Container(
-                                                                      child: Row(
-                                                                        children: [
-                                                                          const Icon(
-                                                                            Icons
-                                                                                .emoji_people,
-                                                                            color:
+                                                              children: [
+                                                                Container(
+                                                                  child: Row(
+                                                                    children: [
+                                                                      const Icon(
+                                                                        Icons
+                                                                            .emoji_people,
+                                                                        color:
                                                                             logoblue,
-                                                                          ),
-                                                                          const Text(
-                                                                            "Customer Name: ",
-                                                                            style: TextStyle(
-                                                                                color:
-                                                                                logoblue,
-                                                                                fontWeight:
-                                                                                FontWeight.w500),
-                                                                          ),
-                                                                          Text(
-                                                                              "${item.recipientName21}",
-                                                                              style: const TextStyle(
-                                                                                  color:
-                                                                                  logoblue,
-                                                                                  fontWeight:
-                                                                                  FontWeight.w500))
-                                                                        ],
                                                                       ),
-                                                                    ),
-                                                                    Container(
-                                                                      child: Row(
-                                                                        children: [
-                                                                          const Icon(
-                                                                              Icons
-                                                                                  .phone,
-                                                                              color:
-                                                                              logoblue),
-                                                                          const Text(
-                                                                              "Customer Phone: ",
-                                                                              style: TextStyle(
-                                                                                  color:
-                                                                                  logoblue,
-                                                                                  fontWeight:
-                                                                                  FontWeight.w500)),
-                                                                          Text(
-                                                                              "${item.recipientPhone20}",
-                                                                              style: const TextStyle(
-                                                                                  color:
-                                                                                  logoblue,
-                                                                                  fontWeight:
-                                                                                  FontWeight.w500))
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Row(
-                                                                      children: [
-                                                                        const Icon(
-                                                                            Icons
-                                                                                .numbers,
+                                                                      const Text(
+                                                                        "Customer Name: ",
+                                                                        style: TextStyle(
                                                                             color:
-                                                                            logoblue),
-                                                                        const Text(
-                                                                            "Invoice: ",
-                                                                            style: TextStyle(
-                                                                                color:
                                                                                 logoblue,
-                                                                                fontWeight:
-                                                                                FontWeight.w500)),
-                                                                        Text(
-                                                                            "${item.merchantInvoice}",
-                                                                            style: const TextStyle(
-                                                                                color:
-                                                                                logoblue,
-                                                                                fontWeight:
-                                                                                FontWeight.w500))
-                                                                      ],
-                                                                    )
-                                                                  ],
+                                                                            fontWeight:
+                                                                                FontWeight.w500),
+                                                                      ),
+                                                                      Text(
+                                                                          "${item.recipientName21}",
+                                                                          style: const TextStyle(
+                                                                              color: logoblue,
+                                                                              fontWeight: FontWeight.w500))
+                                                                    ],
+                                                                  ),
                                                                 ),
+                                                                Container(
+                                                                  child: Row(
+                                                                    children: [
+                                                                      const Icon(
+                                                                          Icons
+                                                                              .phone,
+                                                                          color:
+                                                                              logoblue),
+                                                                      const Text(
+                                                                          "Customer Phone: ",
+                                                                          style: TextStyle(
+                                                                              color: logoblue,
+                                                                              fontWeight: FontWeight.w500)),
+                                                                      Text(
+                                                                          "${item.recipientPhone20}",
+                                                                          style: const TextStyle(
+                                                                              color: logoblue,
+                                                                              fontWeight: FontWeight.w500))
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    const Icon(
+                                                                        Icons
+                                                                            .numbers,
+                                                                        color:
+                                                                            logoblue),
+                                                                    const Text(
+                                                                        "Invoice: ",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                logoblue,
+                                                                            fontWeight:
+                                                                                FontWeight.w500)),
+                                                                    Text(
+                                                                        "${item.merchantInvoice}",
+                                                                        style: const TextStyle(
+                                                                            color:
+                                                                                logoblue,
+                                                                            fontWeight:
+                                                                                FontWeight.w500))
+                                                                  ],
+                                                                )
                                                               ],
                                                             ),
-                                                          ),
-                                                        )),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )),
                                                   ],
                                                 ),
                                               ),
@@ -560,15 +561,15 @@ class _DeliveryPageState extends State<DeliveryPage>
                                           ),
                                           serial == itemList!.length
                                               ? Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                            children: [
-                                              ElevatedButton(
-                                                  onPressed: () {},
-                                                  child:
-                                                  Text('Collect Pickup')),
-                                            ],
-                                          )
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    ElevatedButton(
+                                                        onPressed: () {},
+                                                        child: Text(
+                                                            'Collect Pickup')),
+                                                  ],
+                                                )
                                               : Container()
                                         ],
                                       );
@@ -620,18 +621,21 @@ class _DeliveryPageState extends State<DeliveryPage>
           collapsedIconColor: logogold,
           title: ListTile(
             style: ListTileStyle.list,
-            contentPadding:  EdgeInsets.symmetric(horizontal: 5.sp),
+            contentPadding: EdgeInsets.symmetric(horizontal: 5.sp),
             leading: const Icon(Icons.hail),
             title: Row(
               children: [
                 Text(
                   "Delivery Completed",
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
+                  style:
+                      TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
                 ),
-                SizedBox(width: 5.w,),
-                Text('Marchant Number :'+ (provider
-                    .statusDeliveryList![index]
-                    .merchantInvoice.toString()))
+                SizedBox(
+                  width: 5.w,
+                ),
+                Text('Marchant Number :' +
+                    (provider.statusDeliveryList![index].merchantInvoice
+                        .toString()))
               ],
             ),
             dense: true,
@@ -796,8 +800,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                               ),
                               Expanded(
                                   child: Text(provider
-                                      .statusDeliveryList![index]
-                                      .id
+                                      .statusDeliveryList![index].id
                                       .toString()))
                             ],
                           ),
@@ -858,7 +861,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                               Expanded(
                                   child: Text(provider
                                       .statusDeliveryList![index]
-                                      .currentBranch!.branch.toString()))
+                                      .currentBranch!
+                                      .branch
+                                      .toString()))
                             ],
                           ),
                           SizedBox(
@@ -1272,40 +1277,53 @@ class _DeliveryPageState extends State<DeliveryPage>
                               : 'N/A'),
                         ],
                       ),
+                      
                       Column(
                         children: [
                           Row(
                             children: [
                               Radio(
-                                value: 'Delivered',
-                                groupValue: selectedValue,
-                                onChanged: (value) {
+                                value: RadioOption.delivered,
+                                groupValue: _site,
+                                onChanged: (RadioOption? value) {
                                   setState(() {
-                                    selectedValue = value!;
+                                    _site = value!;
+                                    log(_site.toString());
                                   });
                                 },
                               ),
                               Text('Delivered'),
                             ],
                           ),
+                           if (_site == RadioOption.delivered)
+                           ElevatedButton(onPressed: (){}, child: Text('Confirm')),
                           Row(
                             children: [
                               Radio(
-                                value: 'Return',
-                                groupValue: selectedValue,
-                                onChanged: (value) {
+                                value: RadioOption.returned,
+                                groupValue: _site,
+                                onChanged: (RadioOption? value) {
                                   setState(() {
-                                    selectedValue = value!;
+                                    _site = value!;
+                                    log(_site.toString());
                                   });
                                 },
                               ),
                               Text('Return'),
                             ],
                           ),
-                          if (selectedValue == 'Return')
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Arrived',
+                          if (_site == RadioOption.returned)
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: 'Arrived',
+                                    ),
+                                  ),
+                                  ElevatedButton(onPressed: (){}, child: Text('Confirm'))
+                                ],
                               ),
                             ),
                         ],

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/utils/colors.dart';
+import 'package:flybee/utils/shared_preference.dart';
 import 'package:provider/provider.dart';
+import '../api_helper/account_response.dart';
 import '../models/merchant_pickup_model.dart';
 import '../providers/marchant_provider.dart';
 import 'item_details.dart';
@@ -19,6 +21,9 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
   late MarchantProvider marchantProvider;
   late TabController _tabController;
   bool isExpanded = false;
+  bool allSelected=false;
+  bool singleChk=false;
+  List<bool> chkList=[];
 
   @override
   void initState() {
@@ -27,6 +32,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
     // marchantProvider.getRiderPickupStatusList();
     super.initState();
   }
+
 
   @override
   void dispose() {
@@ -163,7 +169,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(
                               parent: AlwaysScrollableScrollPhysics()),
-                          itemCount: provider.marchantList.length,
+                          itemCount: provider.merchantDataList.length,
                           separatorBuilder: (context, index) => const SizedBox(
                             height: 5,
                           ),
@@ -227,8 +233,12 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                   ],
                                 ),
                                 children: itemList!.map((item) {
+
+                                  //print(checkboxValues);
                                   serial++;
-                                  return Column(
+                                  return Consumer<MarchantProvider>(
+                                  builder: (context, marchantProvider, _) {
+                                    return Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       serial == 1
@@ -240,8 +250,13 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                 children: [
                                                   Text('Select All'),
                                                   Checkbox(
-                                                    onChanged: (value) {},
-                                                    value: false,
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        allSelected=!allSelected;
+                                                       // marchantProvider.merchantBools[0][0]=true;
+                                                      });
+                                                    },
+                                                    value:allSelected,
                                                   ),
                                                 ],
                                               ),
@@ -260,8 +275,15 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                             height: 20,
                                             width: 20,
                                             child: Checkbox(
-                                              onChanged: (value) {},
-                                              value: false,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  // checkboxStates[index] = value ?? false;
+                                                  singleChk=singleChk?false:true;
+                                                 // print(checkboxValues[0]);
+                                                  marchantProvider.merchantBools[0][0]=! marchantProvider.merchantBools[0][0];
+                                                });
+                                              },
+                                              value:allSelected==true?allSelected: marchantProvider.merchantBools[0][0],
                                             ),
                                           ),
                                           title: SizedBox(
@@ -399,7 +421,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                             )
                                           : Container()
                                     ],
-                                  );
+                                  );});
                                 }).toList(),
                               ),
                             );
@@ -415,6 +437,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     }
                   },
                 ),
+                
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
                     if (provider.marchantList.isNotEmpty) {
@@ -441,11 +464,11 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 iconColor: logoblue,
                                 collapsedIconColor: logogold,
                                 onExpansionChanged: (value) {
-                                  setState(() {
-                                    isExpanded =
-                                    isExpanded == false ? true : false;
-                                    print(isExpanded);
-                                  });
+                                  // setState(() {
+                                  //   isExpanded =
+                                  //   isExpanded == false ? true : false;
+                                  //   print(isExpanded);
+                                  // });
                                 },
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)),
@@ -940,6 +963,22 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                     .currentBranch!.branch
                                     .toString()),
                               )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const Text('Marchant Invoice'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider.statusPickupList![index].merchantInvoice!),
+                                  
+                                  )
                             ],
                           ),
                           SizedBox(

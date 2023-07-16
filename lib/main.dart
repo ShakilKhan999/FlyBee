@@ -8,6 +8,7 @@ import 'package:flybee/pages/launcherPage.dart';
 import 'package:flybee/pages/login_page.dart';
 import 'package:flybee/pages/marchant_list_page.dart';
 import 'package:flybee/pages/pickup_page.dart';
+import 'package:flybee/providers/account_provider.dart';
 import 'package:flybee/providers/delivery_provider.dart';
 import 'package:flybee/providers/login_provider.dart';
 import 'package:flybee/providers/marchant_provider.dart';
@@ -20,6 +21,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => LoginProvider()),
         ChangeNotifierProvider(create: (context) => MarchantProvider()),
         ChangeNotifierProvider(create: (context) => DeliveryProvider()),
+        ChangeNotifierProvider(create: (context) => AccountProvider()),
       ],
     child:  const MyApp()));
   //check
