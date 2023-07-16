@@ -151,8 +151,8 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
             indicatorWeight: 3,
             indicatorColor: logoblue,
             tabs: const [
-              Tab(text: 'Pickup List'),
-              Tab(text: 'Return'),
+              Tab(text: 'Pickup Assign'),
+              Tab(text: 'Return Assign'),
               Tab(text: 'Status'),
             ],
           ),
@@ -431,9 +431,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                         ),
                       );
                     } else {
-                      return Container(
-                        child: const Text('Pick up list is empty'),
-                      );
+                      return const Center(child: Text('Pick up list is empty'));
                     }
                   },
                 ),
@@ -685,7 +683,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                       );
                     } else {
                       return Container(
-                        child: const Text('Pick up list is empty'),
+                        child: const Center(child: Text('Pick up list is empty')),
                       );
                     }
                   },
