@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flybee/pages/account_page.dart';
 import 'package:flybee/pages/delivery_page.dart';
 import 'package:flybee/pages/pickup_page.dart';
+import 'package:flybee/providers/account_provider.dart';
 import 'package:flybee/widgets/main_drawer.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
@@ -21,28 +22,33 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 String? name,id,mobile,mail,branch_id,nid,bank,address,branch;
+
+void getinfo()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  name =await prefs.getString(USER_NAME);
+  // basicUserInfoModel.id=await prefs.getString(USER_ID);
+  mobile=await prefs.getString(USER_PHONE);
+  mail=await prefs.getString(USER_EMAIL);
+  branch_id=await prefs.getString(BRANCH_ID);
+  nid=await prefs.getString(NID);
+  bank=await prefs.getString(BANK);
+  address=await prefs.getString(USER_ADDRESS);
+}
 class _HomePageState extends State<HomePage> {
-  
   int pageIndex = 0;
+
   List<Widget> widgetList = const [PickUpPage(), DeliveryPage(), AccountPage()];
   late LoginProvider loginProvider;
+  late AccountProvider accountProvider;
 @override
 void initState() {
   loginProvider = Provider.of<LoginProvider>(context, listen: false);
+  accountProvider = Provider.of<AccountProvider>(context, listen: false);
+  accountProvider.getCollectionAmmount('');
   super.initState();
   getinfo();
 }
-  void getinfo()async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    name =await prefs.getString(USER_NAME);
-    // basicUserInfoModel.id=await prefs.getString(USER_ID);
-    mobile=await prefs.getString(USER_PHONE);
-    mail=await prefs.getString(USER_EMAIL);
-    branch_id=await prefs.getString(BRANCH_ID);
-    nid=await prefs.getString(NID);
-    bank=await prefs.getString(BANK);
-    address=await prefs.getString(USER_ADDRESS);
-  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

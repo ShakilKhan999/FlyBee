@@ -1,6 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flybee/customs/custom_toast.dart';
 import 'package:provider/provider.dart';
 
 import '../api_helper/account_response.dart';
@@ -9,6 +13,20 @@ import '../utils/shared_preference.dart';
 class AccountProvider extends ChangeNotifier{
 
   Map<String, dynamic> commissionsMap = {};
+  double collectionammount=0;
+
+  Future<double> getCollectionAmmount(String date)async {
+    EasyLoading.show();
+    print("called123");
+    String? actoken=await SharedPref().getString(ACCESS_TOKEN);
+    String? id=await SharedPref().getString(USER_ID);
+    String? branchid=await SharedPref().getString(BRANCH_ID);
+    collectionammount=await AccountResponse().fetchCollectionAmount(actoken!,id!,branchid!,date);
+    print("collection123"+collectionammount.toString());
+    EasyLoading.dismiss();
+    notifyListeners();
+    return collectionammount;
+  }
   void getComissions()async {
     print("called123");
     String? actoken=await SharedPref().getString(ACCESS_TOKEN);
@@ -57,5 +75,50 @@ class AccountProvider extends ChangeNotifier{
     return calculatedData;
   }
 
+  Future<void> updateProfile(String uName, String fName, String lName, String address, String email, String phn) async{
+    String? actoken=await SharedPref().getString(ACCESS_TOKEN);
+    String? id=await SharedPref().getString(USER_ID);
+    String? branchid=await SharedPref().getString(BRANCH_ID);
+    await AccountResponse().updateRiderProfile(
+        actoken!,
+        id!,
+        branchid!,
+        uName,
+        fName,
+        lName,
+        address,
+        email,
+        phn);
+
+    await SharedPref().setString(USER_ADDRESS, address);
+    await SharedPref().setString(USER_EMAIL, email);
+    await SharedPref().setString(USER_NAME, uName);
+    await SharedPref().setString(USER_PHONE, phn);
+
+    Fluttertoast.showToast(
+      msg: "Profile Edited",
+      toastLength: Toast.LENGTH_LONG,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
+
+  Future<void> changePass(String oldPass,String newPass)async{
+    String? actoken=await SharedPref().getString(ACCESS_TOKEN);
+    String? id=await SharedPref().getString(USER_ID);
+    await AccountResponse().changePassword(actoken!, id!, oldPass, newPass);
+
+  }
+
+  bool isEmailFormatValid(String email) {
+    // Regular expression pattern to validate email format
+    final pattern = r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)*[a-zA-Z]{2,7}$';
+    final regExp = RegExp(pattern);
+
+    // Check if the email matches the regular expression pattern
+    return !regExp.hasMatch(email);
+  }
 
 }
