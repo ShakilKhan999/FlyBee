@@ -278,9 +278,11 @@ late AccountProvider accountProvider;
                             addressController.text,
                             emailController.text,
                             phnController.text);
+                        setState(() {
+                          getinfo();
+                        });
                         Navigator.of(context).pop();
                       }
-
                     },
                     child: Text(
                       'Update',
