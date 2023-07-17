@@ -33,8 +33,7 @@ class LoginProvider extends ChangeNotifier {
     basicUserInfoModel.Nid=await prefs.getString(NID);
     basicUserInfoModel.bank=await prefs.getString(BANK);
     basicUserInfoModel.area=await prefs.getString(USER_ADDRESS);
-
-
+    
     notifyListeners();
   }
 }

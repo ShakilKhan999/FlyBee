@@ -24,18 +24,33 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage>
     with TickerProviderStateMixin {
+
+  int _currentTabIndex = 0;
   late TabController _tabController;
   late LoginProvider loginProvider;
   DateTime selectedDate = DateTime.now();
+  String date=DateTime.now().toString().substring(0,11);
   //var name,id,mobile,mail;
   ScrollController _scrollController = ScrollController();
   late AccountProvider accountProvider;
+  double todayAmmount=0;
 
   @override
   void initState() {
     accountProvider = Provider.of<AccountProvider>(context, listen: false);
+    getTodaysCollection();
     print("init123");
     super.initState();
+  }
+getTodaysCollection() async{
+    todayAmmount= await accountProvider.getCollectionAmmount(DateTime.now().toString().substring(0,11));
+}
+  void _handleTabSelection() {
+    if (_tabController.indexIsChanging) {
+      setState(() {
+        _currentTabIndex = _tabController.index;
+      });
+    }
   }
 
   @override
@@ -462,35 +477,14 @@ class _AccountPageState extends State<AccountPage>
                           child: Center(child: Text("৳ Balance",style: TextStyle(color: Colors.white,fontSize: 18.sp,fontWeight: FontWeight.w600),)),
                         ),
                         SizedBox(height: 15.h,),
-                        Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () => _selectDate(context),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(width: 0.8,color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(12)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-                                      style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                         TabBar(
                           controller: _tabController,
                           labelColor: Colors.black,
                           unselectedLabelColor: Colors.grey,
                           indicatorSize: TabBarIndicatorSize.tab,
                           indicatorColor: const Color(0xFFfebe07),
+
+
                           tabs: const [
                             Tab(text: 'Delivery'),
                             Tab(text: 'Commission'),
@@ -514,12 +508,13 @@ class _AccountPageState extends State<AccountPage>
                                   // ),
                                   Positioned(
                                     top: 1,
-                                    left: 15.w,
+                                    left: 10.w,
+                                    right: 10.w,
                                     child: Center(
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                                         child: Container(
-                                          height: 100.h,width: screenWidth-30.w,
+                                          height: 120.h,width: screenWidth-30.w,
                                           decoration: BoxDecoration(
                                               color: logoblue,
                                               borderRadius: BorderRadius.circular(12)
@@ -528,6 +523,29 @@ class _AccountPageState extends State<AccountPage>
                                             padding: const EdgeInsets.all(8.0),
                                             child: Column(
                                               children: [
+                                                Center(
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () => _selectDate(context),
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                              border: Border.all(width: 0.8,color: Colors.grey),
+                                                              borderRadius: BorderRadius.circular(12)
+                                                          ),
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Text(
+                                                              '$date',
+                                                              style: TextStyle(color:Colors.white,fontSize: 14.sp, fontWeight: FontWeight.bold),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                                 SizedBox(height: 10.w,),
                                                 Container(
                                                   height: 50.h,
@@ -536,8 +554,8 @@ class _AccountPageState extends State<AccountPage>
                                                       borderRadius: BorderRadius.circular(12),
                                                       color: Colors.white
                                                   ),
-                                                  child: const ListTile(
-                                                    trailing: Text("2500 ৳"),
+                                                  child:  ListTile(
+                                                    trailing: Text("${todayAmmount} ৳"),
                                                     title: Text(
                                                       'Collect Ammount',
                                                       style: TextStyle(color: Colors.black),
@@ -862,7 +880,16 @@ class _AccountPageState extends State<AccountPage>
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+        date = selectedDate.toString().substring(0, 11);
+      });
+
+      accountProvider.getCollectionAmmount(selectedDate.toString().substring(0, 11)).then((todayAmount) {
+        setState(() {
+          todayAmmount = todayAmount;
+          print("date: $date  collection: $todayAmmount");
+        });
       });
     }
+
   }
 }

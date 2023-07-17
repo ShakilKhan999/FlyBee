@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flybee/pages/account_page.dart';
 import 'package:flybee/pages/delivery_page.dart';
 import 'package:flybee/pages/pickup_page.dart';
+import 'package:flybee/providers/account_provider.dart';
 import 'package:flybee/widgets/main_drawer.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
@@ -26,9 +27,12 @@ class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
   List<Widget> widgetList = const [PickUpPage(), DeliveryPage(), AccountPage()];
   late LoginProvider loginProvider;
+  late AccountProvider accountProvider;
 @override
 void initState() {
   loginProvider = Provider.of<LoginProvider>(context, listen: false);
+  accountProvider = Provider.of<AccountProvider>(context, listen: false);
+  accountProvider.getCollectionAmmount('');
   super.initState();
   getinfo();
 }
