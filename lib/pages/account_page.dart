@@ -39,6 +39,7 @@ class _AccountPageState extends State<AccountPage>
   void initState() {
     accountProvider = Provider.of<AccountProvider>(context, listen: false);
     getTodaysCollection();
+    print(todayAmmount);
     print("init123");
     super.initState();
   }
@@ -560,6 +561,7 @@ getTodaysCollection() async{
                                                       style: TextStyle(color: Colors.black),
                                                     ),
                                                   ),
+
                                                 ),
 
                                             ],

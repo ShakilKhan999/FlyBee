@@ -384,7 +384,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                         fontWeight:
                                                                             FontWeight.w500)),
                                                                 Text(
-                                                                    "${item.merchantInvoice}",
+                                                                    "${item.id}",
                                                                     style: const TextStyle(
                                                                         color:
                                                                             logoblue,
@@ -667,7 +667,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                           ElevatedButton(
                                               onPressed: () {},
                                               child:
-                                              Text('Collect Pickup')),
+                                              const Text('Collect Return')),
                                         ],
                                       )
                                           : Container()
@@ -694,7 +694,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     return ListView.builder(
                       physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics()),
-                      itemCount: 1,
+                      itemCount:  provider.statusPickupList!.length,
                       itemBuilder: (context, index) {
                         return Container(
                           child: _buildPickUpStatusItem(index, provider),
@@ -713,7 +713,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
 
   Widget _buildPickUpStatusItem(int index, MarchantProvider provider) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding:  EdgeInsets.symmetric(horizontal: 4.0.sp),
       child: Card(
         elevation: 3,
         child: ExpansionTile(
@@ -734,12 +734,8 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                 SizedBox(
                   width: 5.w,
                 ),
-                Column(
-                  children: [
-                    Text('Marchant number: ' +
-                        provider.statusPickupList![index].merchantInvoice!),
-                  ],
-                )
+                Text('Marchant number: ' +
+                    provider.statusPickupList![index].merchantInvoice!)
               ],
             ),
             dense: true,
@@ -892,13 +888,13 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                             children: [
                               Icon(
                                 Icons.cancel,
-                                size: 22.sp,
+                                size: 22.0,
                               ),
                               Expanded(
-                                child: Text(provider
-                                    .statusPickupList![index].pickupStatus
-                                    .toString()),
-                              )
+                                child: Text(
+                                  provider.statusPickupList![index].pickupStatus == null ? 'Pending' : provider.statusPickupList![index].pickupStatus.toString(),
+                                ),
+                              ),
                             ],
                           ),
                           const Text('Marchant Name'),

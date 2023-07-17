@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flybee/api_helper/marchat_response.dart';
 import 'package:flybee/models/Merchant_data_model.dart';
 import 'package:flybee/models/marchat_model.dart';

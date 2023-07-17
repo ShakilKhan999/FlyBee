@@ -45,7 +45,7 @@ class AccountResponse{
        'Content-Type': 'application/x-www-form-urlencoded'
     };
 
-    var request = http.Request('POST', Uri.parse('http://apps.starxpress.online/api/update_profile'));
+    var request = http.Request('POST', Uri.parse('http://starxpress.online/api/update_profile'));
     request.bodyFields = {
       'userID': userId,
       'username': username??'',
@@ -78,7 +78,7 @@ class AccountResponse{
        'Content-Type': 'application/x-www-form-urlencoded'
     };
 
-    var request = http.Request('POST', Uri.parse('http://apps.starxpress.online/api/rider_collection_balance'));
+    var request = http.Request('POST', Uri.parse('http://starxpress.online/api/rider_collection_balance'));
     request.bodyFields = {
       'rider_user_id': userId,
       'rider_branch_id': branchId,
@@ -113,7 +113,7 @@ class AccountResponse{
       'Content-Type': 'application/x-www-form-urlencoded'
     };
 
-    var request = http.Request('POST', Uri.parse('http://apps.starxpress.online/api/changed_password'));
+    var request = http.Request('POST', Uri.parse('http://starxpress.online/api/changed_password'));
     request.bodyFields = {
       'userID': id,
       'old_password': oldpass,

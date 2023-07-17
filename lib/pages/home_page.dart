@@ -30,6 +30,7 @@ void getinfo()async{
   mobile=await prefs.getString(USER_PHONE);
   mail=await prefs.getString(USER_EMAIL);
   branch_id=await prefs.getString(BRANCH_ID);
+  branch=await prefs.getString(BRANCH_NAME);
   nid=await prefs.getString(NID);
   bank=await prefs.getString(BANK);
   address=await prefs.getString(USER_ADDRESS);
