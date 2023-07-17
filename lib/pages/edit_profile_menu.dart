@@ -278,21 +278,6 @@ late AccountProvider accountProvider;
                             addressController.text,
                             emailController.text,
                             phnController.text);
-                        void getinfo()async{
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          name =await prefs.getString(USER_NAME);
-                          // basicUserInfoModel.id=await prefs.getString(USER_ID);
-                          mobile=await prefs.getString(USER_PHONE);
-                          mail=await prefs.getString(USER_EMAIL);
-                          branch_id=await prefs.getString(BRANCH_ID);
-                          nid=await prefs.getString(NID);
-                          bank=await prefs.getString(BANK);
-                          address=await prefs.getString(USER_ADDRESS);
-                        }
-                       setState(() {
-                         getinfo();
-                       });
-
                         Navigator.of(context).pop();
                       }
 

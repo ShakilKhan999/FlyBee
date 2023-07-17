@@ -22,9 +22,20 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 String? name,id,mobile,mail,branch_id,nid,bank,address,branch;
-int pageIndex = 0;
+
+void getinfo()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  name =await prefs.getString(USER_NAME);
+  // basicUserInfoModel.id=await prefs.getString(USER_ID);
+  mobile=await prefs.getString(USER_PHONE);
+  mail=await prefs.getString(USER_EMAIL);
+  branch_id=await prefs.getString(BRANCH_ID);
+  nid=await prefs.getString(NID);
+  bank=await prefs.getString(BANK);
+  address=await prefs.getString(USER_ADDRESS);
+}
 class _HomePageState extends State<HomePage> {
-  
+  int pageIndex = 0;
 
   List<Widget> widgetList = const [PickUpPage(), DeliveryPage(), AccountPage()];
   late LoginProvider loginProvider;
@@ -37,17 +48,7 @@ void initState() {
   super.initState();
   getinfo();
 }
-  void getinfo()async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    name =await prefs.getString(USER_NAME);
-    // basicUserInfoModel.id=await prefs.getString(USER_ID);
-    mobile=await prefs.getString(USER_PHONE);
-    mail=await prefs.getString(USER_EMAIL);
-    branch_id=await prefs.getString(BRANCH_ID);
-    nid=await prefs.getString(NID);
-    bank=await prefs.getString(BANK);
-    address=await prefs.getString(USER_ADDRESS);
-  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

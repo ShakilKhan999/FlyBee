@@ -239,7 +239,11 @@ getTodaysCollection() async{
                                       builder: (BuildContext context) {
                                         return Opacity(opacity:0.9,child: EditProfileMenu());
                                       },
-                                    );
+                                    ).then((value) {
+                                      setState(() {
+                                        getinfo();
+                                      });
+                                    });
                                     break;
                                   case 'option2':
                                     showDialog(
