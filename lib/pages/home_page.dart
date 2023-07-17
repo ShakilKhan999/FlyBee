@@ -22,9 +22,10 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 String? name,id,mobile,mail,branch_id,nid,bank,address,branch;
+int pageIndex = 0;
 class _HomePageState extends State<HomePage> {
   
-  int pageIndex = 0;
+
   List<Widget> widgetList = const [PickUpPage(), DeliveryPage(), AccountPage()];
   late LoginProvider loginProvider;
   late AccountProvider accountProvider;

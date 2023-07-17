@@ -5,8 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/pages/home_page.dart';
 import 'package:flybee/providers/account_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/colors.dart';
+import '../utils/shared_preference.dart';
 
 
 
@@ -269,13 +271,28 @@ late AccountProvider accountProvider;
                             .showSnackBar(sn);
                       }
                       else{
-                        accountProvider.updateProfile(
+                        await accountProvider.updateProfile(
                             unameController.text,
                             fnameController.text,
                             lnameController.text,
                             addressController.text,
                             emailController.text,
                             phnController.text);
+                        void getinfo()async{
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          name =await prefs.getString(USER_NAME);
+                          // basicUserInfoModel.id=await prefs.getString(USER_ID);
+                          mobile=await prefs.getString(USER_PHONE);
+                          mail=await prefs.getString(USER_EMAIL);
+                          branch_id=await prefs.getString(BRANCH_ID);
+                          nid=await prefs.getString(NID);
+                          bank=await prefs.getString(BANK);
+                          address=await prefs.getString(USER_ADDRESS);
+                        }
+                       setState(() {
+                         getinfo();
+                       });
+
                         Navigator.of(context).pop();
                       }
 

@@ -89,8 +89,14 @@ class AccountProvider extends ChangeNotifier{
         address,
         email,
         phn);
+
+    await SharedPref().setString(USER_ADDRESS, address);
+    await SharedPref().setString(USER_EMAIL, email);
+    await SharedPref().setString(USER_NAME, uName);
+    await SharedPref().setString(USER_PHONE, phn);
+
     Fluttertoast.showToast(
-      msg: "Profile Edited, Please login again",
+      msg: "Profile Edited",
       toastLength: Toast.LENGTH_LONG,
       timeInSecForIosWeb: 1,
       backgroundColor: Colors.black,
