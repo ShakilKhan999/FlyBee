@@ -7,8 +7,6 @@ import 'package:flybee/utils/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../models/merchant_pickup_model.dart';
-import '../providers/marchant_provider.dart';
-import 'item_details.dart';
 
 class DeliveryPage extends StatefulWidget {
   static const String routeName = '/delivery';
@@ -1026,7 +1024,6 @@ class _DeliveryPageState extends State<DeliveryPage>
                               : 'N/A'),
                         ],
                       ),
-                      
                       Column(
                         children: [
                           Row(
@@ -1044,8 +1041,19 @@ class _DeliveryPageState extends State<DeliveryPage>
                               Text('Delivered'),
                             ],
                           ),
-                           if (_site == RadioOption.delivered)
-                           ElevatedButton(onPressed: (){}, child: Text('Confirm')),
+                          if (_site == RadioOption.delivered)
+                            ElevatedButton(
+                                onPressed: () {
+                                  provider.saveDelivery(
+                                    pickupId: provider.deliveryList[index].id
+                                        .toString(),
+                                    statusId: provider
+                                        .deliveryList[index].iDeliveryStatusId18
+                                        .toString(),
+                                    context: context,
+                                  );
+                                },
+                                child: Text('Confirm')),
                           Row(
                             children: [
                               Radio(
@@ -1071,7 +1079,8 @@ class _DeliveryPageState extends State<DeliveryPage>
                                       labelText: 'Arrived',
                                     ),
                                   ),
-                                  ElevatedButton(onPressed: (){}, child: Text('Confirm'))
+                                  ElevatedButton(
+                                      onPressed: () {}, child: Text('Confirm'))
                                 ],
                               ),
                             ),
