@@ -6,6 +6,7 @@ import 'package:flybee/models/Merchant_data_model.dart';
 import 'package:flybee/models/marchat_model.dart';
 import 'package:flybee/models/merchant_pickup_model.dart';
 import 'package:flybee/models/rider_pickup_status_model.dart';
+import 'package:flybee/models/rider_pickup_assign_model.dart';
 
 class MarchantProvider extends ChangeNotifier {
   MarchantModel? marchantModel;
@@ -13,9 +14,11 @@ class MarchantProvider extends ChangeNotifier {
 
   MerchantPickUpModel? merchantPickUpModel;
   List<MerchantDataModel> merchantDataList = [];
-  
+
   RiderPickUpStatusModel? riderPickUpStatusModel;
   List<StatusPickupList>? statusPickupList;
+
+
 
   List<bool> pickupBools=[];
   List<List<bool>> merchantBools=[];
@@ -71,4 +74,5 @@ class MarchantProvider extends ChangeNotifier {
     notifyListeners();
 
   }
+
 }
