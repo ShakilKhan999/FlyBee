@@ -21,7 +21,7 @@ class MarchantResponse {
     };
     var request = http.Request(
         // 'POST', Uri.parse('http://starxpress.online/api/rider_all_merchant'));
-        'POST', Uri.parse('http://starxpress.online/api/rider_all_merchant'));
+        'POST', Uri.parse('http://apps.starxpress.online/api/rider_all_merchant'));
     request.bodyFields = {'rider_branch_id': id};
     request.headers.addAll(headers);
 
@@ -49,7 +49,7 @@ class MarchantResponse {
     };
     var request = http.Request('POST',
         // Uri.parse('http://starxpress.online/api/merchant_rider_pickup_list'));
-        Uri.parse('http://starxpress.online/api/merchant_rider_pickup_list'));
+        Uri.parse('http://apps.starxpress.online/api/merchant_rider_pickup_list'));
     request.bodyFields = {
       'rider_user_id': id,
       'rider_branch_id': branch_id,
