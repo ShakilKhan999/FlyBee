@@ -441,13 +441,11 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                               pickupId: provider
                                                                   .merchantDataList[
                                                                       index]
-                                                                  .assignBranchPickupList![i].id
+                                                                  .assignBranchPickupList![
+                                                                      i]
+                                                                  .id
                                                                   .toString(),
-                                                              statusId: provider
-                                                                  .merchantDataList[
-                                                                      index]
-                                                                  .assignBranchPickupList![i].iDeliveryStatusId18
-                                                                  .toString(),
+                                                              statusId: '4',
                                                               context: context,
                                                             );
                                                           }
@@ -474,7 +472,6 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     }
                   },
                 ),
-                
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
                     if (provider.marchantList.isNotEmpty) {
@@ -509,7 +506,8 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)),
                                 title: Text(
-                                  provider.assignBranchPickupList![index].recipientName21! ??
+                                  provider.assignBranchPickupList![index]
+                                          .recipientName21! ??
                                       'N/A',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -535,9 +533,22 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                     //   style: const TextStyle(
                                     //       fontWeight: FontWeight.w500),
                                     // ),
+
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          provider.saveDelivery(
+                                            pickupId: provider
+                                                .assignBranchPickupList![index]
+                                                .id
+                                                .toString(),
+                                            statusId: '8',
+                                            context: context,
+                                          );
+                                        },
+                                        child: const Text('Collect Return')),
                                   ],
                                 ),
-                               
+
                                 // children: itemList!.map((item) {
                                 //   serial++;
                                 //   return Column(
@@ -713,7 +724,6 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 //     ],
                                 //   );
                                 // }).toList(),
-                              
                               ),
                             );
 
@@ -729,7 +739,6 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     }
                   },
                 ),
-                
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
                     return ListView.builder(

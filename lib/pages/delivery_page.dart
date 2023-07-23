@@ -1050,9 +1050,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                                   provider.saveDelivery(
                                     pickupId: provider.deliveryList[index].id
                                         .toString(),
-                                    statusId: provider
-                                        .deliveryList[index].iDeliveryStatusId18
-                                        .toString(),
+                                    statusId: '6',
                                     context: context,
                                   );
                                 },
@@ -1083,7 +1081,14 @@ class _DeliveryPageState extends State<DeliveryPage>
                                     ),
                                   ),
                                   ElevatedButton(
-                                      onPressed: () {}, child: Text('Confirm'))
+                                      onPressed: () {
+                                         provider.saveDelivery(
+                                    pickupId: provider.deliveryList[index].id
+                                        .toString(),
+                                    statusId: '7',
+                                    context: context,
+                                  );
+                                      }, child: Text('Confirm'))
                                 ],
                               ),
                             ),
