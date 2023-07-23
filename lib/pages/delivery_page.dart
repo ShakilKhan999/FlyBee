@@ -360,7 +360,7 @@ class _DeliveryPageState extends State<DeliveryPage>
   Widget _buildActiveDeliveryItem(int index, DeliveryProvider provider) {
     // log(provider.statusDeliveryList!.length.toString());
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Card(
         elevation: 3,
         child: ExpansionTile(
@@ -368,12 +368,13 @@ class _DeliveryPageState extends State<DeliveryPage>
           collapsedIconColor: logogold,
           title: ListTile(
             style: ListTileStyle.list,
-            contentPadding: EdgeInsets.symmetric(horizontal: 5.sp),
+            // contentPadding: EdgeInsets.symmetric(horizontal: 0.sp),
+            contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.hail),
             title: Row(
               children: [
                 Text(
-                  "Delivery Completed",
+                  "Delivery Status",
                   style:
                       TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
                 ),
@@ -382,7 +383,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                 ),
                 Text('Marchant Number :' +
                     (provider.statusDeliveryList![index].merchantInvoice
-                        .toString()))
+                        .toString()),
+                  style:
+                      TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp))
               ],
             ),
             dense: true,

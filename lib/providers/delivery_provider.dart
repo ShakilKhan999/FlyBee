@@ -64,6 +64,8 @@ class DeliveryProvider extends ChangeNotifier {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
+      await getDeliveryList();
+      await getDeliveryStatusList();
       // AddDeliveryResponse addDeliveryResponse =
       //     addDeliveryResponseFromJson(await response.stream.bytesToString());
       // if (addDeliveryResponse.success!) {
