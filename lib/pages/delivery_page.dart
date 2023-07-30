@@ -33,6 +33,8 @@ class _DeliveryPageState extends State<DeliveryPage>
     super.initState();
   }
 
+  TextEditingController remarkController = TextEditingController();
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -1076,6 +1078,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                               child: Column(
                                 children: [
                                   TextFormField(
+                                    controller: remarkController,
                                     decoration: InputDecoration(
                                       labelText: 'Arrived',
                                     ),
@@ -1087,6 +1090,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                                         .toString(),
                                     statusId: '7',
                                     context: context,
+                                    remark: remarkController.text.toString(),
                                   );
                                       }, child: Text('Confirm'))
                                 ],

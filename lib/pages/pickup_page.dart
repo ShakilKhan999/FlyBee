@@ -30,6 +30,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
     marchantProvider = Provider.of<MarchantProvider>(context, listen: false);
     marchantProvider.getMarchantList();
     marchantProvider.getRiderPickupStatusList();
+    marchantProvider.getMerchantPickupStatusList();
     // marchantProvider.getRiderPickupStatusList();
     super.initState();
   }
@@ -472,6 +473,8 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     }
                   },
                 ),
+              
+              
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
                     if (provider.marchantList.isNotEmpty) {
@@ -528,12 +531,6 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w500),
                                     ),
-                                    // Text(
-                                    //   'Item Count : ${itemList!.length.toString()}',
-                                    //   style: const TextStyle(
-                                    //       fontWeight: FontWeight.w500),
-                                    // ),
-
                                     ElevatedButton(
                                         onPressed: () {
                                           provider.saveDelivery(
@@ -548,186 +545,9 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                         child: const Text('Collect Return')),
                                   ],
                                 ),
-
-                                // children: itemList!.map((item) {
-                                //   serial++;
-                                //   return Column(
-                                //     crossAxisAlignment: CrossAxisAlignment.end,
-                                //     children: [
-                                //       serial == 1
-                                //           ? Container(
-                                //               height: 50,
-                                //               child: Row(
-                                //                 mainAxisAlignment:
-                                //                     MainAxisAlignment.end,
-                                //                 children: [
-                                //                   Text('Select All'),
-                                //                   Checkbox(
-                                //                     onChanged: (value) {},
-                                //                     value: false,
-                                //                   ),
-                                //                 ],
-                                //               ),
-                                //             )
-                                //           : Container(),
-                                //       Padding(
-                                //         padding:
-                                //             const EdgeInsets.only(left: 15.0),
-                                //         child: ListTile(
-                                //           style: ListTileStyle.list,
-                                //           contentPadding:
-                                //               const EdgeInsets.symmetric(
-                                //                   horizontal: 16),
-                                //           // leading: Checkbox(onChanged: (bool? value) {  }, value: false,),
-                                //           trailing: Container(
-                                //             height: 20,
-                                //             width: 20,
-                                //             child: Checkbox(
-                                //               onChanged: (value) {},
-                                //               value: false,
-                                //             ),
-                                //           ),
-                                //           title: SizedBox(
-                                //             child: Row(
-                                //               crossAxisAlignment:
-                                //                   CrossAxisAlignment.start,
-                                //               children: [
-                                //                 Text(
-                                //                   "${serial}.  ",
-                                //                   style: const TextStyle(
-                                //                       fontWeight:
-                                //                           FontWeight.bold),
-                                //                 ),
-                                //                 Expanded(
-                                //                     child: Container(
-                                //                   decoration: BoxDecoration(
-                                //                       color: logogold
-                                //                           .withOpacity(0.4),
-                                //                       border: Border.all(),
-                                //                       borderRadius:
-                                //                           BorderRadius.circular(
-                                //                               12)),
-                                //                   child: Padding(
-                                //                     padding:
-                                //                         const EdgeInsets.all(
-                                //                             2.0),
-                                //                     child: Column(
-                                //                       children: [
-                                //                         Column(
-                                //                           mainAxisAlignment:
-                                //                               MainAxisAlignment
-                                //                                   .spaceBetween,
-                                //                           children: [
-                                //                             Container(
-                                //                               child: Row(
-                                //                                 children: [
-                                //                                   const Icon(
-                                //                                     Icons
-                                //                                         .emoji_people,
-                                //                                     color:
-                                //                                         logoblue,
-                                //                                   ),
-                                //                                   const Text(
-                                //                                     "Customer Name: ",
-                                //                                     style: TextStyle(
-                                //                                         color:
-                                //                                             logoblue,
-                                //                                         fontWeight:
-                                //                                             FontWeight.w500),
-                                //                                   ),
-                                //                                   Text(
-                                //                                       "${item.recipientName21}",
-                                //                                       style: const TextStyle(
-                                //                                           color:
-                                //                                               logoblue,
-                                //                                           fontWeight:
-                                //                                               FontWeight.w500))
-                                //                                 ],
-                                //                               ),
-                                //                             ),
-                                //                             Container(
-                                //                               child: Row(
-                                //                                 children: [
-                                //                                   const Icon(
-                                //                                       Icons
-                                //                                           .phone,
-                                //                                       color:
-                                //                                           logoblue),
-                                //                                   const Text(
-                                //                                       "Customer Phone: ",
-                                //                                       style: TextStyle(
-                                //                                           color:
-                                //                                               logoblue,
-                                //                                           fontWeight:
-                                //                                               FontWeight.w500)),
-                                //                                   Text(
-                                //                                       "${item.recipientPhone20}",
-                                //                                       style: const TextStyle(
-                                //                                           color:
-                                //                                               logoblue,
-                                //                                           fontWeight:
-                                //                                               FontWeight.w500))
-                                //                                 ],
-                                //                               ),
-                                //                             ),
-                                //                             Row(
-                                //                               children: [
-                                //                                 const Icon(
-                                //                                     Icons
-                                //                                         .numbers,
-                                //                                     color:
-                                //                                         logoblue),
-                                //                                 const Text(
-                                //                                     "Invoice: ",
-                                //                                     style: TextStyle(
-                                //                                         color:
-                                //                                             logoblue,
-                                //                                         fontWeight:
-                                //                                             FontWeight.w500)),
-                                //                                 Text(
-                                //                                     "${item.merchantInvoice}",
-                                //                                     style: const TextStyle(
-                                //                                         color:
-                                //                                             logoblue,
-                                //                                         fontWeight:
-                                //                                             FontWeight.w500))
-                                //                               ],
-                                //                             )
-                                //                           ],
-                                //                         ),
-                                //                       ],
-                                //                     ),
-                                //                   ),
-                                //                 )),
-                                //               ],
-                                //             ),
-                                //           ),
-                                //           dense: true,
-                                //           onTap: () {
-                                //             Navigator.pushNamed(context,
-                                //                 ItemDetailsPage.routeName);
-                                //           },
-                                //         ),
-                                //       ),
-                                //       serial == itemList!.length
-                                //           ? Row(
-                                //               mainAxisAlignment:
-                                //                   MainAxisAlignment.center,
-                                //               children: [
-                                //                 ElevatedButton(
-                                //                     onPressed: () {},
-                                //                     child: const Text(
-                                //                         'Collect Return')),
-                                //               ],
-                                //             )
-                                //           : Container()
-                                //     ],
-                                //   );
-                                // }).toList(),
+                               
                               ),
                             );
-
-                            // Text('${deptData[index]['name']}');
                           },
                         ),
                       );
@@ -739,6 +559,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     }
                   },
                 ),
+                
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
                     return ListView.builder(
@@ -784,119 +605,18 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                 SizedBox(
                   width: 5.w,
                 ),
-                Text('Marchant number: ' +
-                    provider.statusPickupList![index].merchantInvoice!)
+               provider.statusPickupList![index].merchantInvoice != null ? Text('Marchant number: ' +
+                    provider.statusPickupList![index].merchantInvoice!) : Text('Marchant number: N/A')
               ],
             ),
             dense: true,
             onTap: () {
-              // Navigator.pushNamed(
-              //     context, ItemDetailsPage.routeName);
+             
             },
           ),
-          // subtitle: Text(provider.statusPickupList![index].senderAddress9!),
+        
           children: [
-            // SizedBox(
-            //   child: Row(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Text(
-            //         "${index + 1}.  ",
-            //         style: const TextStyle(fontWeight: FontWeight.bold),
-            //       ),
-            //       Expanded(
-            //           child: Padding(
-            //             padding: const EdgeInsets.all(2.0),
-            //             child: Column(
-            //               children: [
-            //                 Row(
-            //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                   children: [
-            //                     Container(
-            //                       child: Row(
-            //                         children: [
-            //                           const Icon(
-            //                             Icons.price_change,
-            //                             color: logoblue,
-            //                           ),
-            //                           const Text(
-            //                             "Fixed Price: ",
-            //                             style: TextStyle(
-            //                                 color: logoblue,
-            //                                 fontWeight: FontWeight.w500),
-            //                           ),
-            //                           Text(
-            //                               "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['fixed_cost']}",
-            //                               style: const TextStyle(
-            //                                   color: logoblue,
-            //                                   fontWeight: FontWeight.w500))
-            //                         ],
-            //                       ),
-            //                     ),
-            //                     Container(
-            //                       child: Row(
-            //                         children: [
-            //                           const Icon(Icons.price_change,
-            //                               color: logoblue),
-            //                           const Text("Selling Price: ",
-            //                               style: TextStyle(
-            //                                   color: logoblue,
-            //                                   fontWeight: FontWeight.w500)),
-            //                           Text(
-            //                               "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['selling_price']}",
-            //                               style: const TextStyle(
-            //                                   color: logoblue,
-            //                                   fontWeight: FontWeight.w500))
-            //                         ],
-            //                       ),
-            //                     )
-            //                   ],
-            //                 ),
-            //                 Row(
-            //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                   children: [
-            //                     Container(
-            //                       child: Row(
-            //                         children: [
-            //                           const Icon(Icons.monitor_weight_outlined,
-            //                               color: logoblue),
-            //                           const Text("Weight: ",
-            //                               style: TextStyle(
-            //                                   color: logoblue,
-            //                                   fontWeight: FontWeight.w500)),
-            //                           Text(
-            //                               "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['weight']}",
-            //                               style: const TextStyle(
-            //                                   color: logoblue,
-            //                                   fontWeight: FontWeight.w500))
-            //                         ],
-            //                       ),
-            //                     ),
-            //                     Container(
-            //                       child: Row(
-            //                         children: [
-            //                           const Icon(Icons.shopping_bag_outlined,
-            //                               color: logoblue),
-            //                           const Text("Quantity: ",
-            //                               style: TextStyle(
-            //                                   color: logoblue,
-            //                                   fontWeight: FontWeight.w500)),
-            //                           Text(
-            //                               "${provider.productInfoMapMaker(provider.statusPickupList![index].productInfo4.toString())[0]['qty']}",
-            //                               style: const TextStyle(
-            //                                   color: logoblue,
-            //                                   fontWeight: FontWeight.w500))
-            //                         ],
-            //                       ),
-            //                     )
-            //                   ],
-            //                 )
-            //               ],
-            //             ),
-            //           )),
-            //     ],
-            //   ),
-            // ),
+            
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
@@ -1026,8 +746,9 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 size: 22.sp,
                               ),
                               Expanded(
-                                child: Text(provider
-                                    .statusPickupList![index].merchantInvoice!),
+                                child: provider
+                                    .statusPickupList![index].merchantInvoice != null ? Text(provider
+                                    .statusPickupList![index].merchantInvoice!) : Text('N/A'),
                               )
                             ],
                           ),

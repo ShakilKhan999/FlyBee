@@ -7,8 +7,7 @@ import 'package:flybee/api_helper/marchat_response.dart';
 import 'package:flybee/models/Merchant_data_model.dart';
 import 'package:flybee/models/marchat_model.dart';
 import 'package:flybee/models/merchant_pickup_model.dart';
-import 'package:flybee/models/rider_pickup_status_model.dart';
-import 'package:flybee/models/rider_pickup_assign_model.dart';
+import 'package:flybee/models/status_list.dart';
 import 'package:intl/intl.dart';
 
 import '../utils/shared_preference.dart';
@@ -22,17 +21,15 @@ class MarchantProvider extends ChangeNotifier {
   List<MerchantDataModel> merchantDataList = [];
 
   MerchantPickUpModel? riderPickUpStatusModel;
+
+  StatusList? statusList;
   List<StatusPickupList>? statusPickupList;
 
-
-
-  List<bool> pickupBools=[];
-  List<List<bool>> merchantBools=[];
+  List<bool> pickupBools = [];
+  List<List<bool>> merchantBools = [];
   List<AssignBranchPickupList>? assignBranchPickupList;
 
-
-
-
+// get marchant list
   getMarchantList() async {
     marchantList = [];
     merchantDataList = [];
@@ -41,14 +38,14 @@ class MarchantProvider extends ChangeNotifier {
     marchantList.addAll(marchantModel!.riderMerchants!);
 
     for (int i = 0; i < marchantList.length; i++) {
-      merchantPickUpModel = await MarchantResponse().getMerchantPickupList(phone: marchantList[i].userPhone!);
+      merchantPickUpModel = await MarchantResponse()
+          .getMerchantPickupList(phone: marchantList[i].userPhone!);
       if (merchantPickUpModel != null) {
-      
         merchantDataList.add(MerchantDataModel(
             marchantModel, merchantPickUpModel!.assignBranchPickupList!));
       }
     }
-     tempBoolListMaker();
+    tempBoolListMaker();
     print(merchantBools);
     await getRiderPickupStatusList();
     EasyLoading.dismiss();
@@ -58,14 +55,15 @@ class MarchantProvider extends ChangeNotifier {
   void tempBoolListMaker() {
     for (int i = 0; i < merchantDataList.length; i++) {
       List<bool> temp = [];
-      for (int j = 0; j < merchantDataList[i].assignBranchPickupList!.length; j++) {
+      for (int j = 0;
+          j < merchantDataList[i].assignBranchPickupList!.length;
+          j++) {
         print("bool adding123");
         temp.add(false);
       }
-      if(temp.isNotEmpty)
-        {
-          merchantBools.add([...temp]);
-        }
+      if (temp.isNotEmpty) {
+        merchantBools.add([...temp]);
+      }
 
       temp.clear();
       print("bool addinglength 123" + merchantBools.length.toString());
@@ -73,21 +71,36 @@ class MarchantProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-  productInfoMapMaker(String info){
+  productInfoMapMaker(String info) {
     var properties = json.decode(info);
     return properties;
   }
 
-  getRiderPickupStatusList() async {
- assignBranchPickupList = [];
-    riderPickUpStatusModel = await MarchantResponse().getMerchantPickupReturnList(phone: USER_PHONE);
-    assignBranchPickupList!.addAll(riderPickUpStatusModel!.assignBranchPickupList!);
-    notifyListeners();
+  //get pickup
 
+  getRiderPickupStatusList() async {
+    assignBranchPickupList = [];
+    riderPickUpStatusModel =
+        await MarchantResponse().getMerchantPickupReturnList(phone: USER_PHONE);
+    assignBranchPickupList!
+        .addAll(riderPickUpStatusModel!.assignBranchPickupList!);
+    notifyListeners();
+  }
+  
+
+
+    getMerchantPickupStatusList() async {
+      statusPickupList = [];
+    statusList =
+        await MarchantResponse().getMerchantPickupStatusList();
+    statusPickupList!
+        .addAll(statusList!.statusPickupList!);
+
+      log(statusPickupList!.length.toString());
+    notifyListeners();
   }
 
-    saveDelivery(
+  saveDelivery(
       {required String pickupId,
       required String statusId,
       required BuildContext context}) async {
@@ -113,6 +126,7 @@ class MarchantProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       await getMarchantList();
       await getRiderPickupStatusList();
+      await getMerchantPickupStatusList();
       // await getDeliveryStatusList();
       // AddDeliveryResponse addDeliveryResponse =
       //     addDeliveryResponseFromJson(await response.stream.bytesToString());
@@ -126,5 +140,4 @@ class MarchantProvider extends ChangeNotifier {
       print(response.reasonPhrase);
     }
   }
-
 }

@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flybee/models/marchat_model.dart';
 import 'package:flybee/models/merchant_pickup_model.dart';
 import 'package:flybee/models/rider_pickup_status_model.dart';
+import 'package:flybee/models/status_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -102,22 +103,24 @@ class MarchantResponse {
   }
 
 
-  Future<RiderPickUpStatusModel?> getMerchantPickupStatusList() async {
+  Future<StatusList?> getMerchantPickupStatusList() async {
+    String? token = await SharedPref().getString(ACCESS_TOKEN);
+    String? id = await SharedPref().getString(USER_ID);
     var headers = {
       'accesstoken':
-          'Bearer ${await SharedPref().getString(ACCESS_TOKEN)}',
+          'Bearer $token',
       'Content-Type': 'application/x-www-form-urlencoded'
     };
     var request = http.Request('POST',
         // Uri.parse('http://starxpress.online/api/rider_pickup_status_list'));
         Uri.parse('http://apps.starxpress.online/api/rider_pickup_status_list'));
-    request.bodyFields = {'rider_user_id': '${await SharedPref().getString(USER_ID)}'};
+    request.bodyFields = {'rider_user_id': '$id'};
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-       return riderPickUpStatusModelFromJson(await response.stream.bytesToString());
+       return statusListFromJson(await response.stream.bytesToString());
     } else {
       return null;
     }

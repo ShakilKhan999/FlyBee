@@ -16,6 +16,8 @@ class DeliveryProvider extends ChangeNotifier {
   DeliveryStatus? deliveryStatus;
   List<StatusDeliveryList>? statusDeliveryList;
 
+
+// delivery assign
   getDeliveryList() async {
     deliveryList = [];
     // EasyLoading.show();
@@ -33,6 +35,8 @@ class DeliveryProvider extends ChangeNotifier {
     return properties;
   }
 
+
+// delivery status
   getDeliveryStatusList() async {
     statusDeliveryList = [];
     deliveryStatus =
@@ -44,8 +48,10 @@ class DeliveryProvider extends ChangeNotifier {
   saveDelivery(
       {required String pickupId,
       required String statusId,
-      required BuildContext context}) async {
-    log('${await SharedPref().getString(ACCESS_TOKEN)}');
+      required BuildContext context,
+      String remark = ''
+      }) async {
+     log('Remarks : '+remark);
     var headers = {
       'accesstoken': 'Bearer ${await SharedPref().getString(ACCESS_TOKEN)}',
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -57,7 +63,7 @@ class DeliveryProvider extends ChangeNotifier {
       'created_branch_id': '${await SharedPref().getString(BRANCH_ID)}',
       'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
       'pickup_data':
-          '[{"pickup_id": $pickupId,"i_delivery_status_id_18":$statusId,"remarks":"test2"}]'
+          '[{"pickup_id": $pickupId,"i_delivery_status_id_18":$statusId,"remarks": $remark}]'
     };
     request.headers.addAll(headers);
 
