@@ -41,6 +41,7 @@ class DeliveryResponse {
 
 
 
+// delivery status-------------------->>>>>>>>>
     Future<DeliveryStatus?> getDeliveryStatusList() async {
     var headers = {
       'accesstoken':
