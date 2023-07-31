@@ -39,7 +39,7 @@ class MarchantProvider extends ChangeNotifier {
 
     for (int i = 0; i < marchantList.length; i++) {
       merchantPickUpModel = await MarchantResponse()
-          .getMerchantPickupList(phone: marchantList[i].userPhone!);
+          .getMerchantPickupList(userId: marchantList[i].userId!);
       if (merchantPickUpModel != null) {
         merchantDataList.add(MerchantDataModel(
             marchantModel, merchantPickUpModel!.assignBranchPickupList!));

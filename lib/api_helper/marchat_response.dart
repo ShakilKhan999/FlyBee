@@ -38,12 +38,11 @@ class MarchantResponse {
   }
 
   Future<MerchantPickUpModel?> getMerchantPickupList(
-      {required String phone}) async {
+      {required int userId}) async {
         EasyLoading.show();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = await prefs.getString(USER_ID)!;
     String branch_id = await prefs.getString(BRANCH_ID)!;
-    log('phone : '+phone);
     var headers = {
       'accesstoken': 'Bearer ${await SharedPref().getString(ACCESS_TOKEN)}',
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -53,8 +52,8 @@ class MarchantResponse {
         Uri.parse('http://apps.starxpress.online/api/merchant_rider_pickup_list'));
     request.bodyFields = {
       'rider_user_id': id,
-      // 'rider_branch_id': branch_id,
-      // 'merchant_user_phone': phone
+      'rider_branch_id': branch_id,
+      'merchant_user_id': userId.toString()
     };
     request.headers.addAll(headers);
 

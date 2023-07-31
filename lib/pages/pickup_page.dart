@@ -510,7 +510,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                     borderRadius: BorderRadius.circular(10)),
                                 title: Text(
                                   provider.assignBranchPickupList![index]
-                                          .recipientName21! ??
+                                          .senderName6! ??
                                       'N/A',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -522,27 +522,30 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Phone: ${provider.assignBranchPickupList![index].recipientPhone20}',
+                                      'Phone: ${provider.assignBranchPickupList![index].senderPhone5}',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w500),
                                     ),
                                     Text(
-                                      'Address: ${provider.assignBranchPickupList![index].recipientAddress24}',
+                                      'Address: ${provider.assignBranchPickupList![index].senderAddress9}',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w500),
                                     ),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          provider.saveDelivery(
-                                            pickupId: provider
-                                                .assignBranchPickupList![index]
-                                                .id
-                                                .toString(),
-                                            statusId: '8',
-                                            context: context,
-                                          );
-                                        },
-                                        child: const Text('Collect Return')),
+                                    SizedBox(height: 5.h,),
+                                    Center(
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            provider.saveDelivery(
+                                              pickupId: provider
+                                                  .assignBranchPickupList![index]
+                                                  .id
+                                                  .toString(),
+                                              statusId: '8',
+                                              context: context,
+                                            );
+                                          },
+                                          child: const Text('Collect Return')),
+                                    ),
                                   ],
                                 ),
                                
