@@ -281,7 +281,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                     ),
                                   ],
                                 ),
-                                children: itemList!.map((item) {
+                                children:selectedindex!=index?[]: itemList!.map((item) {
                                   print("item012"+itemList!.length.toString());
                                   serial++;
                                   return Consumer<MarchantProvider>(
