@@ -20,13 +20,20 @@ class PickUpPage extends StatefulWidget {
 class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
   late MarchantProvider marchantProvider;
   late TabController _tabController;
-  bool isExpanded = false;
+ // bool isExpanded = false;
   bool allSelected = false;
   bool singleChk = false;
+  int selectedindex=-1;
   List<bool> chkList = [];
+  List<bool> expandbools=[];
 
+  List<bool> generateBoolList(int length) {
+    return List<bool>.filled(length, false);
+  }
   @override
   void initState() {
+    expandbools = generateBoolList(10);
+    print("bools:"+expandbools.toString());
     marchantProvider = Provider.of<MarchantProvider>(context, listen: false);
     marchantProvider.getMarchantList();
     marchantProvider.getRiderPickupStatusList();
@@ -34,12 +41,12 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
     // marchantProvider.getRiderPickupStatusList();
     super.initState();
   }
-
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
+  int openIndex = -1;
 
   List data = [
     {
@@ -135,11 +142,19 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
       ],
     },
   ];
-
+  List<AssignBranchPickupList>? itemList = [];
+  pickupList(int ind) async{
+    await marchantProvider.getPickupfromMerchant(ind);
+    itemList = marchantProvider
+        .merchantDataList[ind].assignBranchPickupList!
+        .cast<AssignBranchPickupList>();
+  }
+  final GlobalKey expansionTile = new GlobalKey();
   @override
   Widget build(BuildContext context) {
+
     _tabController = TabController(length: 3, vsync: this);
-    List<AssignBranchPickupList>? itemList = [];
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Column(
@@ -170,28 +185,61 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(
                               parent: AlwaysScrollableScrollPhysics()),
-                          itemCount: provider.merchantDataList.length,
+                          itemCount: provider.marchantList.length,
                           separatorBuilder: (context, index) => const SizedBox(
                             height: 5,
                           ),
                           itemBuilder: (context, index) {
                             int serial = 0;
-                            itemList = provider
-                                .merchantDataList[index].assignBranchPickupList!
-                                .cast<AssignBranchPickupList>();
+                            // itemList = provider
+                            //     .merchantDataList[index].assignBranchPickupList!
+                            //     .cast<AssignBranchPickupList>();
                             return Card(
                               elevation: 3,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               child: ExpansionTile(
+                                maintainState: true,
                                 iconColor: logoblue,
+                                initiallyExpanded: expandbools[index],
                                 collapsedIconColor: logogold,
-                                onExpansionChanged: (value) {
+                                onExpansionChanged: (value) async{
                                   setState(() {
-                                    isExpanded =
-                                        isExpanded == false ? true : false;
-                                    print(isExpanded);
+                                    selectedindex=index;
+                                    if(selectedindex==index)
+                                      {
+                                        for(int i=0;i<expandbools.length;i++)
+                                          {
+                                            if(index!=i)
+                                              {
+                                                expandbools[i]=false;
+                                              }
+                                            else
+                                              {
+                                                expandbools[index]=expandbools[index]==true?false:true;
+                                              }
+                                          }
+                                      }
+
+                                    print("bools update: "+expandbools.toString());
+                                   // isExpanded=false;
                                   });
+                                    // isExpanded =
+                                    //     isExpanded == false ? true : false;
+
+                                       // isExpanded=false;
+
+                                    if(expandbools[index]==true)
+                                      {
+                                        pickupList(index);
+                                       // print(isExpanded);
+                                        // setState(() {
+                                        //   isExpanded = isExpanded == false ? true : false;
+                                        // });
+                                      }
+                                    else{
+                                      itemList!.clear();
+                                    }
                                 },
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)),
@@ -234,7 +282,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                   ],
                                 ),
                                 children: itemList!.map((item) {
-                                  //print(checkboxValues);
+                                  print("item012"+itemList!.length.toString());
                                   serial++;
                                   return Consumer<MarchantProvider>(
                                       builder: (context, marchantProvider, _) {
@@ -273,31 +321,31 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                 const EdgeInsets.symmetric(
                                                     horizontal: 16),
                                             // leading: Checkbox(onChanged: (bool? value) {  }, value: false,),
-                                            trailing: Container(
-                                              height: 20,
-                                              width: 20,
-                                              child: Checkbox(
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    // checkboxStates[index] = value ?? false;
-                                                    singleChk = singleChk
-                                                        ? false
-                                                        : true;
-                                                    // print(checkboxValues[0]);
-                                                    marchantProvider
-                                                                .merchantBools[
-                                                            0][0] =
-                                                        !marchantProvider
-                                                                .merchantBools[
-                                                            0][0];
-                                                  });
-                                                },
-                                                value: allSelected == true
-                                                    ? allSelected
-                                                    : marchantProvider
-                                                        .merchantBools[0][0],
-                                              ),
-                                            ),
+                                            // trailing: Container(
+                                            //   height: 20,
+                                            //   width: 20,
+                                            //   child: Checkbox(
+                                            //     onChanged: (value) {
+                                            //       setState(() {
+                                            //         // checkboxStates[index] = value ?? false;
+                                            //         singleChk = singleChk
+                                            //             ? false
+                                            //             : true;
+                                            //         // print(checkboxValues[0]);
+                                            //         marchantProvider
+                                            //                     .merchantBools[
+                                            //                 0][0] =
+                                            //             !marchantProvider
+                                            //                     .merchantBools[
+                                            //                 0][0];
+                                            //       });
+                                            //     },
+                                            //     value: allSelected == true
+                                            //         ? allSelected
+                                            //         : marchantProvider
+                                            //             .merchantBools[0][0],
+                                            //   ),
+                                            // ),
                                             title: SizedBox(
                                               child: Row(
                                                 crossAxisAlignment:
@@ -548,7 +596,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                     ),
                                   ],
                                 ),
-                               
+
                               ),
                             );
                           },
@@ -562,7 +610,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     }
                   },
                 ),
-                
+
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
                     return ListView.builder(

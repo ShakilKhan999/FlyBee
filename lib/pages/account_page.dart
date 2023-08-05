@@ -33,18 +33,22 @@ class _AccountPageState extends State<AccountPage>
   //var name,id,mobile,mail;
   ScrollController _scrollController = ScrollController();
   late AccountProvider accountProvider;
-  double todayAmmount=0;
+  double todayAmmount=5;
 
   @override
   void initState() {
     accountProvider = Provider.of<AccountProvider>(context, listen: false);
-    getTodaysCollection();
+    getTodaysCollection(date=DateTime.now().toString().substring(0,10));
     print(todayAmmount);
     print("init123");
     super.initState();
   }
-getTodaysCollection() async{
-    todayAmmount= await accountProvider.getCollectionAmmount(DateTime.now().toString().substring(0,11));
+getTodaysCollection(String date) async{
+    double amnt=0;
+    amnt= await accountProvider.getCollectionAmmount(date==null?DateTime.now().toString().substring(0,10):date);
+    setState(() {
+      todayAmmount=amnt;
+    });
 }
   void _handleTabSelection() {
     if (_tabController.indexIsChanging) {
@@ -883,10 +887,10 @@ getTodaysCollection() async{
         date = selectedDate.toString().substring(0, 11);
       });
 
-      accountProvider.getCollectionAmmount(selectedDate.toString().substring(0, 11)).then((todayAmount) {
+      accountProvider.getCollectionAmmount(selectedDate.toString().substring(0, 10)).then((todayAmount) {
+        getTodaysCollection(selectedDate.toString().substring(0, 10));
         setState(() {
-          todayAmmount = todayAmount;
-          print("date: $date  collection: $todayAmmount");
+          print("date:$date  collection: $todayAmmount");
         });
       });
     }

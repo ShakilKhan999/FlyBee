@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,6 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/shared_preference.dart';
 
 class MarchantResponse {
+
+
+  
   Future<MarchantModel?> getMarchantList() async {
     // EasyLoading.show();
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -49,7 +53,7 @@ class MarchantResponse {
     };
     var request = http.Request('POST',
         // Uri.parse('http://starxpress.online/api/merchant_rider_pickup_list'));
-        Uri.parse('http://apps.starxpress.online/api/merchant_rider_pickup_list'));
+        Uri.parse('http://apps.starxpress.online/api/rider_pickup_list'));
     request.bodyFields = {
       'rider_user_id': id,
       'rider_branch_id': branch_id,

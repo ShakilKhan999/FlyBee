@@ -76,21 +76,28 @@ class AccountResponse{
       'accesstoken': 'Bearer $accesstoken',
        'Content-Type': 'application/x-www-form-urlencoded'
     };
-
-    var request = http.Request('POST', Uri.parse('http://apps.starxpress.online/api/rider_collection_balance'));
+print("info: $userId  $branchId  $date  $accesstoken");
+    var request = http.Request('POST', Uri.parse('http://starxpress.online/api/rider_collection_balance'));
     request.bodyFields = {
-      'rider_user_id': userId,
+      'rider_user_id': '323',
       'rider_branch_id': branchId,
-      'date': date
+      'date': date.trim()
     };
+    print("date234"+date.trim()+"hjb");
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
+    var res= await response.stream.bytesToString();
+    String amount=res.toString().replaceAll(RegExp(r'[^0-9]'), '');
+    double ant=double.tryParse(amount)??0;
 
     if (response.statusCode == 200) {
-      final responseBody = await response.stream.bytesToString();
-      final jsonMap = json.decode(responseBody);
-      double collection = jsonMap['collection_amounts'] ??0;
+      print("rs234"+ res.toString());
+      //final responseBody = await response.stream.bytesToString();
+     // final jsonMap = json.decode(responseBody);
+     //double collection = jsonMap['collection_amounts'] ??0;
+    // print("col234"+collection.toString());
+
 
       // Calculate the sum of collection amounts
       double sumCollectionAmount = 0;
@@ -98,7 +105,7 @@ class AccountResponse{
       //   sumCollectionAmount += collection['amount'] as double;
       // }
 
-      return collection;
+      return ant;
     } else {
       throw Exception('Request failed with status: ${response.statusCode}');
     }

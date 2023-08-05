@@ -36,19 +36,32 @@ class MarchantProvider extends ChangeNotifier {
     EasyLoading.show();
     marchantModel = await MarchantResponse().getMarchantList();
     marchantList.addAll(marchantModel!.riderMerchants!);
+    print("marlist123"+marchantList.length.toString());
 
-    for (int i = 0; i < marchantList.length; i++) {
-      merchantPickUpModel = await MarchantResponse()
-          .getMerchantPickupList(userId: marchantList[i].userId!);
-      if (merchantPickUpModel != null) {
-        merchantDataList.add(MerchantDataModel(
-            marchantModel, merchantPickUpModel!.assignBranchPickupList!));
-      }
-    }
+    // for (int i = 0; i < marchantList.length; i++) {
+    //   merchantPickUpModel = await MarchantResponse()
+    //       .getMerchantPickupList(userId: marchantList[3].userId!);
+    //   if (merchantPickUpModel != null) {
+    //     merchantDataList.add(MerchantDataModel(
+    //         marchantModel, merchantPickUpModel!.assignBranchPickupList!));
+    //   }
+    // }
     tempBoolListMaker();
     print(merchantBools);
-    await getRiderPickupStatusList();
+
     EasyLoading.dismiss();
+    notifyListeners();
+  }
+
+  getPickupfromMerchant(int index) async{
+    print("pickcallid123"+index.toString());
+    merchantPickUpModel = await MarchantResponse()
+           .getMerchantPickupList(userId: marchantList[index].userId!);
+    if (merchantPickUpModel != null) {
+          merchantDataList.add(MerchantDataModel(
+              marchantModel, merchantPickUpModel!.assignBranchPickupList!));
+        }
+    //await getRiderPickupStatusList();
     notifyListeners();
   }
 
