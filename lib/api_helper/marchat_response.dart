@@ -31,6 +31,8 @@ class MarchantResponse {
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
+   // String pres=await response.stream.bytesToString().toString();
+   // print("response123merchant"+pres);
 
     if (response.statusCode == 200) {
       // EasyLoading.dismiss();

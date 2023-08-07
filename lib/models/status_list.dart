@@ -373,7 +373,7 @@ class StatusPickupList {
         iShipmentMethod: json["i_shipment_method"] == null ? null : IShipmentMethod.fromJson(json["i_shipment_method"]),
         iDeliveryStatus: json["i_delivery_status"] == null ? null : IDeliveryStatus.fromJson(json["i_delivery_status"]),
         iTrackingStatus: json["i_tracking_status"] == null ? null : ITrackingStatus.fromJson(json["i_tracking_status"]),
-        currentBranch: json["current_branch"] == null ? null : Branch.fromJson(json["current_branch"]),
+        currentBranch:  Branch.fromJson(json["current_branch"]),
         createdBranch: json["created_branch_"] == null ? null : Branch.fromJson(json["created_branch_"]),
         creator1: json["creator1_"] == null ? null : Creator1.fromJson(json["creator1_"]),
     );
@@ -504,7 +504,7 @@ class Branch {
     });
 
     factory Branch.fromJson(Map<String, dynamic> json) => Branch(
-        branch: branchEnumValues.map[json["branch"]]!,
+        branch: branchEnumValues.map[json["branch"]]==null?null:branchEnumValues.map[json["branch"]],
     );
 
     Map<String, dynamic> toJson() => {
@@ -517,7 +517,7 @@ enum BranchEnum {
 }
 
 final branchEnumValues = EnumValues({
-    "Dhaka (Central Hub)": BranchEnum.DHAKA_CENTRAL_HUB
+    "Dhaka (Central Hub)": BranchEnum.DHAKA_CENTRAL_HUB==null?null:BranchEnum.DHAKA_CENTRAL_HUB
 });
 
 class Creator1 {
