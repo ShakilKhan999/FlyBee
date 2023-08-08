@@ -147,10 +147,10 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
     itemList=[];
     print("calledind012"+ind.toString());
     await marchantProvider.getPickupfromMerchant(ind);
-
     itemList = marchantProvider
         .merchantDataList[ind].assignBranchPickupList!
         .cast<AssignBranchPickupList>();
+    marchantProvider.tempBoolListMaker(itemList!.length);
     print("item012"+itemList!.length.toString());
   }
   final GlobalKey expansionTile = new GlobalKey();
@@ -207,12 +207,12 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                   //     .cast<AssignBranchPickupList>();
                                   return InkWell(
                                     onTap: ()async{
-                                      expandbools[index]==true?false:true;
+                                      expandbools[index]=expandbools[index]==true?false:true;
                                       // itemList!.clear();
                                       setState(() {
                                         selectedindex=index;
                                       });
-                                      if(expandbools[index]==false)
+                                      if(expandbools[index]==true)
                                       {
                                         await pickupList(index);
                                       }
@@ -259,15 +259,30 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                               ),
                                               trailing: IconButton(onPressed:null,icon: Icon(Icons.arrow_drop_down),),
                                             ),
-                                            selectedindex==index?Padding(
+                                            selectedindex==index && expandbools[index]==true?Padding(
                                               padding: EdgeInsets.all(10),
                                                     // elevation: 3,
                                                     // shape: RoundedRectangleBorder(
                                                     //     borderRadius: BorderRadius.circular(10)),
                                                     child: Column(
                                                       children: [
+                                                        Row(
+                                                          children: [
+                                                            Text('Select all'),
+                                                            Checkbox(
+                                                              onChanged: (value) {
+                                                                setState(() {
+                                                                  allSelected =
+                                                                  !allSelected;
+                                                                  // marchantProvider.merchantBools[index][serial]=true;
+                                                                });
+                                                              },
+                                                              value: allSelected,
+                                                            ),
+                                                          ],
+                                                        ),
                                                         SizedBox(
-                                                          child:selectedindex==index && expandbools[index]==true?SizedBox(): ListView.builder(
+                                                          child: ListView.builder(
                                                             itemCount: itemList!.length,
                                                             shrinkWrap: true,
                                                             physics: NeverScrollableScrollPhysics(),
@@ -280,6 +295,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                       crossAxisAlignment:
                                                                       CrossAxisAlignment.end,
                                                                       children: [
+
                                                                         // serial == 1
                                                                         //     ? Container(
                                                                         //   height: 50,
@@ -311,31 +327,26 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                             const EdgeInsets.symmetric(
                                                                                 horizontal: 16),
                                                                             // leading: Checkbox(onChanged: (bool? value) {  }, value: false,),
-                                                                            // trailing: Container(
-                                                                            //   height: 20,
-                                                                            //   width: 20,
-                                                                            //   child: Checkbox(
-                                                                            //     onChanged: (value) {
-                                                                            //       setState(() {
-                                                                            //         // checkboxStates[index] = value ?? false;
-                                                                            //         singleChk = singleChk
-                                                                            //             ? false
-                                                                            //             : true;
-                                                                            //         // print(checkboxValues[0]);
-                                                                            //         marchantProvider
-                                                                            //                     .merchantBools[
-                                                                            //                 0][0] =
-                                                                            //             !marchantProvider
-                                                                            //                     .merchantBools[
-                                                                            //                 0][0];
-                                                                            //       });
-                                                                            //     },
-                                                                            //     value: allSelected == true
-                                                                            //         ? allSelected
-                                                                            //         : marchantProvider
-                                                                            //             .merchantBools[0][0],
-                                                                            //   ),
-                                                                            // ),
+                                                                            trailing: Container(
+                                                                              height: 20,
+                                                                              width: 20,
+                                                                              child: Checkbox(
+                                                                                onChanged: (value) {
+                                                                                  setState(() {
+                                                                                    marchantProvider.merchantBools[index][serial]=
+                                                                                    marchantProvider.merchantBools[index][serial]==true?false:true;
+                                                                                    singleChk = singleChk
+                                                                                        ? false
+                                                                                        : true;
+                                                                                    // print(checkboxValues[0]);
+
+                                                                                  });
+                                                                                },
+                                                                                value: allSelected == true
+                                                                                    ? allSelected
+                                                                                    : marchantProvider.merchantBools[index][serial],
+                                                                              ),
+                                                                            ),
                                                                             title: SizedBox(
                                                                               child: Row(
                                                                                 crossAxisAlignment:
@@ -458,37 +469,37 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                             },
                                                                           ),
                                                                         ),
-                                                                        serial == itemList!.length
+                                                                        serial == itemList!.length-1
                                                                             ? Row(
                                                                           mainAxisAlignment:
                                                                           MainAxisAlignment.center,
                                                                           children: [
                                                                             ElevatedButton(
-                                                                                onPressed: () {
-                                                                                  for (int i = 0;
-                                                                                  i <
-                                                                                      marchantProvider
-                                                                                          .merchantBools[
-                                                                                      index]
-                                                                                          .length;
-                                                                                  i++) {
-                                                                                    if (marchantProvider
-                                                                                        .merchantBools[
-                                                                                    index][i]) {
-                                                                                      provider
-                                                                                          .saveDelivery(
-                                                                                        pickupId: provider
-                                                                                            .merchantDataList[
-                                                                                        index]
-                                                                                            .assignBranchPickupList![
-                                                                                        i]
-                                                                                            .id
-                                                                                            .toString(),
-                                                                                        statusId: '4',
-                                                                                        context: context,
-                                                                                      );
+                                                                                onPressed: () async{
+                                                                                  if(allSelected==true)
+                                                                                    {
+                                                                                      for(int i=0;i<=serial;i++)
+                                                                                        {
+                                                                                          await provider.saveDelivery(pickupId: provider.merchantDataList[index]
+                                                                                              .assignBranchPickupList![i].id.toString(), statusId: '4',
+                                                                                            context: context,
+                                                                                          );
+                                                                                        }
+                                                                                      pickupList(index);
                                                                                     }
-                                                                                  }
+                                                                                  else if(allSelected==false)
+                                                                                    {
+                                                                                      for (int i = 0; i <=serial;i++) {
+                                                                                        if (marchantProvider.merchantBools[index][i]) {
+                                                                                          await provider.saveDelivery(pickupId: provider.merchantDataList[index]
+                                                                                              .assignBranchPickupList![i].id.toString(), statusId: '4',
+                                                                                            context: context,
+                                                                                          );
+                                                                                        }
+                                                                                      }
+                                                                                      pickupList(index);
+                                                                                    }
+
                                                                                 },
                                                                                 child: Text(
                                                                                     'Collect Pickup')),
