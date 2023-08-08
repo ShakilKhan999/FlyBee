@@ -57,7 +57,9 @@ class MarchantProvider extends ChangeNotifier {
     print("pickcallid123"+index.toString());
     merchantPickUpModel = await MarchantResponse()
            .getMerchantPickupList(userId: marchantList[index].userId!);
+    print(merchantPickUpModel!.assignBranchPickupList!.length);
     if (merchantPickUpModel != null) {
+
           merchantDataList.add(MerchantDataModel(
               marchantModel, merchantPickUpModel!.assignBranchPickupList!));
         }
