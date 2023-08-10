@@ -395,9 +395,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                 SizedBox(
                   width: 5.w,
                 ),
-                Text('Invoice :' +
-                    (provider.statusDeliveryList![index].id
-                        .toString()),
+                Text(
+                    'Invoice :' +
+                        (provider.statusDeliveryList![index].id.toString()),
                     style:
                         TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp))
               ],
@@ -563,8 +563,14 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: provider.statusDeliveryList![index].merchantInvoice!= null ? Text('Merchant Number: ' +
-                                      provider.statusDeliveryList![index].merchantInvoice!.toString()) : Text('N/A'))
+                                  child: provider.statusDeliveryList![index]
+                                              .merchantInvoice !=
+                                          null
+                                      ? Text('Merchant Number: ' +
+                                          provider.statusDeliveryList![index]
+                                              .merchantInvoice!
+                                              .toString())
+                                      : Text('N/A'))
                             ],
                           ),
                           SizedBox(
@@ -758,8 +764,8 @@ class _DeliveryPageState extends State<DeliveryPage>
               Row(
                 children: [
                   Icon(Icons.numbers),
-                  Text('Invoice: ' + provider.deliveryList[index].id
-                      .toString()),
+                  Text(
+                      'Invoice: ' + provider.deliveryList[index].id.toString()),
                 ],
               ),
               Row(
@@ -970,8 +976,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
-                      SizedBox(height: 5.h,),
+                      SizedBox(
+                        height: 5.h,
+                      ),
                       Row(
                         children: [
                           Icon(Icons.person_search),
@@ -1022,6 +1029,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 onChanged: (RadioOption? value) {
                                   setState(() {
                                     _site = value!;
+                                    formOpenFlag = true;
                                     log(_site.toString());
                                   });
                                 },
@@ -1052,6 +1060,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                                   setState(() {
                                     _site = value!;
                                     log(_site.toString());
+                                    formOpenFlag = true;
                                   });
                                 },
                               ),
@@ -1070,8 +1079,8 @@ class _DeliveryPageState extends State<DeliveryPage>
                                     ),
                                   ),
                                   ElevatedButton(
-                                      onPressed: () {
-                                        provider.saveDelivery(
+                                      onPressed: () async {
+                                        await provider.saveDelivery(
                                           pickupId: provider
                                               .deliveryList[index].id
                                               .toString(),
@@ -1080,6 +1089,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                                           remark:
                                               remarkController.text.toString(),
                                         );
+                                        setState(() {
+                                          formOpenFlag = false;
+                                        });
                                       },
                                       child: Text('Confirm'))
                                 ],
