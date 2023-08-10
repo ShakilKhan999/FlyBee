@@ -46,8 +46,8 @@ class MarchantProvider extends ChangeNotifier {
     //         marchantModel, merchantPickUpModel!.assignBranchPickupList!));
     //   }
     // }
-    tempBoolListMaker();
-    print(merchantBools);
+    //tempBoolListMaker();
+
 
     EasyLoading.dismiss();
     notifyListeners();
@@ -57,7 +57,9 @@ class MarchantProvider extends ChangeNotifier {
     print("pickcallid123"+index.toString());
     merchantPickUpModel = await MarchantResponse()
            .getMerchantPickupList(userId: marchantList[index].userId!);
+    print(merchantPickUpModel!.assignBranchPickupList!.length);
     if (merchantPickUpModel != null) {
+
           merchantDataList.add(MerchantDataModel(
               marchantModel, merchantPickUpModel!.assignBranchPickupList!));
         }
@@ -65,11 +67,11 @@ class MarchantProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void tempBoolListMaker() {
+  void tempBoolListMaker(int picklen) {
     for (int i = 0; i < merchantDataList.length; i++) {
       List<bool> temp = [];
       for (int j = 0;
-          j < merchantDataList[i].assignBranchPickupList!.length;
+          j < picklen;
           j++) {
         print("bool adding123");
         temp.add(false);
@@ -81,6 +83,7 @@ class MarchantProvider extends ChangeNotifier {
       temp.clear();
       print("bool addinglength 123" + merchantBools.length.toString());
     }
+    print("pickbools:"+merchantBools.toString());
     notifyListeners();
   }
 
