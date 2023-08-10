@@ -31,6 +31,7 @@ class _DeliveryPageState extends State<DeliveryPage>
       deliveryProvider.getDeliveryList();
     });
   }
+
   @override
   void initState() {
     deliveryProvider = Provider.of<DeliveryProvider>(context, listen: false);
@@ -46,6 +47,8 @@ class _DeliveryPageState extends State<DeliveryPage>
     _tabController.dispose();
     super.dispose();
   }
+
+  bool formOpenFlag = false;
 
   @override
   Widget build(BuildContext context) {
@@ -75,23 +78,23 @@ class _DeliveryPageState extends State<DeliveryPage>
                   children: [
                     provider.deliveryList.isEmpty
                         ? const Center(
-                        child: Text(
-                          "Delivery list is empty",
-                          style: TextStyle(color: Colors.black),
-                        ))
+                            child: Text(
+                            "Delivery list is empty",
+                            style: TextStyle(color: Colors.black),
+                          ))
                         : RefreshIndicator(
-                      onRefresh: refreshData,
-                          child: ListView.builder(
-                      physics: const BouncingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics()),
-                      itemCount: provider.deliveryList.length,
-                      itemBuilder: (context, index) {
-                          return Container(
-                            child: _buildDeliveryItem(index, provider),
-                          );
-                      },
-                    ),
-                        ),
+                            onRefresh: refreshData,
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
+                              itemCount: provider.deliveryList.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  child: _buildDeliveryItem(index, provider),
+                                );
+                              },
+                            ),
+                          ),
                     // Consumer<MarchantProvider>(
                     //   builder: (context, provider, child) {
                     //     return Container(
@@ -387,7 +390,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                 Text(
                   "Delivery Status",
                   style:
-                  TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
+                      TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
                 ),
                 SizedBox(
                   width: 5.w,
@@ -396,7 +399,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                     (provider.statusDeliveryList![index].id
                         .toString()),
                     style:
-                    TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp))
+                        TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp))
               ],
             ),
             dense: true,
@@ -516,18 +519,18 @@ class _DeliveryPageState extends State<DeliveryPage>
             // ),
             Padding(
               padding:
-              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     decoration: const BoxDecoration(
                         border: Border(
-                          bottom: BorderSide(
-                            color: Colors.black,
-                            width: 0.5,
-                          ),
-                        )),
+                      bottom: BorderSide(
+                        color: Colors.black,
+                        width: 0.5,
+                      ),
+                    )),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
                       child: Column(
@@ -681,7 +684,6 @@ class _DeliveryPageState extends State<DeliveryPage>
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -702,6 +704,8 @@ class _DeliveryPageState extends State<DeliveryPage>
         child: ExpansionTile(
           iconColor: logoblue,
           collapsedIconColor: logogold,
+          key: GlobalKey(),
+          initiallyExpanded: formOpenFlag,
           title: Column(
             children: [
               // Row(
@@ -761,13 +765,15 @@ class _DeliveryPageState extends State<DeliveryPage>
               Row(
                 children: [
                   Icon(Icons.people),
-                  Text(' Customer Name : ${provider.deliveryList[index].recipientName21!}'),
+                  Text(
+                      ' Customer Name : ${provider.deliveryList[index].recipientName21!}'),
                 ],
               ),
               Row(
                 children: [
                   Icon(Icons.phone),
-                  Text('Customer Phone : ${provider.deliveryList[index].recipientPhone20!}'),
+                  Text(
+                      'Customer Phone : ${provider.deliveryList[index].recipientPhone20!}'),
                 ],
               ),
             ],
@@ -776,18 +782,191 @@ class _DeliveryPageState extends State<DeliveryPage>
             children: [
               const Icon(Icons.location_on_outlined),
               Expanded(
-                  child:
-                  Text('Customer Address : ${provider.deliveryList[index].recipientAddress24!}')),
+                  child: Text(
+                      'Customer Address : ${provider.deliveryList[index].recipientAddress24!}')),
             ],
           ),
           children: [
             Padding(
               padding:
-              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
+                  // Container(
+                  //   decoration: const BoxDecoration(
+                  //       border: Border(
+                  //     bottom: BorderSide(
+                  //       color: Colors.black,
+                  //       width: 0.5,
+                  //     ),
+                  //   )),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+                  //     child: Column(
+                  //       mainAxisAlignment: MainAxisAlignment.start,
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         const Text('Branch Address'),
+                  //         Row(
+                  //           children: [
+                  //             Icon(
+                  //               Icons.location_pin,
+                  //               size: 22.sp,
+                  //             ),
+                  //             Expanded(
+                  //                 child: Text(
+                  //                 provider.deliveryList[index].senderAddress9!,
+                  //               style: TextStyle(fontSize: 18.sp),
+                  //             ))
+                  //           ],
+                  //         ),
+                  //         SizedBox(
+                  //           height: 10.h,
+                  //         ),
+                  //         const Text('User Address'),
+                  //         Row(
+                  //           children: [
+                  //             Icon(
+                  //               Icons.location_pin,
+                  //               size: 22.sp,
+                  //             ),
+                  //             Expanded(
+                  //                 child: Text(
+                  //               (provider.deliveryList[index].recipientAddress24!),
+                  //               style: TextStyle(fontSize: 18.sp),
+                  //             ))
+                  //           ],
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // Container(
+                  //   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                  //   decoration: const BoxDecoration(
+                  //       border: Border(
+                  //     bottom: BorderSide(
+                  //       color: Colors.black,
+                  //       width: 0.5,
+                  //     ),
+                  //   )),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //           child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.start,
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           const Text('Collection Time'),
+                  //           Row(
+                  //             children: [
+                  //               Icon(
+                  //                 Icons.access_time,
+                  //                 size: 22.sp,
+                  //               ),
+                  //               SizedBox(
+                  //                 width: 8.w,
+                  //               ),
+                  //               Text(provider.deliveryList[index].deliveryBoyDate!.toString().substring(0, 10),
+                  //                   style: TextStyle(
+                  //                       fontSize: 18.sp, color: Colors.black))
+                  //             ],
+                  //           )
+                  //         ],
+                  //       )),
+                  //       Expanded(
+                  //           child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.start,
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           const Text('Delivery Time'),
+                  //           SizedBox(
+                  //             width: 8.w,
+                  //           ),
+                  //           Row(
+                  //             children: [
+                  //               Icon(
+                  //                 Icons.access_time,
+                  //                 size: 22.sp,
+                  //               ),
+                  //               Text(provider.deliveryList[index].deliveryDate!.toString().substring(0, 10),
+                  //                   style: TextStyle(
+                  //                       fontSize: 18.sp, color: Colors.black))
+                  //             ],
+                  //           )
+                  //         ],
+                  //       ))
+                  //     ],
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 15.h,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     // SizedBox(
+                  //     //   height: 30.h,
+                  //     //   // width: 115.w,
+                  //     //   child: ElevatedButton(
+                  //     //     style: ElevatedButton.styleFrom(
+                  //     //       backgroundColor: const Color(0xFF01B075),
+                  //     //       shape: RoundedRectangleBorder(
+                  //     //         borderRadius:
+                  //     //             BorderRadius.circular(8), // <-- Radius
+                  //     //       ),
+                  //     //     ),
+                  //     //     onPressed: () {
+                  //     //       setState(() {});
+                  //     //     },
+                  //     //     child: Text(
+                  //     //       'Partial Delivery',
+                  //     //       style: TextStyle(fontSize: 14.sp),
+                  //     //     ),
+                  //     //   ),
+                  //     // ),
+                  //     SizedBox(
+                  //       height: 30.h,
+                  //       child: ElevatedButton(
+                  //         style: ElevatedButton.styleFrom(
+                  //           backgroundColor: logoblue,
+                  //           shape: RoundedRectangleBorder(
+                  //             borderRadius:
+                  //                 BorderRadius.circular(8), // <-- Radius
+                  //           ),
+                  //         ),
+                  //         onPressed: () {
+                  //           setState(() {});
+                  //         },
+                  //         child: Text(
+                  //           'Full Delivery',
+                  //           style: TextStyle(fontSize: 14.sp),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       height: 30.h,
+                  //       child: ElevatedButton(
+                  //         style: ElevatedButton.styleFrom(
+                  //           backgroundColor: Colors.red,
+                  //           shape: RoundedRectangleBorder(
+                  //             borderRadius:
+                  //                 BorderRadius.circular(8), // <-- Radius
+                  //           ),
+                  //         ),
+                  //         onPressed: () {
+                  //           setState(() {});
+                  //         },
+                  //         child: Text(
+                  //           'Return',
+                  //           style: TextStyle(fontSize: 14.sp),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -797,30 +976,39 @@ class _DeliveryPageState extends State<DeliveryPage>
                         children: [
                           Icon(Icons.person_search),
                           // provider.deliveryList[index].merchantInvoice
-                          Text(provider.deliveryList[index].merchantInvoice
-                              != null
+                          Text(provider.deliveryList[index].merchantInvoice !=
+                                  null
                               ? 'Merchant Number: ' +
-                              provider
-                                  .deliveryList[index].merchantInvoice!
+                                  provider.deliveryList[index].merchantInvoice!
                               : 'Merchant Number: N/A'),
                         ],
                       ),
-                      SizedBox(height: 5.h,),
+                      SizedBox(
+                        height: 5.h,
+                      ),
                       Row(
                         children: [
                           Icon(Icons.phone),
-                          provider.deliveryList[index].senderPhone5 != null ? Text('Merchant Phone: ' +
-                              provider.deliveryList[index].senderPhone5!) : Text('Merchant Phone: N/A')
+                          provider.deliveryList[index].senderPhone5 != null
+                              ? Text('Merchant Phone: ' +
+                                  provider.deliveryList[index].senderPhone5!)
+                              : Text('Merchant Phone: N/A')
                         ],
                       ),
-                      SizedBox(height: 5.h,),
+                      SizedBox(
+                        height: 5.h,
+                      ),
                       Row(
                         children: [
-                          ImageIcon(AssetImage('images/taka.icon.png'),size: 30.sp,),
+                          ImageIcon(
+                            AssetImage('images/taka.icon.png'),
+                            size: 30.sp,
+                          ),
                           Text(provider.deliveryList[index].collectionAmount !=
-                              null
-                              ? 'Amount :'+ provider.deliveryList[index].collectionAmount!
-                              .toString()
+                                  null
+                              ? 'Amount :' +
+                                  provider.deliveryList[index].collectionAmount!
+                                      .toString()
                               : 'Collection Amount : N/A'),
                         ],
                       ),
@@ -843,13 +1031,16 @@ class _DeliveryPageState extends State<DeliveryPage>
                           ),
                           if (_site == RadioOption.delivered)
                             ElevatedButton(
-                                onPressed: () {
-                                  provider.saveDelivery(
+                                onPressed: () async {
+                                  await provider.saveDelivery(
                                     pickupId: provider.deliveryList[index].id
                                         .toString(),
                                     statusId: '6',
                                     context: context,
                                   );
+                                  setState(() {
+                                    formOpenFlag = false;
+                                  });
                                 },
                                 child: Text('Confirm')),
                           Row(
@@ -881,15 +1072,16 @@ class _DeliveryPageState extends State<DeliveryPage>
                                   ElevatedButton(
                                       onPressed: () {
                                         provider.saveDelivery(
-                                          pickupId: provider.deliveryList[index]
-                                              .id
+                                          pickupId: provider
+                                              .deliveryList[index].id
                                               .toString(),
                                           statusId: '7',
                                           context: context,
-                                          remark: remarkController.text
-                                              .toString(),
+                                          remark:
+                                              remarkController.text.toString(),
                                         );
-                                      }, child: Text('Confirm'))
+                                      },
+                                      child: Text('Confirm'))
                                 ],
                               ),
                             ),

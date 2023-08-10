@@ -112,7 +112,7 @@ class MarchantProvider extends ChangeNotifier {
     statusPickupList!
         .addAll(statusList!.statusPickupList!);
 
-      log(statusPickupList!.length.toString());
+      log('status len : '+statusPickupList!.length.toString());
     notifyListeners();
   }
 
