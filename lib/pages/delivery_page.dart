@@ -25,7 +25,12 @@ class _DeliveryPageState extends State<DeliveryPage>
   late TabController _tabController;
   bool isExpanded = false;
   RadioOption _site = RadioOption.delivered;
-
+  Future<void> refreshData() async {
+    setState(() {
+      deliveryProvider = Provider.of<DeliveryProvider>(context, listen: false);
+      deliveryProvider.getDeliveryList();
+    });
+  }
   @override
   void initState() {
     deliveryProvider = Provider.of<DeliveryProvider>(context, listen: false);
@@ -74,16 +79,19 @@ class _DeliveryPageState extends State<DeliveryPage>
                           "Delivery list is empty",
                           style: TextStyle(color: Colors.black),
                         ))
-                        : ListView.builder(
+                        : RefreshIndicator(
+                      onRefresh: refreshData,
+                          child: ListView.builder(
                       physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
+                            parent: AlwaysScrollableScrollPhysics()),
                       itemCount: provider.deliveryList.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          child: _buildDeliveryItem(index, provider),
-                        );
+                          return Container(
+                            child: _buildDeliveryItem(index, provider),
+                          );
                       },
                     ),
+                        ),
                     // Consumer<MarchantProvider>(
                     //   builder: (context, provider, child) {
                     //     return Container(

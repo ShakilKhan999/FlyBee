@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flybee/pages/home_page.dart';
 import 'package:http/http.dart' as http;
 
 class AccountResponse{
@@ -79,7 +80,7 @@ class AccountResponse{
 print("info: $userId  $branchId  $date  $accesstoken");
     var request = http.Request('POST', Uri.parse('http://starxpress.online/api/rider_collection_balance'));
     request.bodyFields = {
-      'rider_user_id': '323',
+      'rider_user_id': userId,
       'rider_branch_id': branchId,
       'date': date.trim()
     };
