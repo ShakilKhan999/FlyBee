@@ -142,6 +142,7 @@ getTodaysCollection(String date) async{
                           SizedBox(height: 8.h),
                           Text(
                             'Branch Name: $branch',
+
                             style: TextStyle(
                               fontSize: 16.sp,
                               color: Colors.grey,
