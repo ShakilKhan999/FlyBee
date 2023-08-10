@@ -410,7 +410,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                                                             logoblue,
                                                                                                           ),
                                                                                                           const Text(
-                                                                                                            "Customer Name: ",
+                                                                                                            "CusName: ",
                                                                                                             style: TextStyle(
                                                                                                                 color:
                                                                                                                 logoblue,
@@ -436,7 +436,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                                                               color:
                                                                                                               logoblue),
                                                                                                           const Text(
-                                                                                                              "Customer Phone: ",
+                                                                                                              "CusPhone: ",
                                                                                                               style: TextStyle(
                                                                                                                   color:
                                                                                                                   logoblue,
@@ -730,7 +730,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Invoice'),
+                          const Text('Merchant Number'),
                           Row(
                             children: [
                               Icon(
@@ -738,8 +738,8 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                 size: 22.sp,
                               ),
                               Expanded(
-                                child: Text(provider.statusPickupList![index].id
-                                    .toString()!),
+                                child: provider.statusPickupList![index].merchantInvoice != null ? Text('Merchant Number: ' +
+                                    provider.statusPickupList![index].merchantInvoice!.toString()) : Text('N/A')
                               )
                             ],
                           ),

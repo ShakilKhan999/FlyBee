@@ -392,8 +392,8 @@ class _DeliveryPageState extends State<DeliveryPage>
                 SizedBox(
                   width: 5.w,
                 ),
-                Text('Marchant Number :' +
-                    (provider.statusDeliveryList![index].merchantInvoice
+                Text('Invoice :' +
+                    (provider.statusDeliveryList![index].id
                         .toString()),
                     style:
                     TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp))
@@ -552,7 +552,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                           SizedBox(
                             height: 10.h,
                           ),
-                          const Text('Invoice'),
+                          const Text('Merchant Number'),
                           Row(
                             children: [
                               Icon(
@@ -560,9 +560,8 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(provider
-                                      .statusDeliveryList![index].id
-                                      .toString()))
+                                  child: provider.statusDeliveryList![index].merchantInvoice!= null ? Text('Merchant Number: ' +
+                                      provider.statusDeliveryList![index].merchantInvoice!.toString()) : Text('N/A'))
                             ],
                           ),
                           SizedBox(
@@ -754,6 +753,13 @@ class _DeliveryPageState extends State<DeliveryPage>
               // )
               Row(
                 children: [
+                  Icon(Icons.numbers),
+                  Text('Invoice: ' + provider.deliveryList[index].id
+                      .toString()),
+                ],
+              ),
+              Row(
+                children: [
                   Icon(Icons.people),
                   Text(' Customer Name : ${provider.deliveryList[index].recipientName21!}'),
                 ],
@@ -781,190 +787,11 @@ class _DeliveryPageState extends State<DeliveryPage>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Container(
-                  //   decoration: const BoxDecoration(
-                  //       border: Border(
-                  //     bottom: BorderSide(
-                  //       color: Colors.black,
-                  //       width: 0.5,
-                  //     ),
-                  //   )),
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-                  //     child: Column(
-                  //       mainAxisAlignment: MainAxisAlignment.start,
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         const Text('Branch Address'),
-                  //         Row(
-                  //           children: [
-                  //             Icon(
-                  //               Icons.location_pin,
-                  //               size: 22.sp,
-                  //             ),
-                  //             Expanded(
-                  //                 child: Text(
-                  //                 provider.deliveryList[index].senderAddress9!,
-                  //               style: TextStyle(fontSize: 18.sp),
-                  //             ))
-                  //           ],
-                  //         ),
-                  //         SizedBox(
-                  //           height: 10.h,
-                  //         ),
-                  //         const Text('User Address'),
-                  //         Row(
-                  //           children: [
-                  //             Icon(
-                  //               Icons.location_pin,
-                  //               size: 22.sp,
-                  //             ),
-                  //             Expanded(
-                  //                 child: Text(
-                  //               (provider.deliveryList[index].recipientAddress24!),
-                  //               style: TextStyle(fontSize: 18.sp),
-                  //             ))
-                  //           ],
-                  //         )
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  // Container(
-                  //   padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                  //   decoration: const BoxDecoration(
-                  //       border: Border(
-                  //     bottom: BorderSide(
-                  //       color: Colors.black,
-                  //       width: 0.5,
-                  //     ),
-                  //   )),
-                  //   child: Row(
-                  //     children: [
-                  //       Expanded(
-                  //           child: Column(
-                  //         mainAxisAlignment: MainAxisAlignment.start,
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //           const Text('Collection Time'),
-                  //           Row(
-                  //             children: [
-                  //               Icon(
-                  //                 Icons.access_time,
-                  //                 size: 22.sp,
-                  //               ),
-                  //               SizedBox(
-                  //                 width: 8.w,
-                  //               ),
-                  //               Text(provider.deliveryList[index].deliveryBoyDate!.toString().substring(0, 10),
-                  //                   style: TextStyle(
-                  //                       fontSize: 18.sp, color: Colors.black))
-                  //             ],
-                  //           )
-                  //         ],
-                  //       )),
-                  //       Expanded(
-                  //           child: Column(
-                  //         mainAxisAlignment: MainAxisAlignment.start,
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //           const Text('Delivery Time'),
-                  //           SizedBox(
-                  //             width: 8.w,
-                  //           ),
-                  //           Row(
-                  //             children: [
-                  //               Icon(
-                  //                 Icons.access_time,
-                  //                 size: 22.sp,
-                  //               ),
-                  //               Text(provider.deliveryList[index].deliveryDate!.toString().substring(0, 10),
-                  //                   style: TextStyle(
-                  //                       fontSize: 18.sp, color: Colors.black))
-                  //             ],
-                  //           )
-                  //         ],
-                  //       ))
-                  //     ],
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 15.h,
-                  // ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //   crossAxisAlignment: CrossAxisAlignment.center,
-                  //   children: [
-                  //     // SizedBox(
-                  //     //   height: 30.h,
-                  //     //   // width: 115.w,
-                  //     //   child: ElevatedButton(
-                  //     //     style: ElevatedButton.styleFrom(
-                  //     //       backgroundColor: const Color(0xFF01B075),
-                  //     //       shape: RoundedRectangleBorder(
-                  //     //         borderRadius:
-                  //     //             BorderRadius.circular(8), // <-- Radius
-                  //     //       ),
-                  //     //     ),
-                  //     //     onPressed: () {
-                  //     //       setState(() {});
-                  //     //     },
-                  //     //     child: Text(
-                  //     //       'Partial Delivery',
-                  //     //       style: TextStyle(fontSize: 14.sp),
-                  //     //     ),
-                  //     //   ),
-                  //     // ),
-                  //     SizedBox(
-                  //       height: 30.h,
-                  //       child: ElevatedButton(
-                  //         style: ElevatedButton.styleFrom(
-                  //           backgroundColor: logoblue,
-                  //           shape: RoundedRectangleBorder(
-                  //             borderRadius:
-                  //                 BorderRadius.circular(8), // <-- Radius
-                  //           ),
-                  //         ),
-                  //         onPressed: () {
-                  //           setState(() {});
-                  //         },
-                  //         child: Text(
-                  //           'Full Delivery',
-                  //           style: TextStyle(fontSize: 14.sp),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     SizedBox(
-                  //       height: 30.h,
-                  //       child: ElevatedButton(
-                  //         style: ElevatedButton.styleFrom(
-                  //           backgroundColor: Colors.red,
-                  //           shape: RoundedRectangleBorder(
-                  //             borderRadius:
-                  //                 BorderRadius.circular(8), // <-- Radius
-                  //           ),
-                  //         ),
-                  //         onPressed: () {
-                  //           setState(() {});
-                  //         },
-                  //         child: Text(
-                  //           'Return',
-                  //           style: TextStyle(fontSize: 14.sp),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // )
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Icon(Icons.numbers),
-                          Text('Invoice: ' + provider.deliveryList[index].id
-                              .toString()),
-                        ],
-                      ),
+
                       SizedBox(height: 5.h,),
                       Row(
                         children: [

@@ -29,6 +29,7 @@ class ApiLogin {
         SharedPref().setString(BANK, user.getUser![0].bankName.toString());
         SharedPref().setString(USER_ADDRESS, user.getUser![0].address.toString());
         SharedPref().setString(BRANCH_ID, user.getUser![0].branchId.toString());
+        SharedPref().setString(BRANCH_NAME, user.branch![0].branch.toString());
         SharedPref()
             .setString(USER_EMAIL, user.getUser![0].userEmail.toString());
         SharedPref().setString(USER_NAME, user.getUser![0].userName.toString());
