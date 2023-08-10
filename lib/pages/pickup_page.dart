@@ -554,7 +554,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
               
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
-                    if (provider.marchantList.isNotEmpty) {
+                    if (provider.assignBranchPickupList!.isNotEmpty) {
                       return Container(
                         padding: EdgeInsets.symmetric(horizontal: 8.w),
                         child: ListView.separated(
@@ -634,7 +634,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                     } else {
                       return Container(
                         child:
-                            const Center(child: Text('Pick up list is empty')),
+                            const Center(child: Text('Retuen assign list is empty')),
                       );
                     }
                   },
