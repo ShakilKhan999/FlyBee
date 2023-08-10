@@ -26,13 +26,18 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
   int selectedindex=-1;
   List<bool> chkList = [];
   List<bool> expandbools=[];
+  List<bool> pickupbools=[];
 
   List<bool> generateBoolList(int length) {
+    return List<bool>.filled(length, false);
+  }
+  List<bool> generatPickupeBoolList(int length) {
     return List<bool>.filled(length, false);
   }
   @override
   void initState() {
     expandbools = generateBoolList(10);
+    pickupbools=generatPickupeBoolList(0);
     print("bools:"+expandbools.toString());
     marchantProvider = Provider.of<MarchantProvider>(context, listen: false);
     marchantProvider.getMarchantList();
@@ -145,17 +150,21 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
   List<AssignBranchPickupList>? itemList = [];
   pickupList(int ind) async{
     itemList=[];
+    pickupbools=[];
     print("calledind012"+ind.toString());
     await marchantProvider.getPickupfromMerchant(ind);
     itemList = marchantProvider
         .merchantDataList[ind].assignBranchPickupList!
         .cast<AssignBranchPickupList>();
     marchantProvider.tempBoolListMaker(itemList!.length);
+    pickupbools=generatPickupeBoolList(itemList!.length);
+    print("pickboolshere: "+pickupbools.toString());
     print("item012"+itemList!.length.toString());
   }
   final GlobalKey expansionTile = new GlobalKey();
   @override
   Widget build(BuildContext context) {
+
 
     _tabController = TabController(length: 3, vsync: this);
 
@@ -201,7 +210,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                   height: 5,
                                 ),
                                 itemBuilder: (context, index) {
-                                  int serial = 0;
+                                  //int serial = 0;
                                   // itemList = provider
                                   //     .merchantDataList[index].assignBranchPickupList!
                                   //     .cast<AssignBranchPickupList>();
@@ -250,11 +259,11 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                     style: const TextStyle(
                                                         fontWeight: FontWeight.w500),
                                                   ),
-                                                  Text(
-                                                    'Item Count : ${itemList!.length.toString()}',
-                                                    style: const TextStyle(
-                                                        fontWeight: FontWeight.w500),
-                                                  ),
+                                                  // Text(
+                                                  //   'Item Count : ${itemList!.length.toString()}',
+                                                  //   style: const TextStyle(
+                                                  //       fontWeight: FontWeight.w500),
+                                                  // ),
                                                 ],
                                               ),
                                               trailing: IconButton(onPressed:null,icon: Icon(Icons.arrow_drop_down),),
@@ -333,8 +342,8 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                               child: Checkbox(
                                                                                 onChanged: (value) {
                                                                                   setState(() {
-                                                                                    marchantProvider.merchantBools[index][serial]=
-                                                                                    marchantProvider.merchantBools[index][serial]==true?false:true;
+                                                                                    pickupbools[serial]=
+                                                                                    pickupbools[serial]==true?false:true;
                                                                                     singleChk = singleChk
                                                                                         ? false
                                                                                         : true;
@@ -344,7 +353,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                                 },
                                                                                 value: allSelected == true
                                                                                     ? allSelected
-                                                                                    : marchantProvider.merchantBools[index][serial],
+                                                                                    : pickupbools[serial],
                                                                               ),
                                                                             ),
                                                                             title: SizedBox(
@@ -353,7 +362,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                                 CrossAxisAlignment.start,
                                                                                 children: [
                                                                                   Text(
-                                                                                    "${serial}.  ",
+                                                                                    "${serial+1}.  ",
                                                                                     style: const TextStyle(
                                                                                         fontWeight:
                                                                                         FontWeight.bold),
@@ -464,8 +473,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                             ),
                                                                             dense: true,
                                                                             onTap: () {
-                                                                              Navigator.pushNamed(context,
-                                                                                  ItemDetailsPage.routeName);
+
                                                                             },
                                                                           ),
                                                                         ),
@@ -480,20 +488,22 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                                                     {
                                                                                       for(int i=0;i<=serial;i++)
                                                                                         {
-                                                                                          await provider.saveDelivery(pickupId: provider.merchantDataList[index]
-                                                                                              .assignBranchPickupList![i].id.toString(), statusId: '4',
-                                                                                            context: context,
+                                                                                          print("loop started for :"+i.toString());
+                                                                                          await provider.saveDelivery(pickupId: itemList![i].id.toString(), statusId: '4',context: context
                                                                                           );
+                                                                                         // Future.delayed(Duration(milliseconds: 100));
+                                                                                          //await pickupList(index);
                                                                                         }
                                                                                       pickupList(index);
+
                                                                                     }
                                                                                   else if(allSelected==false)
                                                                                     {
                                                                                       for (int i = 0; i <=serial;i++) {
-                                                                                        if (marchantProvider.merchantBools[index][i]) {
+                                                                                        if (pickupbools[i]) {
                                                                                           await provider.saveDelivery(pickupId: provider.merchantDataList[index]
-                                                                                              .assignBranchPickupList![i].id.toString(), statusId: '4',
-                                                                                            context: context,
+                                                                                              .assignBranchPickupList![i].id.toString(), statusId: '4',context: context
+
                                                                                           );
                                                                                         }
                                                                                       }
@@ -602,7 +612,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                                                   .id
                                                   .toString(),
                                               statusId: '8',
-                                              context: context,
+                                                context: context
                                             );
                                           },
                                           child: const Text('Collect Return')),
@@ -656,10 +666,10 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
           collapsedIconColor: logogold,
           title: ListTile(
             style: ListTileStyle.list,
-            contentPadding: EdgeInsets.symmetric(horizontal: 5.sp),
+            contentPadding: EdgeInsets.symmetric(horizontal: 0.sp),
             leading: const Icon(Icons.hail),
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   "Pick-Up Completed",
@@ -721,22 +731,21 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                           Row(
                             children: [
                               Icon(
-                                Icons.cancel,
+                                provider.statusPickupList![index].iDeliveryStatus!.iDeliveryStatus != null
+                                    ? Icons.done
+                                    : Icons.cancel,
                                 size: 22.0,
                               ),
                               Expanded(
                                 child: Text(
-                                  provider.statusPickupList![index]
-                                              .pickupStatus ==
-                                          null
-                                      ? 'Pending'
-                                      : provider
-                                          .statusPickupList![index].pickupStatus
-                                          .toString(),
+                                  provider.statusPickupList![index].iDeliveryStatus!.iDeliveryStatus != null
+                                      ? 'Received'
+                                      : 'Pending',
                                 ),
                               ),
                             ],
                           ),
+
                           const Text('Marchant Name'),
                           Row(
                             children: [

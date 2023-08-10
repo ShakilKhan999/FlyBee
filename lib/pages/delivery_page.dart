@@ -25,6 +25,7 @@ class _DeliveryPageState extends State<DeliveryPage>
   late TabController _tabController;
   bool isExpanded = false;
   RadioOption _site = RadioOption.delivered;
+
   @override
   void initState() {
     deliveryProvider = Provider.of<DeliveryProvider>(context, listen: false);
@@ -69,20 +70,20 @@ class _DeliveryPageState extends State<DeliveryPage>
                   children: [
                     provider.deliveryList.isEmpty
                         ? const Center(
-                            child: Text(
-                            "Delivery list is empty",
-                            style: TextStyle(color: Colors.black),
-                          ))
+                        child: Text(
+                          "Delivery list is empty",
+                          style: TextStyle(color: Colors.black),
+                        ))
                         : ListView.builder(
-                            physics: const BouncingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics()),
-                            itemCount: provider.deliveryList.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                child: _buildDeliveryItem(index, provider),
-                              );
-                            },
-                          ),
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      itemCount: provider.deliveryList.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: _buildDeliveryItem(index, provider),
+                        );
+                      },
+                    ),
                     // Consumer<MarchantProvider>(
                     //   builder: (context, provider, child) {
                     //     return Container(
@@ -378,7 +379,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                 Text(
                   "Delivery Status",
                   style:
-                      TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
+                  TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp),
                 ),
                 SizedBox(
                   width: 5.w,
@@ -386,8 +387,8 @@ class _DeliveryPageState extends State<DeliveryPage>
                 Text('Marchant Number :' +
                     (provider.statusDeliveryList![index].merchantInvoice
                         .toString()),
-                  style:
-                      TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp))
+                    style:
+                    TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp))
               ],
             ),
             dense: true,
@@ -507,18 +508,18 @@ class _DeliveryPageState extends State<DeliveryPage>
             // ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     decoration: const BoxDecoration(
                         border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black,
-                        width: 0.5,
-                      ),
-                    )),
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 0.5,
+                          ),
+                        )),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
                       child: Column(
@@ -746,13 +747,13 @@ class _DeliveryPageState extends State<DeliveryPage>
               Row(
                 children: [
                   Icon(Icons.people),
-                  Text(provider.deliveryList[index].recipientName21!),
+                  Text(' Customer Name : ${provider.deliveryList[index].recipientName21!}'),
                 ],
               ),
               Row(
                 children: [
                   Icon(Icons.phone),
-                  Text(provider.deliveryList[index].recipientPhone20!),
+                  Text('Customer Phone : ${provider.deliveryList[index].recipientPhone20!}'),
                 ],
               ),
             ],
@@ -762,13 +763,13 @@ class _DeliveryPageState extends State<DeliveryPage>
               const Icon(Icons.location_on_outlined),
               Expanded(
                   child:
-                      Text(provider.deliveryList[index].recipientAddress24!)),
+                  Text('Customer Address : ${provider.deliveryList[index].recipientAddress24!}')),
             ],
           ),
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
+              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -952,43 +953,40 @@ class _DeliveryPageState extends State<DeliveryPage>
                       Row(
                         children: [
                           Icon(Icons.numbers),
-                          Text(provider.deliveryList[index].merchantInvoice !=
-                                  null
-                              ? 'Invoice No: ' +
-                                  provider.deliveryList[index].merchantInvoice!
-                              : 'Invoice No: N/A'),
+                          Text('Invoice: ' + provider.deliveryList[index].id
+                              .toString()),
                         ],
                       ),
+                      SizedBox(height: 5.h,),
                       Row(
                         children: [
-                          Icon(Icons.ev_station),
-                          Text(provider.deliveryList[index].currentBranch!
-                                      .branch !=
-                                  null
-                              ? 'Merchant Branch: ' +
-                                  provider
-                                      .deliveryList[index].currentBranch!.branch
-                                      .toString()
-                                      .substring(11)
-                              : 'Invoice No: N/A'),
+                          Icon(Icons.person_search),
+                          // provider.deliveryList[index].merchantInvoice
+                          Text(provider.deliveryList[index].merchantInvoice
+                              != null
+                              ? 'Merchant Number: ' +
+                              provider
+                                  .deliveryList[index].merchantInvoice!
+                              : 'Merchant Number: N/A'),
                         ],
                       ),
+                      SizedBox(height: 5.h,),
                       Row(
                         children: [
                           Icon(Icons.phone),
-                          Text(provider.deliveryList[index].senderPhone5 != null
-                              ? provider.deliveryList[index].senderPhone5!
-                              : "N/A"),
+                          provider.deliveryList[index].senderPhone5 != null ? Text('Merchant Phone: ' +
+                              provider.deliveryList[index].senderPhone5!) : Text('Merchant Phone: N/A')
                         ],
                       ),
+                      SizedBox(height: 5.h,),
                       Row(
                         children: [
-                          Icon(Icons.money),
+                          ImageIcon(AssetImage('images/taka.icon.png'),size: 30.sp,),
                           Text(provider.deliveryList[index].collectionAmount !=
-                                  null
-                              ? provider.deliveryList[index].collectionAmount!
-                                  .toString()
-                              : 'N/A'),
+                              null
+                              ? 'Amount :'+ provider.deliveryList[index].collectionAmount!
+                              .toString()
+                              : 'Collection Amount : N/A'),
                         ],
                       ),
                       Column(
@@ -1047,13 +1045,15 @@ class _DeliveryPageState extends State<DeliveryPage>
                                   ),
                                   ElevatedButton(
                                       onPressed: () {
-                                         provider.saveDelivery(
-                                    pickupId: provider.deliveryList[index].id
-                                        .toString(),
-                                    statusId: '7',
-                                    context: context,
-                                    remark: remarkController.text.toString(),
-                                  );
+                                        provider.saveDelivery(
+                                          pickupId: provider.deliveryList[index]
+                                              .id
+                                              .toString(),
+                                          statusId: '7',
+                                          context: context,
+                                          remark: remarkController.text
+                                              .toString(),
+                                        );
                                       }, child: Text('Confirm'))
                                 ],
                               ),
