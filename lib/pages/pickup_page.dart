@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/utils/colors.dart';
@@ -142,12 +144,14 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
       ],
     },
   ];
+  
   List<AssignBranchPickupList>? itemList = [];
   pickupList(int ind) async{
     await marchantProvider.getPickupfromMerchant(ind);
     itemList = marchantProvider
         .merchantDataList[ind].assignBranchPickupList!
         .cast<AssignBranchPickupList>();
+    log(itemList!.length.toString());
   }
   final GlobalKey expansionTile = new GlobalKey();
   @override
@@ -189,7 +193,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                           separatorBuilder: (context, index) => const SizedBox(
                             height: 5,
                           ),
-                          itemBuilder: (context, index) {
+                          itemBuilder: (context, index) { 
                             int serial = 0;
                             // itemList = provider
                             //     .merchantDataList[index].assignBranchPickupList!
@@ -201,7 +205,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                               child: ExpansionTile(
                                 maintainState: true,
                                 iconColor: logoblue,
-                                initiallyExpanded: expandbools[index],
+                                // initiallyExpanded: expandbools[index],
                                 collapsedIconColor: logogold,
                                 onExpansionChanged: (value) async{
                                   setState(() {

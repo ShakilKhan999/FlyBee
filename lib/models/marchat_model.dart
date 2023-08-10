@@ -63,6 +63,7 @@ class RiderMerchant {
     String? branchId;
     int? deliveryCostPackagesIdF;
     dynamic riderCommissionPackagesIdF;
+    dynamic pickupOrderCount;
 
     RiderMerchant({
         this.userId,
@@ -104,6 +105,7 @@ class RiderMerchant {
         this.branchId,
         this.deliveryCostPackagesIdF,
         this.riderCommissionPackagesIdF,
+        this.pickupOrderCount
     });
 
     factory RiderMerchant.fromJson(Map<String, dynamic> json) => RiderMerchant(
@@ -146,6 +148,7 @@ class RiderMerchant {
         branchId: json["branch_id"],
         deliveryCostPackagesIdF: json["delivery_cost_packages_id_f"],
         riderCommissionPackagesIdF: json["rider_commission_packages_id_f"],
+        pickupOrderCount: json["pickup_order_count"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -188,5 +191,6 @@ class RiderMerchant {
         "branch_id": branchId,
         "delivery_cost_packages_id_f": deliveryCostPackagesIdF,
         "rider_commission_packages_id_f": riderCommissionPackagesIdF,
+        "pickup_order_count": pickupOrderCount,
     };
 }

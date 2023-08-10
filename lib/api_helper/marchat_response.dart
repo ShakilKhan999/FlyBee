@@ -18,7 +18,8 @@ class MarchantResponse {
   Future<MarchantModel?> getMarchantList() async {
     // EasyLoading.show();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = await prefs.getString(USER_ID)!;
+    String id = await prefs.getString(BRANCH_ID)!;
+    log(id);
     print("riderid235:$id");
     var headers = {
       'accesstoken': 'Bearer ${await SharedPref().getString(ACCESS_TOKEN)}',
@@ -26,7 +27,7 @@ class MarchantResponse {
     };
     var request = http.Request(
         // 'POST', Uri.parse('http://starxpress.online/api/rider_all_merchant'));
-        'POST', Uri.parse('http://apps.starxpress.online/api/rider_all_merchant'));
+        'POST', Uri.parse('http://starxpress.online/api/rider_all_merchant'));
     request.bodyFields = {'rider_branch_id': id};
     request.headers.addAll(headers);
 

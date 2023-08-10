@@ -504,7 +504,7 @@ class Branch {
     });
 
     factory Branch.fromJson(Map<String, dynamic> json) => Branch(
-        branch: branchEnumValues.map[json["branch"]]!,
+        branch: branchEnumValues.map[json["branch"]] ?? null,
     );
 
     Map<String, dynamic> toJson() => {
