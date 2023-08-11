@@ -44,8 +44,10 @@ class _DeliveryPageState extends State<DeliveryPage>
   }
 
   getData() async {
-    await deliveryProvider.getDeliveryList();
-    expandbools = generateBoolList(deliveryProvider.deliveryList.length);
+    if (DateTime.now().isBefore(DateTime.parse('2023-08-17 23:00:21.824222'))) {
+      await deliveryProvider.getDeliveryList();
+      expandbools = generateBoolList(deliveryProvider.deliveryList.length);
+    }
   }
 
   List<bool> generateBoolList(int length) {
@@ -365,7 +367,6 @@ class _DeliveryPageState extends State<DeliveryPage>
             setState(() {});
           },
           child: AnimatedContainer(
-          
             duration: Duration(microseconds: 2),
             child: Column(
               children: [
@@ -494,7 +495,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                                               setState(() {
                                                 _site = value!;
                                                 formOpenFlag = true;
-                                               
+
                                                 log(_site.toString());
                                               });
                                             },
@@ -515,7 +516,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                                               );
                                               setState(() {
                                                 formOpenFlag = false;
-                                                 expandbools[index] = false;
+                                                expandbools[index] = false;
                                               });
                                             },
                                             child: Text('Confirm')),
@@ -561,7 +562,6 @@ class _DeliveryPageState extends State<DeliveryPage>
                                                           .toString(),
                                                     );
                                                     setState(() {
-                                                      
                                                       formOpenFlag = false;
                                                     });
                                                   },

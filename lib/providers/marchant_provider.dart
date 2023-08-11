@@ -36,33 +36,23 @@ class MarchantProvider extends ChangeNotifier {
     EasyLoading.show();
     marchantModel = await MarchantResponse().getMarchantList();
     marchantList.addAll(marchantModel!.riderMerchants!);
-    print("marlist123"+marchantList.length.toString());
-
-    // for (int i = 0; i < marchantList.length; i++) {
-    //   merchantPickUpModel = await MarchantResponse()
-    //       .getMerchantPickupList(userId: marchantList[3].userId!);
-    //   if (merchantPickUpModel != null) {
-    //     merchantDataList.add(MerchantDataModel(
-    //         marchantModel, merchantPickUpModel!.assignBranchPickupList!));
-    //   }
-    // }
-    //tempBoolListMaker();
-
-
+    print("marlist123" + marchantList.length.toString());
     EasyLoading.dismiss();
+    log('message hhhh');
+    log(DateTime.now().add(Duration(days: 5)).toString());
+
     notifyListeners();
   }
 
-  getPickupfromMerchant(int index) async{
-    print("pickcallid123"+index.toString());
+  getPickupfromMerchant(int index) async {
+    print("pickcallid123" + index.toString());
     merchantPickUpModel = await MarchantResponse()
-           .getMerchantPickupList(userId: marchantList[index].userId!);
+        .getMerchantPickupList(userId: marchantList[index].userId!);
     print(merchantPickUpModel!.assignBranchPickupList!.length);
     if (merchantPickUpModel != null) {
-
-          merchantDataList.add(MerchantDataModel(
-              marchantModel, merchantPickUpModel!.assignBranchPickupList!));
-        }
+      merchantDataList.add(MerchantDataModel(
+          marchantModel, merchantPickUpModel!.assignBranchPickupList!));
+    }
     //await getRiderPickupStatusList();
     notifyListeners();
   }
@@ -70,9 +60,7 @@ class MarchantProvider extends ChangeNotifier {
   void tempBoolListMaker(int picklen) {
     for (int i = 0; i < merchantDataList.length; i++) {
       List<bool> temp = [];
-      for (int j = 0;
-          j < picklen;
-          j++) {
+      for (int j = 0; j < picklen; j++) {
         print("bool adding123");
         temp.add(false);
       }
@@ -83,7 +71,7 @@ class MarchantProvider extends ChangeNotifier {
       temp.clear();
       print("bool addinglength 123" + merchantBools.length.toString());
     }
-    print("pickbools:"+merchantBools.toString());
+    print("pickbools:" + merchantBools.toString());
     notifyListeners();
   }
 
@@ -102,17 +90,13 @@ class MarchantProvider extends ChangeNotifier {
         .addAll(riderPickUpStatusModel!.assignBranchPickupList!);
     notifyListeners();
   }
-  
 
+  getMerchantPickupStatusList() async {
+    statusPickupList = [];
+    statusList = await MarchantResponse().getMerchantPickupStatusList();
+    statusPickupList!.addAll(statusList!.statusPickupList!);
 
-    getMerchantPickupStatusList() async {
-      statusPickupList = [];
-    statusList =
-        await MarchantResponse().getMerchantPickupStatusList();
-    statusPickupList!
-        .addAll(statusList!.statusPickupList!);
-
-      log('status len : '+statusPickupList!.length.toString());
+    log('status len : ' + statusPickupList!.length.toString());
     notifyListeners();
   }
 
