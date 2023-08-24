@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flybee/pages/home_page.dart';
+import 'package:flybee/models/count_model.dart';
+import 'package:flybee/utils/shared_preference.dart';
 import 'package:http/http.dart' as http;
 
 class AccountResponse{
@@ -12,8 +14,7 @@ class AccountResponse{
     print("comhit234");
     var headers = {
       'accesstoken': 'Bearer $accesstoken',
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer 2ujdICbAW8NxF1RuZsvOJtyjXcO9ceU-GegiS00akref6FB_Fh6Pz5zBcjH6p8dp'
+      'Content-Type': 'application/x-www-form-urlencoded'
     };
 
     var request = http.Request('POST', Uri.parse('http://apps.starxpress.online/api/rider_commission_balance'));
@@ -34,6 +35,29 @@ class AccountResponse{
     }
 
     return data;
+  }
+
+  Future<CountModel> getCountData() async {
+    log('call');
+    String? actoken=await SharedPref().getString(ACCESS_TOKEN);
+    var headers = {
+      'accesstoken': 'Bearer $actoken'
+    };
+    var request = http.Request('POST', Uri.parse('http://apps.starxpress.online/api/rider_stock_counts'));
+    request.bodyFields = {};
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    var data;
+    if (response.statusCode == 200) {
+      // var responseBody = await response.stream.bytesToString();
+      data = countModelFromJson(await response.stream.bytesToString());
+      log(data.pickupAssignCount.toString());
+    } else {
+      print(response.reasonPhrase);
+    }
+    return data;
+
   }
 
   Future<void> updateRiderProfile(String accesstoken,
@@ -159,6 +183,12 @@ print("info: $userId  $branchId  $date  $accesstoken");
       print(response.reasonPhrase);
     }
   }
+
+
+
+
+
+
 
 
 

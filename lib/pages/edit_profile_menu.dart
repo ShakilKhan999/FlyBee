@@ -31,10 +31,12 @@ late AccountProvider accountProvider;
 @override
   void initState() {
   accountProvider = Provider.of<AccountProvider>(context, listen: false);
+  fnameController.text =firstName!;
+  lnameController.text = lastName!;
   unameController.text=name!;
   emailController.text=mail!;
   addressController.text=address!;
-  phnController.text=mobile!;
+  phnController.text=mobile!;print(fnameController.text);
     super.initState();
   }
   @override

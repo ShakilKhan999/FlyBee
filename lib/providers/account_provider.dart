@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flybee/customs/custom_toast.dart';
+import 'package:flybee/models/count_model.dart';
 import 'package:provider/provider.dart';
 
 import '../api_helper/account_response.dart';
@@ -13,6 +14,7 @@ import '../utils/shared_preference.dart';
 class AccountProvider extends ChangeNotifier{
 
   Map<String, dynamic> commissionsMap = {};
+  CountModel? countMap;
   double collectionammount=0;
 
   Future<double> getCollectionAmmount(String date)async {
@@ -36,6 +38,11 @@ class AccountProvider extends ChangeNotifier{
      print("jontrona"+commissionsMap['sum_pickup_rider_amount'].toString());
     commissionCalculator('');
     notifyListeners();
+  }
+    Future<CountModel> getCountData() async {
+    countMap = await AccountResponse().getCountData();
+    notifyListeners();
+    return countMap!;
   }
   bool isInteger(String input) {
     return int.tryParse(input) != null;

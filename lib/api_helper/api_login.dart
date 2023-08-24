@@ -33,6 +33,8 @@ class ApiLogin {
         SharedPref()
             .setString(USER_EMAIL, user.getUser![0].userEmail.toString());
         SharedPref().setString(USER_NAME, user.getUser![0].userName.toString());
+        SharedPref().setString(FIRST_NAME, user.getUser![0].firstName.toString());
+        SharedPref().setString(LAST_NAME, user.getUser![0].lastName.toString());
         SharedPref()
             .setString(USER_PHONE, user.getUser![0].userPhone.toString());
         SharedPref().setString(USER_IMAGE, user.getUser![0].image.toString());

@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 String ACCESS_TOKEN = "accessToken";
 String USER_ID = "userID";
 String USER_NAME = "userName";
+String FIRST_NAME = "firstName";
+String LAST_NAME = "lastName";
 String USER_IMAGE="image";
 String USER_ADDRESS = "user_address";
 String USER_EMAIL = "userEmail";

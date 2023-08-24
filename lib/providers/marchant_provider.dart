@@ -44,6 +44,17 @@ class MarchantProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool merhcanthavePickup(){
+    bool havepickup=false;
+    for(int i=0;i<marchantList.length;i++)
+      {
+        if(marchantList[i].pickupOrderCount!=0){
+          havepickup=true;
+        }
+      }
+    return havepickup;
+  }
+
   getPickupfromMerchant(int index) async {
     print("pickcallid123" + index.toString());
     merchantPickUpModel = await MarchantResponse()
@@ -116,8 +127,7 @@ class MarchantProvider extends ChangeNotifier {
       'rider_user_id': "${await SharedPref().getString(USER_ID)}",
       'created_branch_id': '${await SharedPref().getString(BRANCH_ID)}',
       'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      'pickup_data':
-          '[{"pickup_id": $pickupId,"i_delivery_status_id_18":$statusId,"remarks":"test2"}]'
+      'pickup_data': '[{"pickup_id":$pickupId,"i_delivery_status_id_18":3,"remarks":"test2"}]'
     };
     request.headers.addAll(headers);
 

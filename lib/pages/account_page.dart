@@ -1,7 +1,10 @@
 
+import 'dart:developer';
+
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flybee/models/count_model.dart';
 import 'package:flybee/pages/change_pass_menu.dart';
 import 'package:flybee/pages/edit_profile_menu.dart';
 import 'package:flybee/utils/colors.dart';
@@ -25,6 +28,8 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage>
     with TickerProviderStateMixin {
 
+  bool addressExpand=false;
+
   int _currentTabIndex = 0;
   late TabController _tabController;
   late LoginProvider loginProvider;
@@ -34,6 +39,7 @@ class _AccountPageState extends State<AccountPage>
   ScrollController _scrollController = ScrollController();
   late AccountProvider accountProvider;
   double todayAmmount=5;
+  CountModel? countModel;
 
   @override
   void initState() {
@@ -46,6 +52,8 @@ class _AccountPageState extends State<AccountPage>
 getTodaysCollection(String date) async{
     double amnt=0;
     amnt= await accountProvider.getCollectionAmmount(date==null?DateTime.now().toString().substring(0,10):date);
+    countModel = await accountProvider.getCountData();
+
     setState(() {
       todayAmmount=amnt;
     });
@@ -156,7 +164,8 @@ getTodaysCollection(String date) async{
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(15)
                               ),
-                              child: address==""|| address==null?Row(
+                              child: address==""|| address==null?
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Icon(Icons.location_pin,color: Colors.black,),
@@ -202,7 +211,14 @@ getTodaysCollection(String date) async{
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Icon(Icons.location_pin,color: Colors.black,),
-                                  Text( 'Address: $address',),
+                                  addressExpand?
+                                  Expanded(child: Text( 'Address: ${address}',maxLines: 2,)):
+                                  Text( 'Address: ${address!.length>23?address!.substring(0,22):address}..',),
+                                  address!.length>23? IconButton(onPressed: (){
+                                    setState(() {
+                                      addressExpand=addressExpand?false:true;
+                                    });
+                                  }, icon: Icon(addressExpand? Icons.keyboard_arrow_up:Icons.keyboard_arrow_down)):SizedBox()
                                 ],
                               ),
                             )
@@ -281,12 +297,12 @@ getTodaysCollection(String date) async{
                               radius: 40.0,
                               lineWidth: 6.0,
                               percent: 0.8,
-                              center:  const Text("8/10",style: TextStyle(color: Colors.white),),
+                              center: Text("${countModel != null ? countModel!.totalPickupReceivedCount : '0'}/${countModel != null ? countModel!.pickupAssignCount : '0'}",style: TextStyle(color: Colors.white),),
                               backgroundColor: Colors.white,
                               progressColor: logoblue,
                             ),
                             SizedBox(height: 5.h,),
-                            Text("Pickup Completed",style: TextStyle(fontSize: 15.sp,color: Colors.white,fontWeight: FontWeight.w500),)
+                            Text("Pickup",style: TextStyle(fontSize: 15.sp,color: Colors.white,fontWeight: FontWeight.w500),)
                           ],
                         ),
                       ),
@@ -303,8 +319,32 @@ getTodaysCollection(String date) async{
                             CircularPercentIndicator(
                               radius: 40.0,
                               lineWidth: 6.0,
+                              percent: 1.0,
+                              center:   Text("${countModel != null ? countModel!.totalPickupReturnReceivedCount : '0'}/${countModel != null ? countModel!.pickupReturnAssignCount : '0'}",style: TextStyle(color: Colors.white,fontSize: 15),),
+                              backgroundColor: Colors.white,
+                              progressColor: Colors.green,
+                            ),
+                            SizedBox(height: 5.h,),
+                            Text("Pickup Return",style: TextStyle(fontSize: 15.sp,color: Colors.white,fontWeight: FontWeight.w500),)
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 10.w,),
+
+                      Container(
+                        height: 140.h,width: 140.w,
+                        decoration: BoxDecoration(
+                            color: logoblue.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(12)
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularPercentIndicator(
+                              radius: 40.0,
+                              lineWidth: 6.0,
                               percent: 0.9,
-                              center:  const Text("19/20",style: TextStyle(color: Colors.white),),
+                              center:   Text("${countModel != null ? countModel!.totalDeliveredCount : '0'}/${countModel != null ? countModel!.deliveryAssignCount : '0'}",style: TextStyle(color: Colors.white),),
                               backgroundColor: Colors.white,
                               progressColor: logoblue,
                             ),
@@ -327,35 +367,12 @@ getTodaysCollection(String date) async{
                               radius: 40.0,
                               lineWidth: 6.0,
                               percent: 1.0,
-                              center:  const Text("11",style: TextStyle(color: Colors.white,fontSize: 26),),
+                              center:   Text(countModel != null ? countModel!.holdCount.toString() : '0',style: TextStyle(color: Colors.white,fontSize: 26),),
                               backgroundColor: Colors.white,
-                              progressColor: Colors.green,
+                              progressColor: Colors.red,
                             ),
                             SizedBox(height: 5.h,),
-                            Text("Active Pickup",style: TextStyle(fontSize: 15.sp,color: Colors.white,fontWeight: FontWeight.w500),)
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 10.w,),
-                      Container(
-                        height: 140.h,width: 140.w,
-                        decoration: BoxDecoration(
-                            color: logoblue.withOpacity(0.3),
-                            borderRadius: BorderRadius.circular(12)
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircularPercentIndicator(
-                              radius: 40.0,
-                              lineWidth: 6.0,
-                              percent: 1.0,
-                              center:  const Text("15",style: TextStyle(color: Colors.white,fontSize: 26),),
-                              backgroundColor: Colors.white,
-                              progressColor: Colors.green,
-                            ),
-                            SizedBox(height: 5.h,),
-                            Text("Active Delivery",style: TextStyle(fontSize: 15.sp,color: Colors.white,fontWeight: FontWeight.w500),)
+                            Text("Hold",style: TextStyle(fontSize: 15.sp,color: Colors.white,fontWeight: FontWeight.w500),)
                           ],
                         ),
                       ),
@@ -413,55 +430,7 @@ getTodaysCollection(String date) async{
                     ),
                   ),
                 ),
-                // SizedBox(height: 10.w,),
-                // Container(
-                //   height: 50.h,
-                //   width: screenWidth-20.w,
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(12),
-                //       color: Colors.white
-                //   ),
-                //   child:  ListTile(
-                //     leading: Icon(Icons.business_center_outlined),
-                //     title: Text(
-                //       '$bank',
-                //       style: TextStyle(color: Colors.black),
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(height: 10.w,),
-                // Container(
-                //   height: 50.h,
-                //   width: screenWidth-20.w,
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(12),
-                //       color: Colors.white
-                //   ),
-                //   child: const ListTile(
-                //     leading: Icon(Icons.person_outline),
-                //     title: Text(
-                //       'Rider',
-                //       style: TextStyle(color: Colors.black),
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(height: 10.w,),
-                // Container(
-                //   height: 50.h,
-                //   width: screenWidth-20.w,
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(12),
-                //       color: Colors.white
-                //   ),
-                //   child: const ListTile(
-                //     leading: Icon(Icons.featured_video_outlined),
-                //     trailing:Icon(Icons.navigate_next) ,
-                //     title: Text(
-                //       'NID',
-                //       style: TextStyle(color: Colors.black),
-                //     ),
-                //   ),
-                // ),
+
                 const Divider(),
                 Padding(
                   padding:  EdgeInsets.all(5.sp),

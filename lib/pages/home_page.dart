@@ -21,10 +21,12 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
-String? name,id,mobile,mail,branch_id,nid,bank,address,branch;
+String? firstName,lastName,name,id,mobile,mail,branch_id,nid,bank,address,branch;
 
 void getinfo()async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  firstName =await prefs.getString(FIRST_NAME);
+  lastName =await prefs.getString(LAST_NAME);
   name =await prefs.getString(USER_NAME);
   // basicUserInfoModel.id=await prefs.getString(USER_ID);
   mobile=await prefs.getString(USER_PHONE);

@@ -44,10 +44,10 @@ class _DeliveryPageState extends State<DeliveryPage>
   }
 
   getData() async {
-    if (DateTime.now().isBefore(DateTime.parse('2023-08-17 23:00:21.824222'))) {
+    // if (DateTime.now().isBefore(DateTime.parse('2023-08-25 23:00:21.824222'))) {
       await deliveryProvider.getDeliveryList();
       expandbools = generateBoolList(deliveryProvider.deliveryList.length);
-    }
+
   }
 
   List<bool> generateBoolList(int length) {
@@ -555,7 +555,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                                                           .deliveryList[index]
                                                           .id
                                                           .toString(),
-                                                      statusId: '7',
+                                                      statusId: '8',
                                                       context: context,
                                                       remark: remarkController
                                                           .text
