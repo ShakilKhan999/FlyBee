@@ -44,10 +44,10 @@ class _DeliveryPageState extends State<DeliveryPage>
   }
 
   getData() async {
-    // if (DateTime.now().isBefore(DateTime.parse('2023-08-25 23:00:21.824222'))) {
-      await deliveryProvider.getDeliveryList();
-      expandbools = generateBoolList(deliveryProvider.deliveryList.length);
 
+    await deliveryProvider.getDeliveryList();
+    expandbools = generateBoolList(deliveryProvider.deliveryList.length);
+    // }
   }
 
   List<bool> generateBoolList(int length) {
@@ -109,7 +109,11 @@ class _DeliveryPageState extends State<DeliveryPage>
                               },
                             ),
                           ),
-                    ListView.builder(
+                    provider.statusDeliveryList==null || provider.statusDeliveryList!.isEmpty? const Center(
+                        child: Text(
+                          "Delivery status list is empty",
+                          style: TextStyle(color: Colors.black),
+                        )):ListView.builder(
                       physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics()),
                       itemCount: provider.statusDeliveryList == null
@@ -157,7 +161,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                 ),
                 Text(
                     'Invoice :' +
-                        (provider.statusDeliveryList![index].id.toString()),
+                        (provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?'':provider.statusDeliveryList![index]!.id.toString()),
                     style:
                         TextStyle(fontWeight: FontWeight.w500, fontSize: 13.sp))
               ],
@@ -198,13 +202,28 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(provider
+                                  child: Text(provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?'':provider
                                       .statusDeliveryList![index]
                                       .iDeliveryStatus!
                                       .iDeliveryStatus
                                       .toString()))
                             ],
                           ),
+                          const Text('Note'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.speaker_notes_rounded,
+                                size: 22.sp,
+                              ),
+                              Expanded(
+                                  child: Text(provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?'':
+                                  provider
+                                      .statusDeliveryList![index].pickup_return_status==null?"N/A":
+                                  provider.statusDeliveryList![index].pickup_return_status!))
+                            ],
+                          ),
+
                           SizedBox(
                             height: 10.h,
                           ),
@@ -216,7 +235,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: provider.statusDeliveryList![index]
+                                  child:provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?
+                                  Text('N/A')
+                                      : provider.statusDeliveryList![index]
                                               .merchantInvoice !=
                                           null
                                       ? Text('Merchant Number: ' +
@@ -237,7 +258,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(provider
+                                  child:provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?
+                                  Text('N/A')
+                                      : Text(provider
                                       .statusDeliveryList![index].senderName6!))
                             ],
                           ),
@@ -252,7 +275,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(provider
+                                  child:provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?
+                                  Text('N/A')
+                                      : Text(provider
                                       .statusDeliveryList![index]
                                       .senderAddress9!))
                             ],
@@ -268,7 +293,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(provider
+                                  child:provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?
+                                  Text('N/A')
+                                      : Text(provider
                                       .statusDeliveryList![index]
                                       .senderPhone5!))
                             ],
@@ -281,7 +308,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(provider
+                                  child:provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?
+                                  Text('N/A')
+                                      : Text(provider
                                       .statusDeliveryList![index]
                                       .currentBranch!
                                       .branch
@@ -299,7 +328,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(provider
+                                  child:provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?
+                                  Text('N/A')
+                                      : Text(provider
                                       .statusDeliveryList![index]
                                       .recipientName21!))
                             ],
@@ -315,7 +346,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(provider
+                                  child:provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?
+                                  Text('N/A')
+                                      : Text(provider
                                       .statusDeliveryList![index]
                                       .recipientAddress24!))
                             ],
@@ -331,7 +364,9 @@ class _DeliveryPageState extends State<DeliveryPage>
                                 size: 22.sp,
                               ),
                               Expanded(
-                                  child: Text(provider
+                                  child:provider.statusDeliveryList==null ||provider.statusDeliveryList!.isEmpty?
+                                  Text('N/A')
+                                      : Text(provider
                                       .statusDeliveryList![index]
                                       .recipientPhone20!))
                             ],
@@ -555,7 +590,7 @@ class _DeliveryPageState extends State<DeliveryPage>
                                                           .deliveryList[index]
                                                           .id
                                                           .toString(),
-                                                      statusId: '8',
+                                                      statusId: '7',
                                                       context: context,
                                                       remark: remarkController
                                                           .text

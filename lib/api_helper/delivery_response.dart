@@ -1,6 +1,4 @@
 
-import 'dart:developer';
-
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flybee/models/delivery_model.dart';
 import 'package:flybee/utils/shared_preference.dart';
@@ -23,7 +21,7 @@ class DeliveryResponse {
     };
     var request = http.Request(
         // 'POST', Uri.parse('http://starxpress.online/api/rider_delivery_list'));
-        'POST', Uri.parse('http://apps.starxpress.online/api/rider_delivery_list'));
+        'POST', Uri.parse('https://flybeecouriersoftware.com/api/rider_delivery_list'));
     request.bodyFields = {'rider_user_id': id};
     request.headers.addAll(headers);
 
@@ -50,7 +48,7 @@ class DeliveryResponse {
     };
     var request = http.Request('POST',
         // Uri.parse('http://starxpress.online/api/rider_delivery_status_list'));
-        Uri.parse('http://apps.starxpress.online/api/rider_delivery_status_list'));
+        Uri.parse('https://flybeecouriersoftware.com/api/rider_delivery_status_list'));
     request.bodyFields = {'rider_user_id': '${await SharedPref().getString(USER_ID)}'};
     request.headers.addAll(headers);
 

@@ -95,12 +95,16 @@ class AccountProvider extends ChangeNotifier{
         lName,
         address,
         email,
-        phn);
+        phn).then((value) async {
+      await SharedPref().setString(USER_ADDRESS, address);
+      await SharedPref().setString(USER_EMAIL, email);
+      await SharedPref().setString(USER_NAME, uName);
+      await SharedPref().setString(USER_PHONE, phn);
+      await SharedPref().setString(FIRST_NAME, fName);
+      await SharedPref().setString(LAST_NAME, lName);
+    });
 
-    await SharedPref().setString(USER_ADDRESS, address);
-    await SharedPref().setString(USER_EMAIL, email);
-    await SharedPref().setString(USER_NAME, uName);
-    await SharedPref().setString(USER_PHONE, phn);
+
 
     Fluttertoast.showToast(
       msg: "Profile Edited",

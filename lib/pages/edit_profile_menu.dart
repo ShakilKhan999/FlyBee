@@ -55,7 +55,7 @@ late AccountProvider accountProvider;
                   height: 20,
                 ),
                 SizedBox(
-                  height: 60.h,
+                  height: 50.h,
                   child: TextFormField(
                     controller: unameController,
                     decoration: InputDecoration(
@@ -78,7 +78,7 @@ late AccountProvider accountProvider;
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 SizedBox(
                   height: 50.h,
@@ -133,9 +133,11 @@ late AccountProvider accountProvider;
                   height: 10,
                 ),
                 SizedBox(
-                  height: 50.h,
+                  height: 80.h,
                   child: TextFormField(
                     controller: addressController,
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 15,overflow: TextOverflow.ellipsis),
                     decoration: const InputDecoration(
                         prefixIcon: Icon(
                           Icons.edit_location_alt_outlined,
@@ -147,20 +149,21 @@ late AccountProvider accountProvider;
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Colors.black, width: 1.2)),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.black, width: 1.2)),
+                        // border: OutlineInputBorder(
+                        //     borderSide: BorderSide(
+                        //         color: Colors.black, width: 1.2)),
                         labelText: 'Address',
                         labelStyle:
                         TextStyle(color: Colors.black)),
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 SizedBox(
                   height: 50.h,
                   child: TextFormField(
+                    enabled: false,
                     controller: emailController,
                     decoration: const InputDecoration(
                         prefixIcon: Icon(

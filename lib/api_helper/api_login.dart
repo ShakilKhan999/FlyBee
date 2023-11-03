@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,7 +17,7 @@ class ApiLogin {
     try {
       Response response = await post(
           // Uri.parse('http://starxpress.online/api/user/login'),
-          Uri.parse('http://apps.starxpress.online/api/user/login'),
+          Uri.parse('https://flybeecouriersoftware.com/api/user/login'),
           body: {'email': email, 'password': password});
       if (response.statusCode == 200 || response.statusCode == 201) {
         EasyLoading.dismiss();
@@ -57,7 +58,7 @@ class ApiLogin {
       }
     } catch (e) {
       EasyLoading.dismiss();
-      log(e.toString());
+      log('fasdfasdf'+e.toString());
     }
     return user;
   }

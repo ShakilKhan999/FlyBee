@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,7 +18,7 @@ class AccountResponse{
       'Content-Type': 'application/x-www-form-urlencoded'
     };
 
-    var request = http.Request('POST', Uri.parse('http://apps.starxpress.online/api/rider_commission_balance'));
+    var request = http.Request('POST', Uri.parse('https://flybeecouriersoftware.com/api/rider_commission_balance'));
     request.bodyFields = {
       'rider_user_id': userId,
       'rider_branch_id': branchId,
@@ -43,7 +44,7 @@ class AccountResponse{
     var headers = {
       'accesstoken': 'Bearer $actoken'
     };
-    var request = http.Request('POST', Uri.parse('http://apps.starxpress.online/api/rider_stock_counts'));
+    var request = http.Request('POST', Uri.parse('https://flybeecouriersoftware.com/api/rider_stock_counts'));
     request.bodyFields = {};
     request.headers.addAll(headers);
 
@@ -52,7 +53,7 @@ class AccountResponse{
     if (response.statusCode == 200) {
       // var responseBody = await response.stream.bytesToString();
       data = countModelFromJson(await response.stream.bytesToString());
-      log(data.pickupAssignCount.toString());
+      log('564'+data.pickupAssignCount.toString());
     } else {
       print(response.reasonPhrase);
     }
@@ -63,13 +64,14 @@ class AccountResponse{
   Future<void> updateRiderProfile(String accesstoken,
       String userId, String branchId,String username,String fname, String lname,
       String address, String email,String phn) async {
+    print("$fname $lname");
     EasyLoading.show();
     var headers = {
       'accesstoken': 'Bearer $accesstoken',
        'Content-Type': 'application/x-www-form-urlencoded'
     };
 
-    var request = http.Request('POST', Uri.parse('http://apps.starxpress.online/api/update_profile'));
+    var request = http.Request('POST', Uri.parse('https://flybeecouriersoftware.com/api/update_profile'));
     request.bodyFields = {
       'userID': userId,
       'username': username??'',
@@ -102,7 +104,7 @@ class AccountResponse{
        'Content-Type': 'application/x-www-form-urlencoded'
     };
 print("info: $userId  $branchId  $date  $accesstoken");
-    var request = http.Request('POST', Uri.parse('http://starxpress.online/api/rider_collection_balance'));
+    var request = http.Request('POST', Uri.parse('https://flybeecouriersoftware.com/api/rider_collection_balance'));
     request.bodyFields = {
       'rider_user_id': userId,
       'rider_branch_id': branchId,
@@ -144,7 +146,7 @@ print("info: $userId  $branchId  $date  $accesstoken");
       'Content-Type': 'application/x-www-form-urlencoded'
     };
 
-    var request = http.Request('POST', Uri.parse('http://apps.starxpress.online/api/changed_password'));
+    var request = http.Request('POST', Uri.parse('https://flybeecouriersoftware.com/api/changed_password'));
     request.bodyFields = {
       'userID': id,
       'old_password': oldpass,
@@ -183,13 +185,5 @@ print("info: $userId  $branchId  $date  $accesstoken");
       print(response.reasonPhrase);
     }
   }
-
-
-
-
-
-
-
-
 
 }

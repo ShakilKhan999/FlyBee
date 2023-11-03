@@ -1,14 +1,12 @@
-import 'dart:developer';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flybee/utils/colors.dart';
-import 'package:flybee/utils/shared_preference.dart';
+
 import 'package:provider/provider.dart';
-import '../api_helper/account_response.dart';
 import '../models/merchant_pickup_model.dart';
 import '../providers/marchant_provider.dart';
-import 'item_details.dart';
 
 class PickUpPage extends StatefulWidget {
   static const String routeName = '/pickup';
@@ -46,30 +44,30 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    marchantProvider = Provider.of<MarchantProvider>(context, listen: false);
     getData();
     super.initState();
   }
 
   getData() async {
     marchantwithdata=[];
-
-    // if (DateTime.now().isBefore(DateTime.parse('2023-08-25 23:00:21.824222'))) {
       pickupbools = await generatPickupeBoolList(0);
       print("bools:" + expandbools.toString());
-      marchantProvider = Provider.of<MarchantProvider>(context, listen: false);
+
       await marchantProvider.getMarchantList();
       await marchantProvider.getRiderPickupStatusList();
       await marchantProvider.getMerchantPickupStatusList();
 
-      for(int i=0;i<marchantProvider.marchantList.length;i++){
-        if(marchantProvider.marchantList[i].pickupOrderCount!=0 ){
-          print("id "+ marchantProvider.marchantList[i].userId.toString());
-          marchantwithdata.add(marchantProvider.marchantList[i].userId.toString());
+      for (int i = 0; i < marchantProvider.marchantList.length; i++) {
+        if (marchantProvider.marchantList[i].pickupOrderCount != 0) {
+          print("id " + marchantProvider.marchantList[i].userId.toString());
+          marchantwithdata.add(
+              marchantProvider.marchantList[i].userId.toString());
         }
       }
 
       expandbools = generateBoolList(marchantProvider.marchantList.length);
-
+    // }
   }
 
   @override
@@ -179,7 +177,7 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
 
   List<AssignBranchPickupList>? itemList = [];
  List<String> temppckupidList=[];
-  
+
   pickupList(int ind, String uid) async {
     itemList = [];
     pickupbools = [];
@@ -563,8 +561,8 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                 ),
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
-                    if (provider.assignBranchPickupList!.isNotEmpty) {
-                      return Container(
+                     return provider.assignBranchPickupList==null || provider.assignBranchPickupList!.isEmpty?
+                     Center(child: Text("Return assign list is empty")): Container(
                         padding: EdgeInsets.symmetric(horizontal: 8.w),
                         child: ListView.separated(
                           shrinkWrap: true,
@@ -646,17 +644,15 @@ class _PickUpPageState extends State<PickUpPage> with TickerProviderStateMixin {
                           },
                         ),
                       );
-                    } else {
-                      return Container(
-                        child: const Center(
-                            child: Text('Retuen assign list is empty')),
-                      );
-                    }
+
+
                   },
                 ),
                 Consumer<MarchantProvider>(
                   builder: (context, provider, child) {
-                    return ListView.builder(
+                    return provider.statusPickupList==null || provider.statusPickupList!.isEmpty?
+                    Center(child: Text("Status list is empty")):
+                    ListView.builder(
                       physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics()),
                       itemCount: provider.statusPickupList!.length,

@@ -75,6 +75,7 @@ class StatusDeliveryList {
     int? codCostAmount;
     int? returnCostAmount;
     String? merchantInvoice;
+    String? pickup_return_status;
     int? merchantAmount;
     dynamic withdrawMerchantAmount;
     dynamic merchantToPayableUserId;
@@ -134,6 +135,7 @@ class StatusDeliveryList {
     Creator1? creator1;
 
     StatusDeliveryList({
+        this.pickup_return_status,
         this.id,
         this.servicesId1,
         this.iProductTypeId2,
@@ -242,6 +244,7 @@ class StatusDeliveryList {
     factory StatusDeliveryList.fromJson(Map<String, dynamic> json) => StatusDeliveryList(
         id: json["id"],
         servicesId1: json["services_id_1"],
+        pickup_return_status: json["pickup_return_status"],
         iProductTypeId2: json["i_product_type_id_2"],
         iPriorityId3: json["i_priority_id_3"],
         productInfo4: json["product_info_4"],
